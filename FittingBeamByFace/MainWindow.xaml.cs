@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* ------------------------------------------------------------------
+ *  Tutorial Сеня Бусин https://www.youtube.com/watch?v=S-d0TBqMqVM
+ *  TeklaOpenAPI Tutorial. Creating macro fitting a beam by face
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +24,8 @@ namespace FittingBeamByFace
     /// </summary>
     public partial class MainWindow : Window
     {
+        TeklaAPI.TeklaAPI TS = new TeklaAPI.TeklaAPI();
+
         public MainWindow()
         {
             InitializeComponent();
