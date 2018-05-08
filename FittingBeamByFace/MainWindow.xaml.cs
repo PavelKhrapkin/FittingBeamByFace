@@ -29,6 +29,22 @@ namespace FittingBeamByFace
         public MainWindow()
         {
             InitializeComponent();
+            TS.Init();
+        }
+
+        private void Button_Go_Click(object sender, RoutedEventArgs e)
+        {
+            TS.FittingBeamByFace();
+        }
+
+        private void Button_Example_Click(object sender, RoutedEventArgs e)
+        {
+//            TS.DrawTextExample();
+        }
+
+        private void Button_DrawText_Click(object sender, RoutedEventArgs e)
+        {
+ //           TS.MyDrawTextExample();
         }
     }
 }

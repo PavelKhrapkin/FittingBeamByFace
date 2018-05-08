@@ -1,6 +1,7 @@
-﻿/* -----------------------------------------------------
- * Tekla module Unit Tests  25.04.2018 Pavel Khrapkin
- */
+﻿using TeklaAPI;
+/* -----------------------------------------------------
+* Tekla module Unit Tests  25.04.2018 Pavel Khrapkin
+*/
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,22 @@ namespace TeklaAPI.Tests
             _TS.Init();
             Assert.IsNotNull(Model);
             Assert.IsNotNull(ModelPlane);
+        }
+
+        [TestMethod()]
+        public void UT_Txt()
+        {
+            // Test выводит надписи красным и черным, а потом эти надписи
+            //.. стираются во время cleanup.Чтобы выводить тексты на в точке
+            //..(7500, 1500, 0), а там, где указано, надо сменить ниже
+            //..закомментированные определения Point tut
+ //           TSMUI.Picker picker = new TSMUI.Picker();
+            T3D.Point tut = new T3D.Point(7500.0, 1500.0);
+
+            _TS.Txt(tut, "Примерчик..");
+            tut.X += 500;
+            tut.Y += 500;
+            _TS.Txt(tut, "черный??", "Black");
         }
 
         [TestMethod()]
