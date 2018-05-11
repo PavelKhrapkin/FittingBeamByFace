@@ -5,34 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FittingBeamByFace"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="500" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}">
-    <Grid Margin="0,0,-312,0">
-        <Label Content="Chris Keyack Session 06&#xD;&#xA;Pick Points and Set Workplane&#xD;&#xA;"
-               HorizontalAlignment="Left" Height="40" Margin="10,5,0,0" VerticalAlignment="Top" Width="170"
+        Title="MainWindow" Height="250" Width="500">
+    <Grid Margin="0,0,-8,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="Auto"/>
+
+            <!-- Chris Keyack Session 06 -->
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0"
+            Content="Chris Keyack Session 06&#xD;&#xA;Pick Points and Set Workplane&#xD;&#xA;"
+               HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top" 
                Background="Yellow"/>
-        <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40" Margin="10,5,0,0" VerticalAlignment="Top" Width="170"/>
-        <Button Content="Pick 2 Points" FontWeight="Bold" Background="LightYellow"
-                HorizontalAlignment="Left" Height="27" Margin="34,60,0,0"
+        <Border Grid.Column="0"
+            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top" Width="170"/>
+        <Button Grid.Column="0" Content="Pick 2 Points" FontWeight="Bold" Background="LightYellow"
+                HorizontalAlignment="Left" Height="27" Margin="20,60,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_Pick2Points_Click"/>
-        <Button Content="Pick Part" FontWeight="Bold" Background="Yellow"
-                HorizontalAlignment="Left" Height="27" Margin="34,100,0,0"
+        <Button Grid.Column="0" Content="Pick Part" FontWeight="Bold" Background="Yellow"
+                HorizontalAlignment="Left" Height="27" Margin="20,100,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_PickPart_Click"/>
-        <Button Content="Global" FontWeight="Bold" Background="LightGreen"
-                HorizontalAlignment="Left" Height="27" Margin="34,140,0,0"
+        <Button Grid.Column="0" Content="Global" FontWeight="Bold" Background="LightGreen"
+                HorizontalAlignment="Left" Height="27" Margin="20,140,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_Global_Click"/>
-     
-        <Button Content="Go"
-                HorizontalAlignment="Left" Height="40" Margin="260,60,0,0"
-                VerticalAlignment="Top" Width="75" Background="Yellow"
+
+        <!-- Chris Keyack Session 07 -->
+        <Label
+            Content="Chris Keyack Session 07&#xD;&#xA;Write Beam Data to Text File&#xD;&#xA;"
+               HorizontalAlignment="Left" Height="40" VerticalAlignment="Top"
+               Background="Bisque" Grid.ColumnSpan="3" Margin="175,0,0,0"/>
+        <Border Grid.Column="1"
+            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
+        <Button Grid.Column="1" Content="Save Selected" FontWeight="Bold" Background="LightYellow"
+                HorizontalAlignment="Left" Height="27" Margin="10,60,0,0"
+                VerticalAlignment="Top" Width="127" Click="Button_Pick2Points_Click"/>
+        <Button Grid.Column="1" Content="Save All" FontWeight="Bold" Background="Yellow"
+                HorizontalAlignment="Left" Height="27" Margin="10,100,0,0"
+                VerticalAlignment="Top" Width="127" Click="Button_PickPart_Click"/>
+
+        <!-- Сеня Бусин -->
+        <Label Grid.Column="2"
+            Content="       Сеня Бусин"
+               HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="120"
+               Background="Khaki"/>
+        <Border Grid.Column="2"
+            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
+        <Button Grid.Column="2" Content="Go"
+                HorizontalAlignment="Left" Height="40" 
+                VerticalAlignment="Top" Width="75" Background="Yellow" Margin="20,50"
                 FontSize="16"
                 Click="Button_Go_Click" RenderTransformOrigin="0.54,-0.7"/>
-        <Button Content="Координаты" 
-                HorizontalAlignment="Left" Height="40" Margin="238,110,0,0" 
+        <Button Grid.Column="2" Content="Координаты" 
+                HorizontalAlignment="Left" Height="40" Margin="0,110,0,0" 
                 VerticalAlignment="Top" Width="121"
                 Background="LightGreen" FontSize="14"
                 Click="Button_Coordinate_Click"/>
-        <Button Content="ShowReper" 
-                HorizontalAlignment="Left" Height="40" Margin="260,160,0,0" 
+        <Button Grid.Column="2" Content="ShowReper" 
+                HorizontalAlignment="Left" Height="40" Margin="20,160,0,0" 
                 VerticalAlignment="Top" Width="75"
                 Background="Aquamarine" FontSize="14"
                 Click="Button_DrawReper_Click"/>
