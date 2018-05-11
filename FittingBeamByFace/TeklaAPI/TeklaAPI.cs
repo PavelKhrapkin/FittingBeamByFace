@@ -7,6 +7,7 @@
  * 24.04.2018 - Common TeklaAPI module created
  *  7.05.2018 - Senia Busin Excercise
  *  8.05.2018 - DrawTextExample Excercise
+ * 11.05.2018 - Separated few methods to TeklaLib
  * --- Methods: ---
  * Init()   - setup Model connection, save ModelPlane
  * CreateBeam(name, prfString, p1, p2)  - create ThisBeam from p1 to p2
@@ -26,7 +27,7 @@ using T3D = Tekla.Structures.Geometry3d;
 
 namespace TeklaAPI
 {
-    public class TeklaAPI
+    public partial class TeklaAPI
     {
         protected Model Model;
         protected TransformationPlane ModelPlane, TmpPlane;
@@ -179,11 +180,6 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
 
-        public Beam PickBeam()
-        {
-            return null;
-        }
-
         public GeometricPlane PickFace()
         {
             Picker picker = new Picker();
@@ -201,15 +197,29 @@ namespace TeklaAPI
                     foreach(T3D.Point p in alis)
                     {
                         points.Add(p);
+                        Txt(p, counter.ToString());
                         counter++;
                     }
                 }
             }
-            return null;
+            T3D.Point origin = points[1];
+            T3D.Vector axisX = new T3D.Vector(points[0] - points[1]);
+            T3D.Vector axisY = new T3D.Vector(points[2] - points[1]);
+            GeometricPlane geomPlane = new GeometricPlane(origin, axisX, axisY);
+            return geomPlane;
+        }
+
+        public Beam PickBeam()
+        {
+            Picker picker = new Picker();
+            return picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART, "Pick a Beam") as Beam;
         }
 
         public void FittingBeamByFace()
         {
+            Beam beam = PickBeam();
+            CoordinateSystem beamCS = beam.GetCoordinateSystem();
+
             GeometricPlane geomPlane = PickFace();
         }
 
@@ -252,13 +262,94 @@ namespace TeklaAPI
 
         }
 
-        public void Txt(T3D.Point point, string text, string color = "Red")
+
+        //Draws coordinate Reper
+        public void Rep(T3D.Point p)
         {
-//            private static
+            T3D.Point pX = new T3D.Point(p.X + 1000, p.Y, p.Z);
+            T3D.Point pY = new T3D.Point(p.X, p.Y + 1000, p.Z);
+            T3D.Point pZ = new T3D.Point(p.X, p.Y, p.Z + 1000);
             GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
             Color _color = new Color(1, 0, 0);
-            if (color == "Black") _color = new Color(0, 0, 0);
-            GraphicsDrawer.DrawText(point, text, _color);
+            GraphicsDrawer.DrawLineSegment(p, pX, _color); Txt(pX, "X");
+            GraphicsDrawer.DrawLineSegment(p, pY, _color); Txt(pY, "Y");
+            GraphicsDrawer.DrawLineSegment(p, pZ, _color); Txt(pZ, "Z");
+        }
+
+        public void RepShow(T3D.Point p, T3D.Vector vX, T3D.Point vY)
+        {
+            T3D.Point pX = new T3D.Point(p.X + 1000, p.Y, p.Z);
+            T3D.Point pY = new T3D.Point(p.X, p.Y + 1000, p.Z);
+            T3D.Point pZ = new T3D.Point(p.X, p.Y, p.Z + 1000);
+            GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
+            Color _color = new Color(1, 0, 0);
+            GraphicsDrawer.DrawLineSegment(p, pX, _color); Txt(pX, "X");
+            GraphicsDrawer.DrawLineSegment(p, pY, _color); Txt(pY, "Y");
+            GraphicsDrawer.DrawLineSegment(p, pZ, _color); Txt(pZ, "Z");
+        }
+
+        public T3D.Vector Rotate(T3D.Vector Vector, double Radians)
+        {
+            double X, Y, Z;
+
+            if (Vector.X == 0 && Vector.Y == 0)
+            {
+                X = Vector.X;
+                Y = (Vector.Y * Math.Cos(Radians)) - (Vector.Z * Math.Sin(Radians));
+                Z = (Vector.Y * Math.Sin(Radians)) + (Vector.Z * Math.Cos(Radians));
+            }
+            else
+            {
+                X = (Vector.X * Math.Cos(Radians)) - (Vector.Y * Math.Sin(Radians));
+                Y = (Vector.X * Math.Sin(Radians)) + (Vector.Y * Math.Cos(Radians));
+                Z = Vector.Z;
+            }
+
+            return new T3D.Vector(X, Y, Z);
+        }
+
+        internal void ExtendControlLine()
+        {
+            Picker picker = new Picker();
+            ArrayList alist = picker.PickLine("Pick Line");
+            T3D.Point p1 = alist[0] as T3D.Point;
+            T3D.Point p2 = alist[1] as T3D.Point;
+
+            ModelObject mo = picker.PickObject(Picker.PickObjectEnum.PICK_ONE_OBJECT, "Pick Control Line");
+            ControlLine cLine = mo as ControlLine;
+
+            Line line1 = new Line(p1, p2);
+            Line line2 = new Line(cLine.Line);
+
+            Intersection.LineToLine(line1, line2);
+            LineSegment intersectionSegment = Intersection.LineToLine(line1, line2);
+
+            double dist = Distance.PointToPoint(intersectionSegment.Point1, intersectionSegment.Point2);
+            if (dist > 0.0001) return;
+        }
+
+        // Exercise 10.05.2018 - pick line and coordinate display
+        internal void CoordinateOfLine()
+        {
+            Picker picker = new Picker();
+            ArrayList alist = picker.PickLine("Pick Line");
+            T3D.Point p1 = alist[0] as T3D.Point;
+            T3D.Point p2 = alist[1] as T3D.Point;
+            Txt(p1, ShowXYZ(p1));
+            Txt(p2, ShowXYZ(p2));
+        }
+
+        internal void ExReper()
+        {
+            Picker picker = new Picker();
+            T3D.Point p = picker.PickPoint("Pick Point for Reper");
+            Rep(p);
+
+            T3D.Point p1 = picker.PickPoint("Pick Point for Rotated П/4 Reper");
+            T3D.Vector v1 = new T3D.Vector(1, 1, 1);
+            T3D.Vector v2 = new T3D.Vector(Rotate(v1, 3.1415926 / 4));
+            Rep(p1);
+
         }
     }
 }

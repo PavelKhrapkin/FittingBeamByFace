@@ -12,16 +12,16 @@
                 VerticalAlignment="Top" Width="75" Background="Yellow"
                 FontSize="16"
                 Click="Button_Go_Click" RenderTransformOrigin="0.54,-0.7"/>
-        <Button Content="Example" 
-                HorizontalAlignment="Left" Height="40" Margin="60,80,0,0" 
-                VerticalAlignment="Top" Width="75"
+        <Button Content="Координаты" 
+                HorizontalAlignment="Left" Height="40" Margin="38,80,0,0" 
+                VerticalAlignment="Top" Width="121"
                 Background="LightGreen" FontSize="14"
-                Click="Button_DrawText_Click"/>
-        <Button Content="DrawText" 
+                Click="Button_Coordinate_Click"/>
+        <Button Content="ShowReper" 
                 HorizontalAlignment="Left" Height="40" Margin="60,140,0,0" 
                 VerticalAlignment="Top" Width="75"
                 Background="Aquamarine" FontSize="14"
-                Click="Button_DrawText_Click"/>
+                Click="Button_DrawReper_Click"/>
 
     </Grid>
 </Window>

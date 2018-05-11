@@ -2,20 +2,7 @@
  *  Tutorial Сеня Бусин https://www.youtube.com/watch?v=S-d0TBqMqVM
  *  TeklaOpenAPI Tutorial. Creating macro fitting a beam by face
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FittingBeamByFace
 {
@@ -37,14 +24,15 @@ namespace FittingBeamByFace
             TS.FittingBeamByFace();
         }
 
-        private void Button_Example_Click(object sender, RoutedEventArgs e)
+        private void Button_Coordinate_Click(object sender, RoutedEventArgs e)
         {
-//            TS.DrawTextExample();
+            TS.CoordinateOfLine();
+//            TS.ExtendControlLine();
         }
 
-        private void Button_DrawText_Click(object sender, RoutedEventArgs e)
+        private void Button_DrawReper_Click(object sender, RoutedEventArgs e)
         {
- //           TS.MyDrawTextExample();
+            TS.ExReper();
         }
     }
 }
