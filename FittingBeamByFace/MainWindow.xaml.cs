@@ -1,6 +1,10 @@
 ﻿/* ------------------------------------------------------------------
- *  Tutorial Сеня Бусин https://www.youtube.com/watch?v=S-d0TBqMqVM
- *  TeklaOpenAPI Tutorial. Creating macro fitting a beam by face
+ *  Головной модуль MainWindow.cs       11.05.2018 Pavel Khrapkin 
+ *  
+ *  Использует модули TeklaAPI разделенные на 3 части partial
+ *  1) TeklaLib     - библиотечные методы
+ *  2) TeklaExercise - упражнения Сени Бусина, Криса Кейак и мои
+ *  3) TeklaAPI     - отдадка, в состоянии между 1) и 2)
  */
 using System.Windows;
 
