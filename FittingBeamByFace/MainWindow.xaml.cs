@@ -32,12 +32,12 @@ namespace FittingBeamByFace
 
         private void Button_PickPart_Click(object sender, RoutedEventArgs e)
         {
-
+            TS.PickPart();
         }
 
         private void Button_Global_Click(object sender, RoutedEventArgs e)
         {
-
+            TS.Global();
         }
 
         #region --- Сеня Бусин ---
