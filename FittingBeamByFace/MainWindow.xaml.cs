@@ -5,6 +5,8 @@
  *  1) TeklaLib     - библиотечные методы
  *  2) TeklaExercise - упражнения Сени Бусина, Криса Кейак и мои
  *  3) TeklaAPI     - отдадка, в состоянии между 1) и 2)
+ *  
+ *  Unit Test - UT_TeklaAPI
  */
 using System.Windows;
 
@@ -23,6 +25,22 @@ namespace FittingBeamByFace
             TS.Init();
         }
 
+        private void Button_Pick2Points_Click(object sender, RoutedEventArgs e)
+        {
+            TS.Pick2Points();
+        }
+
+        private void Button_PickPart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Global_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #region --- Сеня Бусин ---
         private void Button_Go_Click(object sender, RoutedEventArgs e)
         {
             TS.FittingBeamByFace();
@@ -38,5 +56,7 @@ namespace FittingBeamByFace
         {
             TS.ExReper();
         }
+        #endregion --- Сеня Бусин ---
+
     }
 }
