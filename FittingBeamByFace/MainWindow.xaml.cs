@@ -9,6 +9,7 @@
  *  Unit Test - UT_TeklaAPI
  */
 using System.Windows;
+using System.Windows.Input;
 
 namespace FittingBeamByFace
 {
@@ -25,6 +26,7 @@ namespace FittingBeamByFace
             TS.Init();
         }
 
+        #region --- Chris Keyack Session 06 ---
         private void Button_Pick2Points_Click(object sender, RoutedEventArgs e)
         {
             TS.Pick2Points();
@@ -39,6 +41,35 @@ namespace FittingBeamByFace
         {
             TS.Global();
         }
+        #endregion --- Chris Keyack Session 06 ---
+
+        #region --- Chris Keyack Session 07 ---
+        private string prfStr = string.Empty;
+
+        private void Button_Beam_Click(object sender, RoutedEventArgs e)
+        {
+            string prf = ProfileText.Text;
+            TS.Beam(prfStr);
+        }
+
+        private void InputProfile(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Return)
+            {
+                prfStr = ProfileText.Text;
+            }
+        }
+
+        private void Button_Column_Click(object sender, RoutedEventArgs e)
+        {
+            TS.Column();
+        }
+
+        private void Button_Polibeam_Click(object sender, RoutedEventArgs e)
+        {
+            TS.Polibeam();
+        }
+        #endregion --- Chris Keyack Session 07 ---
 
         #region --- Сеня Бусин ---
         private void Button_Go_Click(object sender, RoutedEventArgs e)

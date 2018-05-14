@@ -22,27 +22,34 @@
             BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top" Width="170"/>
         <Button Grid.Column="0" Content="Pick 2 Points" FontWeight="Bold" Background="LightYellow"
                 HorizontalAlignment="Left" Height="27" Margin="20,60,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Pick2Points_Click"/>
+                VerticalAlignment="Top" Width="127" Click="Button_Beam_Click"/>
         <Button Grid.Column="0" Content="Pick Part" FontWeight="Bold" Background="Yellow"
                 HorizontalAlignment="Left" Height="27" Margin="20,100,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_PickPart_Click"/>
+                VerticalAlignment="Top" Width="127" Click="Button_Column_Click"/>
         <Button Grid.Column="0" Content="Global" FontWeight="Bold" Background="LightGreen"
                 HorizontalAlignment="Left" Height="27" Margin="20,140,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Global_Click"/>
+                VerticalAlignment="Top" Width="127" Click="Button_Polibeam_Click"/>
 
         <!-- Chris Keyack Session 07 -->
         <Label
             Content="Chris Keyack Session 07&#xD;&#xA;Write Beam Data to Text File&#xD;&#xA;"
                HorizontalAlignment="Left" Height="40" VerticalAlignment="Top"
-               Background="Bisque" Grid.ColumnSpan="3" Margin="175,0,0,0"/>
-        <Border Grid.Column="1"
+               Background="Bisque" Grid.ColumnSpan="3" Margin="175,2,0,0"/>
+        <Border Grid.Column="1" 
             BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
-        <Button Grid.Column="1" Content="Save Selected" FontWeight="Bold" Background="LightYellow"
-                HorizontalAlignment="Left" Height="27" Margin="10,60,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Pick2Points_Click"/>
-        <Button Grid.Column="1" Content="Save All" FontWeight="Bold" Background="Yellow"
+        <Button Grid.Column="1" Content="Beam" FontWeight="Bold" Background="LightYellow"
+                HorizontalAlignment="Left" Height="27" Margin="5,60,0,0"
+                VerticalAlignment="Top" Width="40" Click="Button_Beam_Click"/>
+        <TextBox Name="ProfileText" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="60,60,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="90"
+                 FontSize="14" FontWeight="Bold"
+                 KeyDown="InputProfile"/>
+        <Button Grid.Column="1" Content="Column" FontWeight="Bold" Background="Yellow"
                 HorizontalAlignment="Left" Height="27" Margin="10,100,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_PickPart_Click"/>
+                VerticalAlignment="Top" Width="127" Click="Button_Column_Click"/>
+        <Button Grid.Column="1" Content="Polibeam" FontWeight="Bold" Background="LightGreen"
+                HorizontalAlignment="Left" Height="27" Margin="10,140,0,0"
+                VerticalAlignment="Top" Width="127" Click="Button_Polibeam_Click"/>
 
         <!-- Сеня Бусин -->
         <Label Grid.Column="2"
@@ -66,6 +73,5 @@
                 VerticalAlignment="Top" Width="75"
                 Background="Aquamarine" FontSize="14"
                 Click="Button_DrawReper_Click"/>
-
     </Grid>
 </Window>
