@@ -48,16 +48,13 @@ namespace FittingBeamByFace
 
         private void Button_Beam_Click(object sender, RoutedEventArgs e)
         {
-            string prf = ProfileText.Text;
+            if (prfStr == "") prfStr = "I20B1_20_93";
             TS.Beam(prfStr);
         }
 
         private void InputProfile(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Return)
-            {
-                prfStr = ProfileText.Text;
-            }
+            if(e.Key == Key.Return) prfStr = ProfileText.Text;
         }
 
         private void Button_Column_Click(object sender, RoutedEventArgs e)

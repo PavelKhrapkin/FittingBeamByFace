@@ -225,11 +225,8 @@ namespace TeklaAPI
 
         public Beam CreateBeam(string name, string prfStr, T3D.Point p1, T3D.Point p2)
         {
-            if (p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z)
-            {
-                MessageBox.Show("StartPoint and EndPoint are the same -- Beam not Created.");
-                return null;
-            }
+            if(p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
+            if (prfStr == "" || prfStr == null) goto ErrPrfStr;
             Beam ThisBeam = new Beam();
             ThisBeam.StartPoint = p1;
             ThisBeam.EndPoint = p2;
@@ -239,6 +236,12 @@ namespace TeklaAPI
             ThisBeam.Insert();
             Model.CommitChanges();
             return ThisBeam;
+
+            string msg;
+            ErrPrfStr: msg = "Profile string is empty"; goto Err;
+            ErrXeqY: msg = "StartPoint and EndPoint are the same -- Beam not Created.";
+            Err: MessageBox.Show(msg);
+            return null;
         }
 
         protected void SetWorkPlane(Beam theBeam = null)

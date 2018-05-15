@@ -104,7 +104,7 @@ namespace TeklaAPI
                 Beam ThisBeam = CreateBeam("MyBeam", prfStr, FirstPoint, SecondPoint);
                 ThisBeam.Finish = "GALVANIZED";
                 ThisBeam.Class = "4";
-                ThisBeam.AssemblyNumber.Prefix = "m";
+                ThisBeam.AssemblyNumber.Prefix = "B";
                 ThisBeam.AssemblyNumber.StartNumber = 1;
                 ThisBeam.Position.Depth = Position.DepthEnum.BEHIND;
                 ThisBeam.Position.Plane = Position.PlaneEnum.MIDDLE;
@@ -121,6 +121,18 @@ namespace TeklaAPI
 
                 Model.CommitChanges();
                 MessageBox.Show("Beam Inserted");
+
+                ThisBeam.Profile.ProfileString = "—200*20";
+                double Height = 0;
+                ThisBeam.GetReportProperty("HEIGHT", ref Height);
+                string ReportProfile = "—200*20";
+                ThisBeam.GetReportProperty("PROFILE", ref ReportProfile);
+                Model.CommitChanges();
+                MessageBox.Show("Beam Modified - PL");
+
+                ThisBeam.Delete();
+                Model.CommitChanges();
+                MessageBox.Show("Beam DELETED");
             }
             Model.GetWorkPlaneHandler()
                 .SetCurrentTransformationPlane(new TransformationPlane());
@@ -130,21 +142,21 @@ namespace TeklaAPI
 
         public void Column()
         {
-            T3D.Point FirstPoint = null;
-            Picker Picker = new Picker();
-            try
-            {
-                FirstPoint = Picker.PickPoint(Picker.PickPointEnum.PICK_ONE_POINT);
-            }
-            catch { PickedPoint = null; }
-            if (PickedPoint != null)
-            {
+            //T3D.Point FirstPoint = null;
+            //Picker Picker = new Picker();
+            //try
+            //{
+            //    FirstPoint = Picker.PickPoint(Picker.PickPointEnum.PICK_ONE_POINT);
+            //}
+            //catch { PickedPoint = null; }
+            //if (PickedPoint != null)
+            //{
 
-            }
-            Model.GetWorkPlaneHandler()
-                .SetCurrentTransformationPlane(new TransformationPlane());
-            ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
-            Model.CommitChanges();
+            //}
+            //Model.GetWorkPlaneHandler()
+            //    .SetCurrentTransformationPlane(new TransformationPlane());
+            //ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
+            //Model.CommitChanges();
         }
 
         public void Polibeam()
