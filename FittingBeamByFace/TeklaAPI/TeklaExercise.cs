@@ -14,6 +14,7 @@
  */
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
@@ -184,8 +185,7 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
         #endregion --- Cris Keyack Session 07 ---
-
-        #region ------ DrawTextExample Excercise 8.5.2018 ----
+        #region --- Tekla OpenAPI reference DrawTextExample 8.5.2018 ---
         private readonly Model _Model = new Model();
         private static GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
 
@@ -316,5 +316,51 @@ namespace TeklaAPI
             return Output;
         }
         #endregion ------ DrawTextExample Excercise 8.5.2018 ----
+        #region --- Сеня Бусин Creating macro fitting a beam by face ---
+        public GeometricPlane PickFace()
+        {
+            Picker picker = new Picker();
+            PickInput input = picker.PickFace("Pick a FACE");
+            IEnumerator enumerator = input.GetEnumerator();
+            List<T3D.Point> points = new List<T3D.Point>();
+
+            while (enumerator.MoveNext())
+            {
+                InputItem item = enumerator.Current as InputItem;
+                if (item.GetInputType() == InputItem.InputTypeEnum.INPUT_POLYGON)
+                {
+                    ArrayList alist = item.GetData() as ArrayList;
+                    int counter = 1;
+                    foreach (T3D.Point p in alist)
+                    {
+                        points.Add(p);
+                        Txt(p, counter.ToString());
+                        counter++;
+                    }
+                }
+            }
+            T3D.Point origin = points[1];
+            T3D.Vector axisX = new T3D.Vector(points[0] - points[1]);
+            T3D.Vector axisY = new T3D.Vector(points[2] - points[1]);
+            GeometricPlane geomPlane = new GeometricPlane(origin, axisX, axisY);
+            return geomPlane;
+        }
+
+        public Beam PickBeam()
+        {
+            Picker picker = new Picker();
+            return picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART, "Pick a Beam") as Beam;
+        }
+
+        public void FittingBeamByFace()
+        {
+            Beam beam = PickBeam();
+            CoordinateSystem beamCS = beam.GetCoordinateSystem();
+            ReperShow(beamCS);
+
+            GeometricPlane geomPlane = PickFace();
+        }
+
+        #endregion --- Сеня Бусин Creating macro fitting a beam by face ---
     }
 }

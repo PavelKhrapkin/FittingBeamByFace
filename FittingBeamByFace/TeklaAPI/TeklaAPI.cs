@@ -46,49 +46,6 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
 
-        public GeometricPlane PickFace()
-        {
-            Picker picker = new Picker();
-            PickInput input = picker.PickFace("Pick a FACE");
-            IEnumerator enumerator = input.GetEnumerator();
-            List<T3D.Point> points = new List<T3D.Point>();
-
-            while (enumerator.MoveNext())
-            {
-                InputItem item = enumerator.Current as InputItem;
-                if(item.GetInputType() == InputItem.InputTypeEnum.INPUT_POLYGON)
-                {
-                    ArrayList alis = item.GetData() as ArrayList;
-                    int counter = 1;
-                    foreach(T3D.Point p in alis)
-                    {
-                        points.Add(p);
-                        Txt(p, counter.ToString());
-                        counter++;
-                    }
-                }
-            }
-            T3D.Point origin = points[1];
-            T3D.Vector axisX = new T3D.Vector(points[0] - points[1]);
-            T3D.Vector axisY = new T3D.Vector(points[2] - points[1]);
-            GeometricPlane geomPlane = new GeometricPlane(origin, axisX, axisY);
-            return geomPlane;
-        }
-
-        public Beam PickBeam()
-        {
-            Picker picker = new Picker();
-            return picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART, "Pick a Beam") as Beam;
-        }
-
-        public void FittingBeamByFace()
-        {
-            Beam beam = PickBeam();
-            CoordinateSystem beamCS = beam.GetCoordinateSystem();
-
-            GeometricPlane geomPlane = PickFace();
-        }
-
         public Beam CreateBeam(string name, string prfStr, T3D.Point p1, T3D.Point p2)
         {
             if(p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
