@@ -1,6 +1,6 @@
 ﻿using TeklaAPI;
 /* -----------------------------------------------------
-* Tekla module Unit Tests  25.04.2018 Pavel Khrapkin
+* Tekla module Unit Tests  15.05.2018 Pavel Khrapkin
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -11,9 +11,16 @@ using System.Threading.Tasks;
 using Tekla.Structures.Model;
 using T3D = Tekla.Structures.Geometry3d;
 using TSMUI = Tekla.Structures.Model.UI;
+using Tekla.Structures.Geometry3d;
 
 namespace TeklaAPI.Tests
 {
+    [TestClass()]
+    public class UT_TeklaAPITests
+    {
+     
+    }
+
     [TestClass()]
     public class UT_Tekla
     {
@@ -80,6 +87,21 @@ namespace TeklaAPI.Tests
             Assert.AreEqual("C245", ThisBeam.Material.MaterialString);
             //           ThisBeam.Delete();
             Model.CommitChanges();
+        }
+
+        [TestMethod()]
+        public void UT_ReperShow()
+        {
+            Point p1 = new Point(1000, 1000, 0);
+            Point p2 = new Point(2000, 3000, 0);
+            ThisBeam = _TS.CreateBeam("test Beam", "I50B1_20_93", p1, p2);
+            var cs = ThisBeam.GetCoordinateSystem();
+
+            Assert.AreEqual(1000.0, cs.Origin.X);
+            Assert.AreEqual(1000.0, cs.Origin.Y);
+            Assert.AreEqual(-246.0, cs.Origin.Z);
+
+            _TS.ReperShow(cs);
         }
 
         [TestMethod()]
