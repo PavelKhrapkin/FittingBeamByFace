@@ -67,5 +67,22 @@ namespace TeklaAPI
 
         public Point PointAddVector(Point p, Vector v, double Norm = 1)
             => new Point(p.X + v.X * Norm, p.Y + v.Y * Norm, p.Z + v.Z * Norm);
+
+        public void PointShow(Point p)
+        {
+            const int l = 50;
+            Point p1 = new Point(p.X + l, p.Y + l);
+            Point p2 = new Point(p.X + l, p.Y - l);
+            Point p3 = new Point(p.X - l, p.Y - l);
+            Point p4 = new Point(p.X - l, p.Y + l);
+            GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
+            Color _color = new Color(1, 0, 0);
+            GraphicsDrawer.DrawLineSegment(p1, p2, _color);
+            GraphicsDrawer.DrawLineSegment(p2, p3, _color);
+            GraphicsDrawer.DrawLineSegment(p3, p4, _color);
+            GraphicsDrawer.DrawLineSegment(p4, p1, _color);
+            GraphicsDrawer.DrawLineSegment(p1, p3, _color);
+            GraphicsDrawer.DrawLineSegment(p2, p4, _color);
+        }
     }
 }

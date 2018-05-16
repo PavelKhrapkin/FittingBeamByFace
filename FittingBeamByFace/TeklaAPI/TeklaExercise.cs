@@ -330,12 +330,12 @@ namespace TeklaAPI
                 if (item.GetInputType() == InputItem.InputTypeEnum.INPUT_POLYGON)
                 {
                     ArrayList alist = item.GetData() as ArrayList;
-                    int counter = 1;
+         //           int counter = 1;
                     foreach (T3D.Point p in alist)
                     {
                         points.Add(p);
-                        Txt(p, counter.ToString());
-                        counter++;
+          //              Txt(p, counter.ToString());
+          //              counter++;
                     }
                 }
             }
@@ -343,6 +343,24 @@ namespace TeklaAPI
             T3D.Vector axisX = new T3D.Vector(points[0] - points[1]);
             T3D.Vector axisY = new T3D.Vector(points[2] - points[1]);
             GeometricPlane geomPlane = new GeometricPlane(origin, axisX, axisY);
+
+            Model model = new Model();
+            WorkPlaneHandler workPlane = model.GetWorkPlaneHandler();
+            TransformationPlane currentPlane = workPlane.GetCurrentTransformationPlane();
+            Matrix matrix = currentPlane.TransformationMatrixToLocal;
+            T3D.Point p1 = matrix.Transform(geomPlane.Origin);
+            T3D.Point p2 = matrix.Transform(geomPlane.Origin + geomPlane.Normal);
+            geomPlane.Origin = p1;
+            geomPlane.Normal = new T3D.Vector(p2 - p1);
+            T3D.Point dummy = null;
+            int counter = 1;
+            foreach (T3D.Point pt in points)
+            {
+                dummy = matrix.Transform(pt);
+                Txt(dummy, counter.ToString());
+                counter++;
+            }
+
             return geomPlane;
         }
 
@@ -355,10 +373,31 @@ namespace TeklaAPI
         public void FittingBeamByFace()
         {
             Beam beam = PickBeam();
+            GeometricPlane geomPlane = PickFace();
+
+            Fitting fitting = new Fitting();
+            fitting.Father = beam;
             CoordinateSystem beamCS = beam.GetCoordinateSystem();
             ReperShow(beamCS);
+            Line lineAlongBeamAxisX = new Line(beamCS.Origin, beamCS.AxisX);
+            //do u need Z asis
+            //T3D.Vector axisZ = beamCS.
+            T3D.Point intersectionPoint = Intersection.LineToPlane(lineAlongBeamAxisX, geomPlane);
+            T3D.Point randomPoint = new T3D.Point(intersectionPoint + new T3D.Point(100,100,100));
+            randomPoint = Projection.PointToPlane(randomPoint, geomPlane);
+            T3D.Vector x = new T3D.Vector(randomPoint - intersectionPoint);
+            T3D.Vector y = geomPlane.Normal.Cross(x);
+            Plane plane = new Plane();
+            plane.Origin = intersectionPoint;
+            plane.AxisX = x;
+            plane.AxisY = y;
+            x.Normalize(500);
+            y.Normalize(500);
+            fitting.Plane = plane;
+            fitting.Insert();
 
-            GeometricPlane geomPlane = PickFace();
+
+
         }
 
         #endregion --- Сеня Бусин Creating macro fitting a beam by face ---

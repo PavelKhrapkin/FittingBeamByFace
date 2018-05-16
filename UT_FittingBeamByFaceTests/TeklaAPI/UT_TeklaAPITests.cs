@@ -18,7 +18,7 @@ namespace TeklaAPI.Tests
     [TestClass()]
     public class UT_TeklaAPITests
     {
-     
+    
     }
 
     [TestClass()]
@@ -102,6 +102,13 @@ namespace TeklaAPI.Tests
             Assert.AreEqual(-246.0, cs.Origin.Z);
 
             _TS.ReperShow(cs);
+        }
+
+        [TestMethod()]
+        public void UT_PointShow()
+        {
+            Point p = new Point(1000, 3000);
+            _TS.PointShow(p);
         }
 
         [TestMethod()]
