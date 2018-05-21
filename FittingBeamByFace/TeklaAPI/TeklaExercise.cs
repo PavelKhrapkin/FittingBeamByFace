@@ -28,7 +28,7 @@ namespace TeklaAPI
     public partial class TeklaAPI
     {
         #region --- Cris Keyack Session 06 ---
-        public void LocalByPick2Points()
+        public void CK06_Pick2Points()
         {
             T3D.Point FirstPoint = null;
             T3D.Point SecondPoint = null;
@@ -55,7 +55,7 @@ namespace TeklaAPI
             }
         }
 
-        public void PickPart()
+        public void CK06_ByPickPart()
         {
             ModelObject PickedObject = null;
             Picker Picker = new Picker();
@@ -84,7 +84,7 @@ namespace TeklaAPI
             }
         }
 
-        public void Global()
+        public void CK06_Global()
         {
             Model.GetWorkPlaneHandler()
                 .SetCurrentTransformationPlane(new TransformationPlane());

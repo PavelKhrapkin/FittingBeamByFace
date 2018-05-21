@@ -29,17 +29,17 @@ namespace FittingBeamByFace
         #region --- Chris Keyack Session 06 ---
         private void Button_CK06_Peak2Points_Click(object sender, RoutedEventArgs e)
         {
-            TS.LocalByPick2Points();
+            TS.CK06_Pick2Points();
         }
 
         private void Button_CK06_PickPart_Click(object sender, RoutedEventArgs e)
         {
-            TS.PickPart();
+            TS.CK06_ByPickPart();
         }
 
         private void Button_CK06_Global_Click(object sender, RoutedEventArgs e)
         {
-            TS.Global();
+            TS.CK06_Global();
         }
         #endregion --- Chris Keyack Session 06 ---
 

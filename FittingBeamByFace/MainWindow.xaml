@@ -23,17 +23,17 @@
                             FontWeight="Bold" Background="LightYellow"/>
                     <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
                     <Image Source="divider.jpg" Height="15"/>
-           
+
                     <TextBlock Text="Теперь выбираем не точки, а деталь- балку, и строим ПСК по ней."/>
                     <Button Content="Pick Beam" Width="80" Click="Button_CK06_PickPart_Click" 
                             FontWeight="Bold" Background="Yellow"/>
-                    
+                    <TextBlock Text="ПСК теперь на желтой ручке балки: Х по опорной линии, Y вверх."/>
+
                     <Image Source="divider.jpg" Height="15"/>
                     <TextBlock Text="Восстанавливаем из ПСК глобальную систему координат"/>
                     <Button Content="Global" Width="80" Click="Button_CK06_Global_Click"
                             FontWeight="Bold" Background="LightGreen"/>
                 </StackPanel>
-                <!--   <Button Content="Pick 2 Points" Click="Button_Beam_Click"/> -->
             </TabItem>
             <TabItem Header="Chris Keyack 07">
                 <StackPanel Margin="10">
