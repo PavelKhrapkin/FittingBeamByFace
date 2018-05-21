@@ -37,12 +37,28 @@
             </TabItem>
             <TabItem Header="Chris Keyack 07">
                 <StackPanel Margin="10">
-                    <TextBlock Text="Session 07. Pick Points and Set Workplane 2018.05.21" FontWeight="Bold"/>
+                    <TextBlock Text="Session 07. Beam, Column, Polibeam 2018.05.21" FontWeight="Bold"/>
                     <TextBlock/>
-                    <TextBox Name="ProfileText" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="60,60,0,0" TextWrapping="Wrap" 
-                 VerticalAlignment="Top" Width="90"
-                 FontSize="14" FontWeight="Bold"
-                 KeyDown="InputProfile"/>
+                    <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим координатный репер X,Y,Z" />
+                    <TextBlock Text ="В поле TextBox вводим профиль балки для модификации." />
+                    <StackPanel Orientation="Horizontal" Height="20"
+                                HorizontalAlignment="Center">
+                        <Button Content="Pick 2 Points" Width="80" Click="Button_CK07_Peak2Points_Click"
+                            FontWeight="Bold" Background="LightYellow"/>
+                        <TextBox Name="ProfileText" Width="120" Margin="5, 0"
+                            FontSize="14" FontWeight="Bold" KeyDown="InputProfile"/>
+                    </StackPanel>
+                    
+                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+                    <Image Source="divider.jpg" Height="15"/>
+                    
+                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+                    <Button Content="Pick Column" Width="80" Click="Button_Column_Click" FontWeight="Bold" Background="Yellow"/>
+                    <Image Source="divider.jpg" Height="15"/>
+                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+                    <Button Content="Polibeam" FontWeight="Bold" Background="LightGreen"
+                         Width="80" Click="Button_Polibeam_Click"/>
+
                     <!--                    <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим на экране Tekla ПСК." />
                     <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Beam_Click" FontWeight="Bold" Background="LightYellow"/>
                     <TextBlock Text ="Выполняем в 3 стадии, разделенных OK: 1)Insert 2)Modify 3)Delete"/>
