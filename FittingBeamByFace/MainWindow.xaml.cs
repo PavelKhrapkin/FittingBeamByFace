@@ -27,17 +27,17 @@ namespace FittingBeamByFace
         }
 
         #region --- Chris Keyack Session 06 ---
-        private void Button_Pick2Points_Click(object sender, RoutedEventArgs e)
+        private void Button_CK06_Peak2Points_Click(object sender, RoutedEventArgs e)
         {
-            TS.Pick2Points();
+            TS.LocalByPick2Points();
         }
 
-        private void Button_PickPart_Click(object sender, RoutedEventArgs e)
+        private void Button_CK06_PickPart_Click(object sender, RoutedEventArgs e)
         {
             TS.PickPart();
         }
 
-        private void Button_Global_Click(object sender, RoutedEventArgs e)
+        private void Button_CK06_Global_Click(object sender, RoutedEventArgs e)
         {
             TS.Global();
         }
@@ -86,5 +86,11 @@ namespace FittingBeamByFace
         }
         #endregion --- Сеня Бусин ---
 
+        #region --- W36 ---
+        private void Button_GoW36_Click(object sender, RoutedEventArgs e)
+        {
+            TS.DevelopW36();
+        }
+        #endregion --- W36 ---
     }
 }

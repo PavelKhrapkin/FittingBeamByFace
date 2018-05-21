@@ -107,8 +107,12 @@ namespace TeklaAPI.Tests
         [TestMethod()]
         public void UT_PointShow()
         {
+            // test 0: [1000, 3000] and empty text
             Point p = new Point(1000, 3000);
             _TS.PointShow(p);
+
+            // test 1: [1500, 2500] and "p"
+            _TS.PointShow(new Point(1500, 2500), "p");
         }
 
         [TestMethod()]

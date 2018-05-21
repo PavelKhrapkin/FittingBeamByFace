@@ -5,32 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FittingBeamByFace"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="500">
-    <Grid Margin="0,0,-8,0">
+        Title="TeklaAPI Exercizes and Development Pavel Khrapkin 2018" Height="300" Width="400">
+    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.05.21
+            - History: -
+    April-2018 - Created set of modules
+    2018.05.5  - DataGrid XAML architekture with all Buttons visible on Window
+    2018.05.21 - Modify XAML to Tab Control with split contents by Tabs
+    -->
+    <Grid>
+        <TabControl>
+            <TabItem Header="Chris Keyack 06">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Session 06. Pick Points and Set Workplane 2018.05.21" FontWeight="Bold"/>
+                    <TextBlock/>
+                    <TextBlock Text ="По 2 точкам строим ПСК. Выводим на экране Tekla иконку ПСК." />
+                    <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Peak2Points_Click"
+                            FontWeight="Bold" Background="LightYellow"/>
+                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+                    <Image Source="divider.jpg" Height="15"/>
+           
+                    <TextBlock Text="Теперь выбираем не точки, а деталь- балку, и строим ПСК по ней."/>
+                    <Button Content="Pick Beam" Width="80" Click="Button_CK06_PickPart_Click" 
+                            FontWeight="Bold" Background="Yellow"/>
+                    
+                    <Image Source="divider.jpg" Height="15"/>
+                    <TextBlock Text="Восстанавливаем из ПСК глобальную систему координат"/>
+                    <Button Content="Global" Width="80" Click="Button_CK06_Global_Click"
+                            FontWeight="Bold" Background="LightGreen"/>
+                </StackPanel>
+                <!--   <Button Content="Pick 2 Points" Click="Button_Beam_Click"/> -->
+            </TabItem>
+            <TabItem Header="Chris Keyack 07">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Session 07. Pick Points and Set Workplane 2018.05.21" FontWeight="Bold"/>
+                    <TextBlock/>
+                    <TextBox Name="ProfileText" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="60,60,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="90"
+                 FontSize="14" FontWeight="Bold"
+                 KeyDown="InputProfile"/>
+                    <!--                    <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим на экране Tekla ПСК." />
+                    <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Beam_Click" FontWeight="Bold" Background="LightYellow"/>
+                    <TextBlock Text ="Выполняем в 3 стадии, разделенных OK: 1)Insert 2)Modify 3)Delete"/>
+                    <TextBlock/>
+                    <TextBlock Text="Теперь выбираем не точки, а деталь - колонну"/>
+                    <Button Content="Pick Column" Width="80" Click="Button_Column_Click" FontWeight="Bold" Background="Yellow"/>
+                    <TextBlock/>
+                    <TextBlock Text="Восстанавливаем из ПСК глобальную систему координат"/>
+                    <Button Content="Global" Width="80" Click="Button_Polibeam_Click" FontWeight="Bold" Background="LightGreen"/>
+ -->
+                </StackPanel>
+                
+            </TabItem>
+            <TabItem Header="Сеня Бусин">
+                <Label Content="FaceFitting"/>
+            </TabItem>
+            <TabItem Header="W36">
+                <Label Content="Моделирование узла 36" />
+            </TabItem>
+        </TabControl>
+<!--        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="Auto"/>
-
-            <!-- Chris Keyack Session 06 -->
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0"
-            Content="Chris Keyack Session 06&#xD;&#xA;Pick Points and Set Workplane&#xD;&#xA;"
-               HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top" 
-               Background="Yellow"/>
-        <Border Grid.Column="0"
-            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top" Width="170"/>
-        <Button Grid.Column="0" Content="Pick 2 Points" FontWeight="Bold" Background="LightYellow"
+
+       - Chris Keyack Session 06 -
+        
+   <Button Grid.Column="0" Content="Pick 2 Points" FontWeight="Bold" Background="LightYellow"
                 HorizontalAlignment="Left" Height="27" Margin="20,60,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_Beam_Click"/>
-        <Button Grid.Column="0" Content="Pick Part" FontWeight="Bold" Background="Yellow"
+                <Button Grid.Column="0" Content="Pick Part" FontWeight="Bold" Background="Yellow"
                 HorizontalAlignment="Left" Height="27" Margin="20,100,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_Column_Click"/>
-        <Button Grid.Column="0" Content="Global" FontWeight="Bold" Background="LightGreen"
+                <Button Grid.Column="0" Content="Global" FontWeight="Bold" Background="LightGreen"
                 HorizontalAlignment="Left" Height="27" Margin="20,140,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_Polibeam_Click"/>
+        
 
-        <!-- Chris Keyack Session 07 -->
+        - Chris Keyack Session 07 -
         <Label
             Content="Chris Keyack Session 07&#xD;&#xA;Write Beam Data to Text File&#xD;&#xA;"
                HorizontalAlignment="Left" Height="40" VerticalAlignment="Top"
@@ -51,7 +105,7 @@
                 HorizontalAlignment="Left" Height="27" Margin="10,140,0,0"
                 VerticalAlignment="Top" Width="127" Click="Button_Polibeam_Click"/>
 
-        <!-- Сеня Бусин -->
+        - Сеня Бусин -
         <Label Grid.Column="2"
             Content="       Сеня Бусин"
                HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="120"
@@ -73,5 +127,19 @@
                 VerticalAlignment="Top" Width="75"
                 Background="Aquamarine" FontSize="14"
                 Click="Button_DrawReper_Click"/>
+        
+        - W36-
+        <Label Grid.Column="3"
+            Content="            W36"
+               HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="120"
+               Background="Khaki"/>
+        <Border Grid.Column="3"
+            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
+        <Button Grid.Column="3" Content="Go W36"
+                HorizontalAlignment="Left" Height="40" 
+                VerticalAlignment="Top" Width="75" Background="Yellow" Margin="20,50"
+                FontSize="16"
+                Click="Button_GoW36_Click" RenderTransformOrigin="0.54,-0.7"/>
+-->        
     </Grid>
 </Window>

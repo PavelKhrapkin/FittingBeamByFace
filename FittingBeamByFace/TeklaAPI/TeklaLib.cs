@@ -1,17 +1,19 @@
 ﻿/* ----------------------------------------------------------------------------
  * TeklaLib - part of TeklaAPI module - separated Library simple common methods
  * 
- * 15.05.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 16.05.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 11.05.2018 - TeklaLib module created
  * 15.05.2018 - ReperShow method add
+ * 16.05.2018 - PointShow add 
  * --- Methods: ---
  * Txt(point, text [, color])   - draw string text in point with color name
  * ShowXYZ(point)   - draw point coordinates as "(x, y, z)" string with integer
  * ShowI(x)         - draw x value as int in Tekla Window
  * Rep(point)       - draw Reper as Global [x,y,z] in point
  * ReperShow(CoordSys) - draw [x,y,z] arrow in Origin Point of Coordinate Syst
+ * PointShow(p, text)  - draw point p and text - name of the point
  */
 using System.Globalization;
 using Tekla.Structures.Model.UI;
@@ -68,7 +70,7 @@ namespace TeklaAPI
         public Point PointAddVector(Point p, Vector v, double Norm = 1)
             => new Point(p.X + v.X * Norm, p.Y + v.Y * Norm, p.Z + v.Z * Norm);
 
-        public void PointShow(Point p)
+        public void PointShow(Point p, string text = "")
         {
             const int l = 50;
             Point p1 = new Point(p.X + l, p.Y + l);
@@ -83,6 +85,7 @@ namespace TeklaAPI
             GraphicsDrawer.DrawLineSegment(p4, p1, _color);
             GraphicsDrawer.DrawLineSegment(p1, p3, _color);
             GraphicsDrawer.DrawLineSegment(p2, p4, _color);
+            Txt(p, text);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace TeklaAPI
     public partial class TeklaAPI
     {
         #region --- Cris Keyack Session 06 ---
-        public void Pick2Points()
+        public void LocalByPick2Points()
         {
             T3D.Point FirstPoint = null;
             T3D.Point SecondPoint = null;
@@ -95,6 +95,7 @@ namespace TeklaAPI
         #region --- Cris Keyack Session 07 ---
         public void Beam(string prfStr)
         {
+            // Create Beam after Pick 2 Points - StartPoint and EndPoint of Beam
             T3D.Point FirstPoint = null, SecondPoint = null;
             Picker Picker = new Picker();
             try
@@ -129,10 +130,11 @@ namespace TeklaAPI
                 Model.CommitChanges();
                 MessageBox.Show("Beam Inserted");
 
-                ThisBeam.Profile.ProfileString = "—200*20";
+                string ReportProfile = "—200*20";
+                ThisBeam.Profile.ProfileString = ReportProfile;
                 double Height = 0;
                 ThisBeam.GetReportProperty("HEIGHT", ref Height);
-                string ReportProfile = "—200*20";
+                
                 ThisBeam.GetReportProperty("PROFILE", ref ReportProfile);
                 Model.CommitChanges();
                 MessageBox.Show("Beam Modified - PL");
@@ -383,10 +385,17 @@ namespace TeklaAPI
             //do u need Z asis
             //T3D.Vector axisZ = beamCS.
             T3D.Point intersectionPoint = Intersection.LineToPlane(lineAlongBeamAxisX, geomPlane);
-            T3D.Point randomPoint = new T3D.Point(intersectionPoint + new T3D.Point(100,100,100));
+            PointShow(intersectionPoint, "intersectionPoint");
+
+            T3D.Point randomPoint = new T3D.Point(intersectionPoint + new T3D.Point(500,500,500));
+            PointShow(randomPoint, "randomPoint");
             randomPoint = Projection.PointToPlane(randomPoint, geomPlane);
+            PointShow(randomPoint, "Projected randomPoint");
             T3D.Vector x = new T3D.Vector(randomPoint - intersectionPoint);
             T3D.Vector y = geomPlane.Normal.Cross(x);
+            CoordinateSystem itersect = new CoordinateSystem(intersectionPoint, x, y);
+            ReperShow(itersect);
+
             Plane plane = new Plane();
             plane.Origin = intersectionPoint;
             plane.AxisX = x;
@@ -396,10 +405,16 @@ namespace TeklaAPI
             fitting.Plane = plane;
             fitting.Insert();
 
-
+            Model.CommitChanges();
 
         }
 
         #endregion --- Сеня Бусин Creating macro fitting a beam by face ---
+        #region --- W36 ---
+        public void DevelopW36()
+        {
+
+        }
+        #endregion --- W36 ---
     }
 }
