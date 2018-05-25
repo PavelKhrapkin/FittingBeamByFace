@@ -21,7 +21,7 @@
                     <TextBlock Text ="По 2 точкам строим ПСК. Выводим на экране Tekla иконку ПСК." />
                     <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Peak2Points_Click"
                             FontWeight="Bold" Background="LightYellow"/>
-                    
+                    <TextBox Name="CK06_1" TextWrapping="Wrap"/>
                     <Image Source="divider.jpg" Height="15"/>
 
                     <TextBlock Text="Теперь выбираем не точки, а деталь- балку, и строим ПСК по ней."/>

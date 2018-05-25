@@ -53,6 +53,9 @@ namespace TeklaAPI
                     , XVector, YVector));
                 ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
                 Model.CommitChanges();
+                mw.Msg("Появляется рисунок осей X и Y ПСК, ось X в направлении от точки 1 к точке 2");
+                MessageBox.Show("вывел ПСК");
+                mw.Msg();
             }
         }
 
@@ -94,10 +97,8 @@ namespace TeklaAPI
         }
         #endregion --- Cris Keyack Session 06 ---
         #region --- Cris Keyack Session 07 ---
-        public void CK07_Beam() //       (dynamic txt, string prfStr)
+        public void CK07_Beam()
         {
-            mw.Msg("Балка и репер выводится в точке 1 с осью Х по направлению к желтой точке (ручке конца балки) - 2      [ОК]");
-            mw.Msg();
             string prf = mw.prfStr;
             // Create Beam after Pick 2 Points - StartPoint and EndPoint of Beam
             T3D.Point FirstPoint = null, SecondPoint = null;
@@ -123,19 +124,14 @@ namespace TeklaAPI
                 ThisBeam.SetUserProperty("USER_FIELD_1", "PEOPLE");
                 string UserField = "";
                 ThisBeam.GetUserProperty("USER_FIELD_1", ref UserField);
-
                 Solid BeamSolid = ThisBeam.GetSolid();
                 T3D.CoordinateSystem BeamCoordinateSystem = ThisBeam.GetCoordinateSystem();
                 Assembly BeamAssembly = ThisBeam.GetAssembly();
                 ModelObjectEnumerator BeamsBolt = ThisBeam.GetBolts();
-
                 ReperShow(BeamCoordinateSystem);
-
                 Model.CommitChanges();
-
                 mw.Msg("Балка и репер выводится в точке 1 с осью Х по направлению к желтой точке (ручке конца балки) - 2      [ОК]");
                 MessageBox.Show("Beam Inserted");
-                mw.Msg();
 
                 string ReportProfile = "—200*20";
                 ThisBeam.Class = "2";
@@ -146,11 +142,14 @@ namespace TeklaAPI
                 
                 ThisBeam.GetReportProperty("PROFILE", ref ReportProfile);
                 Model.CommitChanges();
+                mw.Msg("Профиль балки изменяется на красную пластину -200x20  [OK]");
                 MessageBox.Show("Beam Modified - PL");
 
                 ThisBeam.Delete();
                 Model.CommitChanges();
+                mw.Msg("После всех предыдущих манипуляций, балка стерта.  [ОК]");
                 MessageBox.Show("Beam DELETED");
+                mw.Msg();
             }
             Model.GetWorkPlaneHandler()
                 .SetCurrentTransformationPlane(new TransformationPlane());

@@ -23,6 +23,7 @@ namespace FittingBeamByFace
     {
         TeklaAPI.TeklaAPI TS = new TeklaAPI.TeklaAPI();
         public delegate void Work();
+        private TextBox context;
 
         public MainWindow()
         {
@@ -50,16 +51,17 @@ namespace FittingBeamByFace
                     context.Background = System.Windows.Media.Brushes.Yellow;
                     int n = context.LineCount;
                     context.Height = 18*n;
-                }
-                
+                }               
             }));
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
         }
 
         #region --- Chris Keyack Session 06 ---
         private void Button_CK06_Peak2Points_Click(object sender, RoutedEventArgs e)
         {
-            TS.CK06_Pick2Points();
+            context = CK06_1;
+            Work xx = new Work(TS.CK06_Pick2Points);
+            xx.BeginInvoke(null, null);
         }
 
         private void Button_CK06_PickPart_Click(object sender, RoutedEventArgs e)
@@ -75,7 +77,6 @@ namespace FittingBeamByFace
 
         #region --- Chris Keyack Session 07 ---
         public string prfStr = string.Empty;
-        private TextBox context;
 
         private void Button_CK07_Peak2Points_Click(object sender, RoutedEventArgs e)
         {
