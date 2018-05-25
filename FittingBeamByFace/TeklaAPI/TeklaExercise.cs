@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
@@ -93,8 +94,11 @@ namespace TeklaAPI
         }
         #endregion --- Cris Keyack Session 06 ---
         #region --- Cris Keyack Session 07 ---
-        public void Beam(string prfStr)
+        public void CK07_Beam() //       (dynamic txt, string prfStr)
         {
+            mw.Msg("Балка и репер выводится в точке 1 с осью Х по направлению к желтой точке (ручке конца балки) - 2      [ОК]");
+            mw.Msg();
+            string prf = mw.prfStr;
             // Create Beam after Pick 2 Points - StartPoint and EndPoint of Beam
             T3D.Point FirstPoint = null, SecondPoint = null;
             Picker Picker = new Picker();
@@ -107,7 +111,7 @@ namespace TeklaAPI
             catch { FirstPoint = SecondPoint  = null; }
             if (FirstPoint != null && SecondPoint != null)
             {
-                Beam ThisBeam = CreateBeam("MyBeam", prfStr, FirstPoint, SecondPoint);
+                Beam ThisBeam = CreateBeam("MyBeam", prf, FirstPoint, SecondPoint);
                 ThisBeam.Finish = "GALVANIZED";
                 ThisBeam.Class = "4";
                 ThisBeam.AssemblyNumber.Prefix = "B";
@@ -128,10 +132,15 @@ namespace TeklaAPI
                 ReperShow(BeamCoordinateSystem);
 
                 Model.CommitChanges();
+
+                mw.Msg("Балка и репер выводится в точке 1 с осью Х по направлению к желтой точке (ручке конца балки) - 2      [ОК]");
                 MessageBox.Show("Beam Inserted");
+                mw.Msg();
 
                 string ReportProfile = "—200*20";
+                ThisBeam.Class = "2";
                 ThisBeam.Profile.ProfileString = ReportProfile;
+                ThisBeam.Modify();
                 double Height = 0;
                 ThisBeam.GetReportProperty("HEIGHT", ref Height);
                 
@@ -149,8 +158,10 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
 
-        public void Column()
+        public void CK07_Column()
         {
+            mw.Msg("---- 2222 ----");
+            mw.Msg();
             //T3D.Point FirstPoint = null;
             //Picker Picker = new Picker();
             //try
@@ -168,7 +179,7 @@ namespace TeklaAPI
             //Model.CommitChanges();
         }
 
-        public void Polibeam()
+        public void CK07_Polibeam()
         {
             ArrayList PickedPoint = null;
             Picker Picker = new Picker();

@@ -30,12 +30,14 @@ namespace TeklaAPI
 {
     public partial class TeklaAPI
     {
+        private FittingBeamByFace.MainWindow mw = null;
         protected Model Model;
         protected TransformationPlane ModelPlane, TmpPlane;
         Beam MainBeam = null, AttBeam = null;
 
-        public void Init()
+        public void Init(dynamic mainWindow = null)
         {
+            mw = mainWindow;
             Model = new Model();
             if (!Model.GetConnectionStatus())
                 throw new Exception("Tekla not connected");

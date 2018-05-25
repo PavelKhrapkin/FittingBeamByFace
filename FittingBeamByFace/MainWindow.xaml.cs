@@ -1,5 +1,5 @@
 ﻿/* ------------------------------------------------------------------
- *  Головной модуль MainWindow.cs       11.05.2018 Pavel Khrapkin 
+ *  Головной модуль MainWindow.cs       25.05.2018 Pavel Khrapkin 
  *  
  *  Использует модули TeklaAPI разделенные на 3 части partial
  *  1) TeklaLib     - библиотечные методы
@@ -9,6 +9,9 @@
  *  Unit Test - UT_TeklaAPI
  */
 using System.Windows;
+using System;
+using System.Threading;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace FittingBeamByFace
@@ -19,11 +22,38 @@ namespace FittingBeamByFace
     public partial class MainWindow : Window
     {
         TeklaAPI.TeklaAPI TS = new TeklaAPI.TeklaAPI();
+        public delegate void Work();
 
         public MainWindow()
         {
             InitializeComponent();
-            TS.Init();
+            TS.Init(this);
+            ProfileText.Text = "I20B1_20_93";
+        }
+
+        /// <summary>
+        /// http://the--semicolon.blogspot.ru/p/change-wpf-window-label-content-from.html
+        /// </summary>
+        /// <param name="v"></param>
+        public void Msg(string v = "")
+        {
+            Dispatcher.Invoke(new Action(() => 
+            {
+                context.Text = v;
+                if (v == "")
+                {
+                    context.Background = System.Windows.Media.Brushes.White;
+                    context.Height = 0;
+                }
+                else
+                {
+                    context.Background = System.Windows.Media.Brushes.Yellow;
+                    int n = context.LineCount;
+                    context.Height = 18*n;
+                }
+                
+            }));
+            Thread.Sleep(1000);
         }
 
         #region --- Chris Keyack Session 06 ---
@@ -44,12 +74,15 @@ namespace FittingBeamByFace
         #endregion --- Chris Keyack Session 06 ---
 
         #region --- Chris Keyack Session 07 ---
-        private string prfStr = string.Empty;
+        public string prfStr = string.Empty;
+        private TextBox context;
 
-        private void Button_Beam_Click(object sender, RoutedEventArgs e)
+        private void Button_CK07_Peak2Points_Click(object sender, RoutedEventArgs e)
         {
             if (prfStr == "") prfStr = "I20B1_20_93";
-            TS.Beam(prfStr);
+            context = CK07_1;
+            Work xx = new Work(TS.CK07_Beam);
+            xx.BeginInvoke(null, null);   
         }
 
         private void InputProfile(object sender, KeyEventArgs e)
@@ -57,14 +90,16 @@ namespace FittingBeamByFace
             if(e.Key == Key.Return) prfStr = ProfileText.Text;
         }
 
-        private void Button_Column_Click(object sender, RoutedEventArgs e)
+        private void Button_CK07_Column_Click(object sender, RoutedEventArgs e)
         {
-            TS.Column();
+            context = CK07_2;
+            Work xx = new Work(TS.CK07_Column);
+            xx.BeginInvoke(null, null);        
         }
 
-        private void Button_Polibeam_Click(object sender, RoutedEventArgs e)
+        private void Button_CK07_Polibeam_Click(object sender, RoutedEventArgs e)
         {
-            TS.Polibeam();
+            TS.CK07_Polibeam();
         }
         #endregion --- Chris Keyack Session 07 ---
 

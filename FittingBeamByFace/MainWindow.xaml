@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FittingBeamByFace"
         mc:Ignorable="d"
-        Title="TeklaAPI Exercizes and Development Pavel Khrapkin 2018" Height="300" Width="400">
+        Title="TeklaAPI Exercizes and Development Pavel Khrapkin 2018" Height="400" Width="400">
     <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.05.21
             - History: -
     April-2018 - Created set of modules
@@ -21,7 +21,7 @@
                     <TextBlock Text ="По 2 точкам строим ПСК. Выводим на экране Tekla иконку ПСК." />
                     <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Peak2Points_Click"
                             FontWeight="Bold" Background="LightYellow"/>
-                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+                    
                     <Image Source="divider.jpg" Height="15"/>
 
                     <TextBlock Text="Теперь выбираем не точки, а деталь- балку, и строим ПСК по ней."/>
@@ -48,18 +48,27 @@
                         <TextBox Name="ProfileText" Width="120" Margin="5, 0"
                             FontSize="14" FontWeight="Bold" KeyDown="InputProfile"/>
                     </StackPanel>
+
+                    <TextBox Name="CK07_1" TextWrapping="Wrap"/>
+                    <!--
+                    <TextBlock Text ="Балка и репер выводится в точке 1 с осью Х по направлению к" />
+                    <TextBlock Name="CK07_1" Text="желтой точке (ручке конца балки) - 2      [ОК]"/>
+                                  <TextBlock Text ="точке (ручке) конец - 2                                                   [OK]"/>
+                    <TextBlock Text ="Профиль балки изменяется на пластину -200x20.        [OK]" />
+                    <TextBlock Text ="А теперь пластину стираем.                                            [OK]" />
+        -->
                     
-                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
                     <Image Source="divider.jpg" Height="15"/>
                     
                     <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
-                    <Button Content="Pick Column" Width="80" Click="Button_Column_Click" FontWeight="Bold" Background="Yellow"/>
+                    <Button Content="Pick Column" Width="80" Click="Button_CK07_Column_Click" FontWeight="Bold" Background="Yellow"/>
+                    <TextBox Name="CK07_2"/>
                     <Image Source="divider.jpg" Height="15"/>
                     <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
                     <Button Content="Polibeam" FontWeight="Bold" Background="LightGreen"
-                         Width="80" Click="Button_Polibeam_Click"/>
+                         Width="80" Click="Button_CK07_Polibeam_Click"/>
 
-                    <!--                    <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим на экране Tekla ПСК." />
+                    <!--                         <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим на экране Tekla ПСК." />
                     <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Beam_Click" FontWeight="Bold" Background="LightYellow"/>
                     <TextBlock Text ="Выполняем в 3 стадии, разделенных OK: 1)Insert 2)Modify 3)Delete"/>
                     <TextBlock/>
