@@ -40,6 +40,7 @@ namespace FittingBeamByFace
         {
             Dispatcher.Invoke(new Action(() => 
             {
+                if (context == null) return;
                 context.Text = v;
                 if (v == "")
                 {
@@ -56,23 +57,24 @@ namespace FittingBeamByFace
             Thread.Sleep(100);
         }
 
-        #region --- Chris Keyack Session 06 ---
-        private void Button_CK06_Peak2Points_Click(object sender, RoutedEventArgs e)
+        private void InvokeTS(Action sub, dynamic explanation)
         {
-            context = CK06_1;
-            Work xx = new Work(TS.CK06_Pick2Points);
+            context = explanation;
+            Work xx = new Work(sub);
             xx.BeginInvoke(null, null);
         }
 
-        private void Button_CK06_PickPart_Click(object sender, RoutedEventArgs e)
-        {
-            TS.CK06_ByPickPart();
-        }
+        #region --- Chris Keyack Session 06 ---
+        private void Button_CK06_Peak2Points_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK06_Pick2Points, CK06_1);
 
+
+        private void Button_CK06_PickPart_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK06_ByPickPart, CK06_2);
+  
         private void Button_CK06_Global_Click(object sender, RoutedEventArgs e)
-        {
-            TS.CK06_Global();
-        }
+            => InvokeTS(TS.CK06_Global, CK06_3);
+     
         #endregion --- Chris Keyack Session 06 ---
 
         #region --- Chris Keyack Session 07 ---

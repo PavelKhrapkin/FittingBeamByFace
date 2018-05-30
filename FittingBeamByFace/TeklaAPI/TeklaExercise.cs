@@ -86,6 +86,11 @@ namespace TeklaAPI
                 ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
                 Model.CommitChanges();
             }
+            mw.Msg("Изображение ПСК теперь на стартовой точке - на желтой ручке балки:" 
+                + " Х по опорной линии, Y вверх. Перпендикулярно балке создано"
+                + " 7 дополнительных отрезков другого цвета.");
+            MessageBox.Show("вывел ПСК");
+            mw.Msg();
         }
 
         public void CK06_Global()
@@ -94,6 +99,10 @@ namespace TeklaAPI
                 .SetCurrentTransformationPlane(new TransformationPlane());
             ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
             Model.CommitChanges();
+            mw.Msg("Изображение ПСК исчезло. Теперь вместо него"
+                + " глобальная система координат показана в точте [0,0]");
+            MessageBox.Show("Да, в точке [0,0] ОК, а на балке его больше нет.");
+            mw.Msg();
         }
         #endregion --- Cris Keyack Session 06 ---
         #region --- Cris Keyack Session 07 ---
