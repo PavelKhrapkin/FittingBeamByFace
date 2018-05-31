@@ -41,16 +41,16 @@
                     <TextBlock Text="Session 07. Beam, Column, Polibeam 2018.05.21" FontWeight="Bold"/>
                     <TextBlock/>
                     <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим координатный репер X,Y,Z" />
-                    <TextBlock Text ="В поле TextBox вводим профиль балки для модификации." />
+                    <TextBlock Text ="В поле TextBox вводим профиль балки." />
                     <StackPanel Orientation="Horizontal" Height="20"
                                 HorizontalAlignment="Center">
                         <Button Content="Pick 2 Points" Width="80" Click="Button_CK07_Peak2Points_Click"
                             FontWeight="Bold" Background="LightYellow"/>
-                        <TextBox Name="ProfileText" Width="120" Margin="5, 0"
+                        <TextBox Name="ProfileText" Width="180" Margin="5, 0"
                             FontSize="14" FontWeight="Bold" KeyDown="InputProfile"/>
                     </StackPanel>
 
-                    <TextBox Name="CK07_1" TextWrapping="Wrap"/>
+                    <TextBox Name="CK07_1" Height="0" TextWrapping="Wrap"/>
                     <!--
                     <TextBlock Text ="Балка и репер выводится в точке 1 с осью Х по направлению к" />
                     <TextBlock Name="CK07_1" Text="желтой точке (ручке конца балки) - 2      [ОК]"/>
@@ -63,7 +63,7 @@
                     
                     <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
                     <Button Content="Pick Column" Width="80" Click="Button_CK07_Column_Click" FontWeight="Bold" Background="Yellow"/>
-                    <TextBox Name="CK07_2"/>
+                    <TextBox Name="CK07_2" Height="0" TextWrapping="Wrap"/>
                     <Image Source="divider.jpg" Height="15"/>
                     <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
                     <Button Content="Polibeam" FontWeight="Bold" Background="LightGreen"

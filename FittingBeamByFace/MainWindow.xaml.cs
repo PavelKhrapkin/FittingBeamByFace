@@ -82,10 +82,9 @@ namespace FittingBeamByFace
 
         private void Button_CK07_Peak2Points_Click(object sender, RoutedEventArgs e)
         {
+            prfStr = ProfileText.Text;
             if (prfStr == "") prfStr = "I20B1_20_93";
-            context = CK07_1;
-            Work xx = new Work(TS.CK07_Beam);
-            xx.BeginInvoke(null, null);   
+            InvokeTS(TS.CK07_Beam, CK07_1);
         }
 
         private void InputProfile(object sender, KeyEventArgs e)
@@ -95,9 +94,10 @@ namespace FittingBeamByFace
 
         private void Button_CK07_Column_Click(object sender, RoutedEventArgs e)
         {
-            context = CK07_2;
-            Work xx = new Work(TS.CK07_Column);
-            xx.BeginInvoke(null, null);        
+            InvokeTS(TS.CK07_Column, CK07_2);
+            //context = CK07_2;
+            //Work xx = new Work(TS.CK07_Column);
+            //xx.BeginInvoke(null, null);        
         }
 
         private void Button_CK07_Polibeam_Click(object sender, RoutedEventArgs e)

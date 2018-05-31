@@ -139,8 +139,10 @@ namespace TeklaAPI
                 ModelObjectEnumerator BeamsBolt = ThisBeam.GetBolts();
                 ReperShow(BeamCoordinateSystem);
                 Model.CommitChanges();
-                mw.Msg("Балка и репер выводится в точке 1 с осью Х по направлению к желтой точке (ручке конца балки) - 2      [ОК]");
-                MessageBox.Show("Beam Inserted");
+                mw.Msg("Балка и репер выводится в точке 1 с осью Х по направлению к фиолетовой точке"
+                    + " (ручке конца балки) - точке 2. Профиль как в поле TextBox выше.      [ОК]");
+                MessageBox.Show("Создал балку по 2 точкам и вывел репер");
+                mw.Msg();
 
                 string ReportProfile = "—200*20";
                 ThisBeam.Class = "2";
