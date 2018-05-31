@@ -98,7 +98,6 @@ namespace TeklaAPI
             T3D.Vector nX = vX.GetNormal();
             T3D.Vector nY = vY.GetNormal();
 
-
             T3D.Point pX = new T3D.Point(p.X + 1000, p.Y, p.Z);
             T3D.Point pY = new T3D.Point(p.X, p.Y + 1000, p.Z);
             T3D.Point pZ = new T3D.Point(p.X, p.Y, p.Z + 1000);

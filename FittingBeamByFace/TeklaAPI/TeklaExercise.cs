@@ -200,9 +200,19 @@ namespace TeklaAPI
                 ModelObjectEnumerator BeamsBolt = ThisBeam.GetBolts();
                 ReperShow(BeamCoordinateSystem);
                 Model.CommitChanges();
-                mw.Msg("В выбранной точке создается колонна с осью Х ПСК, направленной вверх."
-                    + " Профиль колонны как в поле TextBox выше.      [ОК]");
-                MessageBox.Show("Создал колонну и вывел репер");
+      
+                Matrix FromColumnSystem = MatrixFactory.FromCoordinateSystem(ThisBeam.GetCoordinateSystem());
+                T3D.Point FrontFacePoint = FromColumnSystem.Transform(new T3D.Point(50, 50, 500));
+                GraphicsDrawer Drawer = new GraphicsDrawer();
+                // Label for Front Face
+                var label = new Color(0, 0, 0);
+                Drawer.DrawLineSegment(new LineSegment(FirstPoint, FrontFacePoint), label);
+                Drawer.DrawText(FrontFacePoint, "THIS IS FRONT FACE", label);
+
+                mw.Msg("В выбранной точке создается колонна с осью Х ПСК, направленой вверх."
+                   + " Профиль колонны как в поле TextBox выше. Черная надпись показывает"
+                   + "  переднюю грань.      [ОК]");
+                MessageBox.Show("Создал колонну и вывел репер, указал переднюю грань");
                 mw.Msg();
             }
         }
