@@ -170,23 +170,41 @@ namespace TeklaAPI
 
         public void CK07_Column()
         {
-            mw.Msg("---- 2222 ----");
-            mw.Msg();
-            //T3D.Point FirstPoint = null;
-            //Picker Picker = new Picker();
-            //try
-            //{
-            //    FirstPoint = Picker.PickPoint(Picker.PickPointEnum.PICK_ONE_POINT);
-            //}
-            //catch { PickedPoint = null; }
-            //if (PickedPoint != null)
-            //{
-
-            //}
-            //Model.GetWorkPlaneHandler()
-            //    .SetCurrentTransformationPlane(new TransformationPlane());
-            //ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
-            //Model.CommitChanges();
+            // Create Column after Pick a Point of this column
+            T3D.Point FirstPoint = null;
+            Picker Picker = new Picker();
+            try
+            {
+                ArrayList PickedPoints = Picker.PickPoints(Picker.PickPointEnum.PICK_ONE_POINT);
+                FirstPoint = PickedPoints[0] as T3D.Point;
+            }
+            catch { FirstPoint = null; }
+            if (FirstPoint != null)
+            {
+                T3D.Point SecondPoint = new T3D.Point(FirstPoint.X, FirstPoint.Y, FirstPoint.Z + 8000);
+                Beam ThisBeam = CreateBeam("MyColumn", mw.prfStr, FirstPoint, SecondPoint);
+                ThisBeam.Finish = "D";
+                ThisBeam.Class = "7";
+                ThisBeam.AssemblyNumber.Prefix = "C";
+                ThisBeam.AssemblyNumber.StartNumber = 1;
+                ThisBeam.Position.Depth = Position.DepthEnum.MIDDLE;
+                ThisBeam.Position.Plane = Position.PlaneEnum.MIDDLE;
+                ThisBeam.Position.Rotation = Position.RotationEnum.TOP;
+                ThisBeam.Modify();
+                //ThisBeam.SetUserProperty("USER_FIELD_1", "PEOPLE");
+                //string UserField = "";
+                //ThisBeam.GetUserProperty("USER_FIELD_1", ref UserField);
+                //Solid BeamSolid = ThisBeam.GetSolid();
+                T3D.CoordinateSystem BeamCoordinateSystem = ThisBeam.GetCoordinateSystem();
+                Assembly BeamAssembly = ThisBeam.GetAssembly();
+                ModelObjectEnumerator BeamsBolt = ThisBeam.GetBolts();
+                ReperShow(BeamCoordinateSystem);
+                Model.CommitChanges();
+                mw.Msg("В выбранной точке создается колонна с осью Х ПСК, направленной вверх."
+                    + " Профиль колонны как в поле TextBox выше.      [ОК]");
+                MessageBox.Show("Создал колонну и вывел репер");
+                mw.Msg();
+            }
         }
 
         public void CK07_Polibeam()

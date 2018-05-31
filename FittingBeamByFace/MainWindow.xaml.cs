@@ -24,12 +24,14 @@ namespace FittingBeamByFace
         TeklaAPI.TeklaAPI TS = new TeklaAPI.TeklaAPI();
         public delegate void Work();
         private TextBox context;
+        const string IDEFAULT = "I20B1_20_93";
+        public string prfStr = IDEFAULT;
 
         public MainWindow()
         {
             InitializeComponent();
             TS.Init(this);
-            ProfileText.Text = "I20B1_20_93";
+            ProfileText.Text = prfStr;
         }
 
         /// <summary>
@@ -74,31 +76,23 @@ namespace FittingBeamByFace
   
         private void Button_CK06_Global_Click(object sender, RoutedEventArgs e)
             => InvokeTS(TS.CK06_Global, CK06_3);
-     
+
         #endregion --- Chris Keyack Session 06 ---
 
         #region --- Chris Keyack Session 07 ---
-        public string prfStr = string.Empty;
 
-        private void Button_CK07_Peak2Points_Click(object sender, RoutedEventArgs e)
-        {
-            prfStr = ProfileText.Text;
-            if (prfStr == "") prfStr = "I20B1_20_93";
-            InvokeTS(TS.CK07_Beam, CK07_1);
-        }
+
+        private void Button_CK07_Peak2Points_Click(object sender, RoutedEventArgs e) 
+            => InvokeTS(TS.CK07_Beam, CK07_1);
 
         private void InputProfile(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Return) prfStr = ProfileText.Text;
+            if (prfStr == "") prfStr = IDEFAULT; ;
         }
 
-        private void Button_CK07_Column_Click(object sender, RoutedEventArgs e)
-        {
-            InvokeTS(TS.CK07_Column, CK07_2);
-            //context = CK07_2;
-            //Work xx = new Work(TS.CK07_Column);
-            //xx.BeginInvoke(null, null);        
-        }
+        private void Button_CK07_Column_Click(object sender, RoutedEventArgs e) 
+            => InvokeTS(TS.CK07_Column, CK07_2);
 
         private void Button_CK07_Polibeam_Click(object sender, RoutedEventArgs e)
         {

@@ -49,19 +49,12 @@
                         <TextBox Name="ProfileText" Width="180" Margin="5, 0"
                             FontSize="14" FontWeight="Bold" KeyDown="InputProfile"/>
                     </StackPanel>
-
                     <TextBox Name="CK07_1" Height="0" TextWrapping="Wrap"/>
-                    <!--
-                    <TextBlock Text ="Балка и репер выводится в точке 1 с осью Х по направлению к" />
-                    <TextBlock Name="CK07_1" Text="желтой точке (ручке конца балки) - 2      [ОК]"/>
-                                  <TextBlock Text ="точке (ручке) конец - 2                                                   [OK]"/>
-                    <TextBlock Text ="Профиль балки изменяется на пластину -200x20.        [OK]" />
-                    <TextBlock Text ="А теперь пластину стираем.                                            [OK]" />
-        -->
-                    
                     <Image Source="divider.jpg" Height="15"/>
-                    
-                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+
+                    <TextBlock Text ="Выбираем точку и строим в ней колонну с профилем, заданным"/>
+                    <TextBlock Text ="для балки выше. ПСК выводится в этой точке с осью Х направ-"/>
+                    <TextBlock Text ="ленной к вершине колонны."/>
                     <Button Content="Pick Column" Width="80" Click="Button_CK07_Column_Click" FontWeight="Bold" Background="Yellow"/>
                     <TextBox Name="CK07_2" Height="0" TextWrapping="Wrap"/>
                     <Image Source="divider.jpg" Height="15"/>
