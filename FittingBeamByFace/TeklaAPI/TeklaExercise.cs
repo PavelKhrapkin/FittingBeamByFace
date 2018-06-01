@@ -217,25 +217,112 @@ namespace TeklaAPI
             }
         }
 
-        public void CK07_Polibeam()
+        public void CK07_Polybeam()
         {
-            ArrayList PickedPoint = null;
+            ArrayList PickedPoints = null;
             Picker Picker = new Picker();
             try
             {
-                PickedPoint = Picker.PickPoints(Picker.PickPointEnum.PICK_POLYGON);
+                PickedPoints = Picker.PickPoints(Picker.PickPointEnum.PICK_POLYGON);
             }
-            catch { PickedPoint = null; }
-            if(PickedPoint != null)
+            catch { PickedPoints = null; }
+            if(PickedPoints != null)
             {
-
+                PolyBeam ThisPolyBeam = new PolyBeam();
+                ThisPolyBeam.Profile.ProfileString = mw.prfStr;
+                ThisPolyBeam.Name = "CURVED PLATE";
+                ThisPolyBeam.Finish = "GALVANIZED";
+                ThisPolyBeam.Class = "6";
+                ThisPolyBeam.AssemblyNumber.Prefix = "P";
+                ThisPolyBeam.AssemblyNumber.StartNumber = 1;
+                ThisPolyBeam.PartNumber.Prefix = "m";
+                ThisPolyBeam.Material.MaterialString = "C245";
+                ThisPolyBeam.Position.Depth = Position.DepthEnum.FRONT;
+                ThisPolyBeam.Position.Plane = Position.PlaneEnum.MIDDLE;
+                ThisPolyBeam.Position.Rotation = Position.RotationEnum.TOP;
+                if(PickedPoints.Count == 3)
+                {
+                    ThisPolyBeam.AddContourPoint(new ContourPoint(PickedPoints[0] as T3D.Point, null));
+                    ThisPolyBeam.AddContourPoint(new ContourPoint(PickedPoints[1] as T3D.Point, new Chamfer(0, 0, Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT)));
+                    ThisPolyBeam.AddContourPoint(new ContourPoint(PickedPoints[2] as T3D.Point, null));
+                    mw.Msg("Выбрано 3 точки; по ним строится дуговая балка.   [OK]");
+                }
+                else
+                {
+                    foreach(T3D.Point ThisPoint in PickedPoints)
+                    {
+                        ThisPolyBeam.AddContourPoint(new ContourPoint(ThisPoint, null));
+                    }
+                    mw.Msg($"Выбрано {PickedPoints.Count} точек. Фаски составной балки отсутствуют.  [OK]");
+                }
+                ThisPolyBeam.Insert();
             }
             Model.GetWorkPlaneHandler()
                 .SetCurrentTransformationPlane(new TransformationPlane());
             ViewHandler.SetRepresentation("standard"); //PKh> should be add for Tekla-2018
             Model.CommitChanges();
+
+//            mw.Msg("  [OK]");
+            MessageBox.Show("Построена составная балка.");
+            mw.Msg();
         }
         #endregion --- Cris Keyack Session 07 ---
+        #region --- Cris Keyack Session 08 ---
+        public void CK08_CreatePlate()
+        {
+            ArrayList PickedPoints = null;
+            Picker Picker = new Picker();
+            try
+            {
+                PickedPoints = Picker.PickPoints(Picker.PickPointEnum.PICK_POLYGON);
+            }
+            catch { PickedPoints = null; }
+            if (PickedPoints != null)
+            {
+                ContourPlate Plate = new ContourPlate();
+                Plate.AssemblyNumber.Prefix = "P";
+                Plate.AssemblyNumber.StartNumber = 1;
+                Plate.PartNumber.Prefix = "p";
+                Plate.PartNumber.StartNumber = 1;
+                Plate.Name = "PLATE";
+                Plate.Profile.ProfileString = "PL25";
+                Plate.Material.MaterialString = "C245";
+                Plate.Finish = "";
+                Plate.Class = "1";
+                Plate.Position.Depth = Position.DepthEnum.FRONT;
+                foreach(T3D.Point ThisPoint in PickedPoints)
+                {
+                    var chamfer = new Chamfer(12.7, 12.7, Chamfer.ChamferTypeEnum.CHAMFER_LINE);
+                    var conturPoint = new ContourPoint(ThisPoint, chamfer);
+                    Plate.AddContourPoint(conturPoint);
+                }
+                if(!Plate.Insert())
+                {
+                    Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Plate wasn't created.");
+                }
+                else
+                {
+                    // Change the workplane to the coordinate system of the plate.
+                    var transformationPlane = new TransformationPlane(Plate.GetCoordinateSystem());
+                    Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(transformationPlane);
+
+                    // Show the plate in the model and the workplane change.
+                    Model.CommitChanges();
+
+                    // This gets the plate's coordinates and information in the current workplane.
+                    Plate.Select();
+                    // Draw the coordinate of the plate in the model in the local coordinate system.
+
+                }
+            }
+        }
+
+        public void CK08_SetWorkPlane()
+        {
+            // Reset Workplane back to global
+            Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
+        }
+        #endregion --- Cris Keyack Session 08 ---
         #region --- Tekla OpenAPI reference DrawTextExample 8.5.2018 ---
         private readonly Model _Model = new Model();
         private static GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();

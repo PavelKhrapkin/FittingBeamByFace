@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:FittingBeamByFace"
         mc:Ignorable="d"
         Title="TeklaAPI Exercizes and Development Pavel Khrapkin 2018" Height="400" Width="400">
-    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.05.21
+    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.06.1
             - History: -
     April-2018 - Created set of modules
     2018.05.5  - DataGrid XAML architekture with all Buttons visible on Window
     2018.05.21 - Modify XAML to Tab Control with split contents by Tabs
+    2018.06.1  - Chris Keyack Session 08
     -->
     <Grid>
         <TabControl>
@@ -38,7 +39,7 @@
             </TabItem>
             <TabItem Header="Chris Keyack 07">
                 <StackPanel Margin="10">
-                    <TextBlock Text="Session 07. Beam, Column, Polibeam 2018.05.21" FontWeight="Bold"/>
+                    <TextBlock Text="Session 07. Beam, Column, Polibeam 2018.05.25" FontWeight="Bold"/>
                     <TextBlock/>
                     <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим координатный репер X,Y,Z" />
                     <TextBlock Text ="В поле TextBox вводим профиль балки." />
@@ -58,22 +59,33 @@
                     <Button Content="Pick Column" Width="80" Click="Button_CK07_Column_Click" FontWeight="Bold" Background="Yellow"/>
                     <TextBox Name="CK07_2" Height="0" TextWrapping="Wrap"/>
                     <Image Source="divider.jpg" Height="15"/>
-                    <TextBlock Text ="ПСК выводится в точке 1 с осью Х по направлению к точке 2." />
+
+                    <TextBlock Text ="По нескольким точкам, выбранным в окне Tekla, создается"/>
+                    <TextBlock Text=" составная балка. Для завершения выбора точек, нажмите на "/>
+                    <TextBlock Text=" колесико мышки." />
                     <Button Content="Polibeam" FontWeight="Bold" Background="LightGreen"
                          Width="80" Click="Button_CK07_Polibeam_Click"/>
-
-                    <!--                         <TextBlock Text ="По 2 точкам строим БАЛКУ. Выводим на экране Tekla ПСК." />
-                    <Button Content="Pick 2 Points" Width="80" Click="Button_CK06_Beam_Click" FontWeight="Bold" Background="LightYellow"/>
-                    <TextBlock Text ="Выполняем в 3 стадии, разделенных OK: 1)Insert 2)Modify 3)Delete"/>
-                    <TextBlock/>
-                    <TextBlock Text="Теперь выбираем не точки, а деталь - колонну"/>
-                    <Button Content="Pick Column" Width="80" Click="Button_Column_Click" FontWeight="Bold" Background="Yellow"/>
-                    <TextBlock/>
-                    <TextBlock Text="Восстанавливаем из ПСК глобальную систему координат"/>
-                    <Button Content="Global" Width="80" Click="Button_Polibeam_Click" FontWeight="Bold" Background="LightGreen"/>
- -->
+                    <TextBox Name="CK07_3" Height="0" TextWrapping="Wrap"/>
                 </StackPanel>
-                
+            </TabItem>
+            <TabItem Header="Chris Keyack 08">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Session 08. Contur plate 2018.06.1" FontWeight="Bold"/>
+                    <TextBlock/>
+
+                    <TextBlock Text ="Выбираем угловые точки и строим по ним пласину."/>
+                    <Button Content="Pick Contur" Width="80" Click="Button_CK08_CreatePlate_Click" 
+                            FontWeight="Bold" Background="Yellow"/>
+                    <TextBox Name="CK08_1" Height="0" TextWrapping="Wrap"/>
+                    <Image Source="divider.jpg" Height="15"/>
+
+                    <TextBlock Text ="По нескольким точкам, выбранным в окне Tekla, создается"/>
+                    <TextBlock Text=" составная балка. Для завершения выбора точек, нажмите на "/>
+                    <TextBlock Text=" колесико мышки." />
+                    <Button Content="Set Workplane to Part" FontWeight="Bold" Background="LightGreen"
+                        Width="150" Click="Button_CK08_SetWorkPlane_Click"/>
+                    <TextBox Name="CK08_2" Height="0" TextWrapping="Wrap"/>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Сеня Бусин">
                 <Label Content="FaceFitting"/>
@@ -82,83 +94,5 @@
                 <Label Content="Моделирование узла 36" />
             </TabItem>
         </TabControl>
-<!--        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-
-       - Chris Keyack Session 06 -
-        
-   <Button Grid.Column="0" Content="Pick 2 Points" FontWeight="Bold" Background="LightYellow"
-                HorizontalAlignment="Left" Height="27" Margin="20,60,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Beam_Click"/>
-                <Button Grid.Column="0" Content="Pick Part" FontWeight="Bold" Background="Yellow"
-                HorizontalAlignment="Left" Height="27" Margin="20,100,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Column_Click"/>
-                <Button Grid.Column="0" Content="Global" FontWeight="Bold" Background="LightGreen"
-                HorizontalAlignment="Left" Height="27" Margin="20,140,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Polibeam_Click"/>
-        
-
-        - Chris Keyack Session 07 -
-        <Label
-            Content="Chris Keyack Session 07&#xD;&#xA;Write Beam Data to Text File&#xD;&#xA;"
-               HorizontalAlignment="Left" Height="40" VerticalAlignment="Top"
-               Background="Bisque" Grid.ColumnSpan="3" Margin="175,2,0,0"/>
-        <Border Grid.Column="1" 
-            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
-        <Button Grid.Column="1" Content="Beam" FontWeight="Bold" Background="LightYellow"
-                HorizontalAlignment="Left" Height="27" Margin="5,60,0,0"
-                VerticalAlignment="Top" Width="40" Click="Button_Beam_Click"/>
-        <TextBox Name="ProfileText" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="60,60,0,0" TextWrapping="Wrap" 
-                 VerticalAlignment="Top" Width="90"
-                 FontSize="14" FontWeight="Bold"
-                 KeyDown="InputProfile"/>
-        <Button Grid.Column="1" Content="Column" FontWeight="Bold" Background="Yellow"
-                HorizontalAlignment="Left" Height="27" Margin="10,100,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Column_Click"/>
-        <Button Grid.Column="1" Content="Polibeam" FontWeight="Bold" Background="LightGreen"
-                HorizontalAlignment="Left" Height="27" Margin="10,140,0,0"
-                VerticalAlignment="Top" Width="127" Click="Button_Polibeam_Click"/>
-
-        - Сеня Бусин -
-        <Label Grid.Column="2"
-            Content="       Сеня Бусин"
-               HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="120"
-               Background="Khaki"/>
-        <Border Grid.Column="2"
-            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
-        <Button Grid.Column="2" Content="Go"
-                HorizontalAlignment="Left" Height="40" 
-                VerticalAlignment="Top" Width="75" Background="Yellow" Margin="20,50"
-                FontSize="16"
-                Click="Button_Go_Click" RenderTransformOrigin="0.54,-0.7"/>
-        <Button Grid.Column="2" Content="Координаты" 
-                HorizontalAlignment="Left" Height="40" Margin="0,110,0,0" 
-                VerticalAlignment="Top" Width="121"
-                Background="LightGreen" FontSize="14"
-                Click="Button_Coordinate_Click"/>
-        <Button Grid.Column="2" Content="ShowReper" 
-                HorizontalAlignment="Left" Height="40" Margin="20,160,0,0" 
-                VerticalAlignment="Top" Width="75"
-                Background="Aquamarine" FontSize="14"
-                Click="Button_DrawReper_Click"/>
-        
-        - W36-
-        <Label Grid.Column="3"
-            Content="            W36"
-               HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="120"
-               Background="Khaki"/>
-        <Border Grid.Column="3"
-            BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="40"  VerticalAlignment="Top"/>
-        <Button Grid.Column="3" Content="Go W36"
-                HorizontalAlignment="Left" Height="40" 
-                VerticalAlignment="Top" Width="75" Background="Yellow" Margin="20,50"
-                FontSize="16"
-                Click="Button_GoW36_Click" RenderTransformOrigin="0.54,-0.7"/>
--->        
     </Grid>
 </Window>

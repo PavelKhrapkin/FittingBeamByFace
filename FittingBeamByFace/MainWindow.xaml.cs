@@ -24,7 +24,7 @@ namespace FittingBeamByFace
         TeklaAPI.TeklaAPI TS = new TeklaAPI.TeklaAPI();
         public delegate void Work();
         private TextBox context;
-        const string IDEFAULT = "I20B1_20_93";
+        public const string IDEFAULT = "I20B1_20_93";
         public string prfStr = IDEFAULT;
 
         public MainWindow()
@@ -80,8 +80,6 @@ namespace FittingBeamByFace
         #endregion --- Chris Keyack Session 06 ---
 
         #region --- Chris Keyack Session 07 ---
-
-
         private void Button_CK07_Peak2Points_Click(object sender, RoutedEventArgs e) 
             => InvokeTS(TS.CK07_Beam, CK07_1);
 
@@ -95,10 +93,16 @@ namespace FittingBeamByFace
             => InvokeTS(TS.CK07_Column, CK07_2);
 
         private void Button_CK07_Polibeam_Click(object sender, RoutedEventArgs e)
-        {
-            TS.CK07_Polibeam();
-        }
+             => InvokeTS(TS.CK07_Polybeam, CK07_3);
         #endregion --- Chris Keyack Session 07 ---
+
+        #region --- Chris Keyack Session 08 ---
+        private void Button_CK08_CreatePlate_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK08_CreatePlate, CK08_1);
+
+        private void Button_CK08_SetWorkPlane_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK08_SetWorkPlane, CK08_2);
+        #endregion --- Chris Keyack Session 08 ---
 
         #region --- Сеня Бусин ---
         private void Button_Go_Click(object sender, RoutedEventArgs e)
