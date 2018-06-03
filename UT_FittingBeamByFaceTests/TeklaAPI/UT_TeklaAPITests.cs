@@ -1,6 +1,6 @@
 ﻿using TeklaAPI;
 /* -----------------------------------------------------
-* Tekla module Unit Tests  15.05.2018 Pavel Khrapkin
+* Tekla module Unit Tests  1.06.2018 Pavel Khrapkin
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -15,12 +15,6 @@ using Tekla.Structures.Geometry3d;
 
 namespace TeklaAPI.Tests
 {
-    [TestClass()]
-    public class UT_TeklaAPITests
-    {
-    
-    }
-
     [TestClass()]
     public class UT_Tekla
     {
@@ -107,12 +101,15 @@ namespace TeklaAPI.Tests
         [TestMethod()]
         public void UT_PointShow()
         {
-            // test 0: [1000, 3000] and empty text
+            // test 0: в точке [1000, 3000] появляется метка и пустой текст
             Point p = new Point(1000, 3000);
             _TS.PointShow(p);
 
-            // test 1: [1500, 2500] and "p"
+            // test 1: в точке [1500, 2500] появляется метка точки и буква "p"
             _TS.PointShow(new Point(1500, 2500), "p");
+
+            // test 2: в точке [1800, 800] выводим координаты на экран Tekla
+            _TS.PointXYZ(new Point(1800, 800));
         }
 
         [TestMethod()]

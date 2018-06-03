@@ -1,4 +1,3 @@
-c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csprojResolveAssemblyReference.cache
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\MainWindow.g.cs
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\App.g.cs
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace_MarkupCompile.cache
@@ -30,3 +29,4 @@ c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\F
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csproj.CopyComplete
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.exe
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.pdb
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csprojResolveAssemblyReference.cache

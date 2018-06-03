@@ -1,15 +1,16 @@
 ﻿/* ----------------------------------------------------------------------------
  * TeklaLib - part of TeklaAPI module - separated Library simple common methods
  * 
- * 16.05.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 1.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 11.05.2018 - TeklaLib module created
  * 15.05.2018 - ReperShow method add
  * 16.05.2018 - PointShow add 
+ *  1.06.2018 - PointXYZ description
  * --- Methods: ---
  * Txt(point, text [, color])   - draw string text in point with color name
- * ShowXYZ(point)   - draw point coordinates as "(x, y, z)" string with integer
+ * PoinXYZ(point)   - draw point coordinates as "(x, y, z)" string of integers
  * ShowI(x)         - draw x value as int in Tekla Window
  * Rep(point)       - draw Reper as Global [x,y,z] in point
  * ReperShow(CoordSys) - draw [x,y,z] arrow in Origin Point of Coordinate Syst
@@ -33,6 +34,7 @@ namespace TeklaAPI
         }
 
         //Shows the point coordinates without decimals
+        public void PointXYZ(Point p) => Txt(p, ShowXYZ(p));
         private string ShowXYZ(Point p)
             => "(" + ShowI(p.X) + ", " + ShowI(p.Y) + ", " + ShowI(p.Z) + ")";
         private string ShowI(double x)

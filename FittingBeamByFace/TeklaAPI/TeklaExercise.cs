@@ -311,8 +311,25 @@ namespace TeklaAPI
 
                     // This gets the plate's coordinates and information in the current workplane.
                     Plate.Select();
+                    ReperShow(Plate.GetCoordinateSystem());
                     // Draw the coordinate of the plate in the model in the local coordinate system.
-
+                    GraphicsDrawer Drawer = new GraphicsDrawer();
+                    foreach (ContourPoint ContourPoint in Plate.Contour.ContourPoints)
+                    {
+                        double x = ContourPoint.X, y = ContourPoint.Y, z = ContourPoint.Z;
+                        T3D.Point CornerPoint = new T3D.Point(x, y, z);
+                        PointXYZ(ContourPoint);
+                        //double ImperialValue = 25.4;
+                        //double XValue = Math.Round(CornerPoint.X / ImperialValue, 4);
+                        //double YValue = Math.Round(CornerPoint.Y / ImperialValue, 4);
+                        //double ZValue = Math.Round(CornerPoint.Z / ImperialValue, 4);
+                        //Drawer.DrawText(CornerPoint, "(" + XValue + "," + YValue + "," + ZValue + ")", new Color(1,0,0));
+                        Drawer.DrawLineSegment(new LineSegment(new T3D.Point(0, 0, 0), new T3D.Point(0, 0, 500)), new Color(1, 0, 0));
+                    }
+                    mw.Msg("На экране Tekla построена пластина по заданным точкам"
+                        + " и показаны координаты этих точек и репер ПСК.  [OK]");
+                    MessageBox.Show("Построена пластина.");
+                    mw.Msg();
                 }
             }
         }
