@@ -1,7 +1,7 @@
 ﻿/* -----------------------------------------------------------------------
  * Упражнения с TeklaAPI    11.05.2018 Pavel Khrapkin
  *
- *  Cris Keyack Session 07 https://www.youtube.com/watch?v=kiDV1vwOOCg
+ *  Cris Keyack Session 08 https://www.youtube.com/watch?v=XZswHuZykzU
  *  Write Selected Beam Data to Text File
  */
 using System;
