@@ -95,6 +95,7 @@
     </ApplicationDefinition>
     <Compile Include="TeklaAPI\TeklaAPI.cs" />
     <Compile Include="TeklaAPI\TeklaExercise.cs" />
+    <Compile Include="TeklaAPI\TeklaExercise_CK06.cs" />
     <Compile Include="TeklaAPI\TeklaLib.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
