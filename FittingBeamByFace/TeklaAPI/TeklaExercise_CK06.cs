@@ -4,13 +4,8 @@
  *  Chris Keyack Session 06 https://www.youtube.com/watch?v=TuSVLPB5NyI
  *  Pick Points and set WorkPlane
  */
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
 using System.Windows;
-using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.UI;
 using T3D = Tekla.Structures.Geometry3d;
@@ -79,8 +74,8 @@ namespace TeklaAPI
             }
             mw.Msg("Изображение ПСК теперь на стартовой точке - на желтой ручке балки:" 
                 + " Х по опорной линии, Y вверх. Перпендикулярно балке создано"
-                + " 7 дополнительных отрезков другого цвета.");
-            MessageBox.Show("вывел ПСК");
+                + " 7 дополнительных отрезков другого цвета.  [OK]");
+            MessageBox.Show("вывел ПСК и 7 перпендикулярных дополнительных балок");
             mw.Msg();
         }
 

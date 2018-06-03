@@ -29,7 +29,6 @@ c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\F
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csproj.CopyComplete
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.exe
 c:\users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.pdb
-C:\Users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csprojResolveAssemblyReference.cache
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\FittingBeamByFace\bin\Debug\FittingBeamByFace.exe.config
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\FittingBeamByFace\bin\Debug\FittingBeamByFace.exe
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\FittingBeamByFace\bin\Debug\FittingBeamByFace.pdb
