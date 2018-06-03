@@ -73,15 +73,13 @@
                     <TextBlock Text="Session 08. Contur plate 2018.06.1" FontWeight="Bold"/>
                     <TextBlock/>
 
-                    <TextBlock Text ="Выбираем угловые точки и строим по ним пласину."/>
+                    <TextBlock Text ="Выбираем угловые точки и строим по ним пластину."/>
                     <Button Content="Pick Contur" Width="80" Click="Button_CK08_CreatePlate_Click" 
                             FontWeight="Bold" Background="Yellow"/>
                     <TextBox Name="CK08_1" Height="0" TextWrapping="Wrap"/>
                     <Image Source="divider.jpg" Height="15"/>
 
-                    <TextBlock Text ="По нескольким точкам, выбранным в окне Tekla, создается"/>
-                    <TextBlock Text=" составная балка. Для завершения выбора точек, нажмите на "/>
-                    <TextBlock Text=" колесико мышки." />
+                    <TextBlock Text ="Возвращаемся от ПСК к глобальной системе координат."/>
                     <Button Content="Set Workplane to Part" FontWeight="Bold" Background="LightGreen"
                         Width="150" Click="Button_CK08_SetWorkPlane_Click"/>
                     <TextBox Name="CK08_2" Height="0" TextWrapping="Wrap"/>

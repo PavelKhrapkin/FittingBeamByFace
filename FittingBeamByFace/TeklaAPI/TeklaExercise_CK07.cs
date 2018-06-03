@@ -1,20 +1,15 @@
 ﻿/* -----------------------------------------------------------------------
- * Упражнения с TeklaAPI    11.05.2018 Pavel Khrapkin
+ * Упражнения с TeklaAPI    3.06.2018 Pavel Khrapkin
  * 
  *  Cris Keyack Session 07 https://www.youtube.com/watch?v=kiDV1vwOOCg
  *  Write Selected Beam Data to Text File
  */
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.UI;
 using T3D = Tekla.Structures.Geometry3d;
-using TSMUI = Tekla.Structures.Model.UI;
 
 namespace TeklaAPI
 {
