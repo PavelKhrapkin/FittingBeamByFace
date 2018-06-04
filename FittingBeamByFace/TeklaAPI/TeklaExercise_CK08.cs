@@ -2,7 +2,7 @@
  * Упражнения с TeklaAPI    3.06.2018 Pavel Khrapkin
  *
  *  Cris Keyack Session 08 https://www.youtube.com/watch?v=XZswHuZykzU
- *  Write Selected Beam Data to Text File
+ *  Contour Plate
  */
 using System.Collections;
 using System.Windows;

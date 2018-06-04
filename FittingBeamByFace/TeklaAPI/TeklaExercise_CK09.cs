@@ -1,26 +1,21 @@
 ﻿/* -----------------------------------------------------------------------
  * Упражнения с TeklaAPI    3.06.2018 Pavel Khrapkin
  *
- *  Cris Keyack Session 09 https://www.youtube.com/watch?v=J71UTTUGQtU
- *  Write Selected Beam Data to Text File
+ * Cris Keyack Session 09 https://www.youtube.com/watch?v=J71UTTUGQtU
+ *  Cuts and Fittings
  */
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.UI;
 using T3D = Tekla.Structures.Geometry3d;
-using TSMUI = Tekla.Structures.Model.UI;
 
 namespace TeklaAPI
 {
     public partial class TeklaAPI
     {
-        public void CK09_CreatePlate()
+        public void CK09_SetWorkplane()
         {
             ArrayList PickedPoints = null;
             Picker Picker = new Picker();
@@ -86,7 +81,19 @@ namespace TeklaAPI
             }
         }
 
-        public void CK09_SetWorkPlane()
+        public void CK09_ApplyFitting()
+        {
+            // Reset Workplane back to global
+            Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
+        }
+
+        public void CK09_PartCut()
+        {
+            // Reset Workplane back to global
+            Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
+        }
+
+        public void CK09_PolygonCut()
         {
             // Reset Workplane back to global
             Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
