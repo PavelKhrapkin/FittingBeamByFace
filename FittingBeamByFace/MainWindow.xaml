@@ -117,10 +117,30 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="Сеня Бусин">
-                <Label Content="FaceFitting"/>
+                <StackPanel Margin="10">
+                    <TextBlock Text="FaceFitting"/>
+                    <Button Content="Start" Width="80" Click="Button_Go_Click" 
+                            FontWeight="Bold" Background="Yellow"/>
+                </StackPanel>
             </TabItem>
+
             <TabItem Header="W36">
-                <Label Content="Моделирование узла 36" />
+                <StackPanel>
+                    <TextBlock Text="Моделирование узла 36  2018.06.5" FontWeight="Bold"/>
+                    <TextBlock />
+                    <TextBlock Text="Проверяем, пересекаются ли балки?"/>
+                    <Button Content="Проверка" Click="Button_W36_CheckCrossBeam"/>
+                    <!--                <TextBlock Text ="??Выбираем "/>
+                </StackPanel>
+                <TextBlock Text="угловые точки и строим по ним пластину.??"/>
+
+                <TextBlock Text ="??Выбираем угловые точки и строим по ним пластину.??"/>
+                <Button Content="Set Workplane" Width="100" Click="Button_CK09_SetWorkplane_Click" 
+                            FontWeight="Bold" Background="Yellow"/>
+                <TextBox Name="CK09_1" Height="0" TextWrapping="Wrap"/>
+                <Image Source="divider.jpg" Height="15"/>
+-->
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>

@@ -142,6 +142,11 @@ namespace FittingBeamByFace
         {
             TS.DevelopW36();
         }
+
+        private void Button_W36_CheckCrossBeam(object sender, RoutedEventArgs e)
+        {
+            TS.CheckCrossBeam();
+        }
         #endregion --- W36 ---
     }
 }

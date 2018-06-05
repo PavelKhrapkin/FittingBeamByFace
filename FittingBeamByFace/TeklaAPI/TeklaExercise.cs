@@ -8,13 +8,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.UI;
 using T3D = Tekla.Structures.Geometry3d;
-using TSMUI = Tekla.Structures.Model.UI;
 
 namespace TeklaAPI
 {
@@ -239,15 +237,7 @@ namespace TeklaAPI
             fitting.Insert();
 
             Model.CommitChanges();
-
         }
-
         #endregion --- Сеня Бусин Creating macro fitting a beam by face ---
-        #region --- W36 ---
-        public void DevelopW36()
-        {
-
-        }
-        #endregion --- W36 ---
     }
 }
