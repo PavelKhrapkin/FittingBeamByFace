@@ -1,5 +1,5 @@
 ﻿/* -----------------------------------------------------------------------
- * Упражнения с TeklaAPI    3.06.2018 Pavel Khrapkin
+ * Упражнения с TeklaAPI    5.06.2018 Pavel Khrapkin
  *
  * Cris Keyack Session 09 https://www.youtube.com/watch?v=J71UTTUGQtU
  *  Cuts and Fittings
@@ -43,59 +43,6 @@ namespace TeklaAPI
                 var red = new Color(1, 0, 0);
                 Drawer.DrawLineSegment(new T3D.Point(0, 0, 0), new T3D.Point(0, 0, 500), red);
             }
-                //ContourPlate Plate = new ContourPlate();
-                //Plate.AssemblyNumber.Prefix = "P";
-                //Plate.AssemblyNumber.StartNumber = 1;
-                //Plate.PartNumber.Prefix = "p";
-                //Plate.PartNumber.StartNumber = 1;
-                //Plate.Name = "PLATE";
-                //Plate.Profile.ProfileString = "PL25";
-                //Plate.Material.MaterialString = "C245";
-                //Plate.Finish = "";
-                //Plate.Class = "1";
-                //Plate.Position.Depth = Position.DepthEnum.FRONT;
-                //foreach(T3D.Point ThisPoint in PickedPoints)
-                //{
-                //    var chamfer = new Chamfer(12.7, 12.7, Chamfer.ChamferTypeEnum.CHAMFER_LINE);
-                //    var conturPoint = new ContourPoint(ThisPoint, chamfer);
-                //    Plate.AddContourPoint(conturPoint);
-                //}
-                //if(!Plate.Insert())
-                //{
-                //    Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Plate wasn't created.");
-                //}
-                //else
-                //{
-                //    // Change the workplane to the coordinate system of the plate.
-                //    var transformationPlane = new TransformationPlane(Plate.GetCoordinateSystem());
-                //    Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(transformationPlane);
-
-                //    // Show the plate in the model and the workplane change.
-                //    Model.CommitChanges();
-
-                //    // This gets the plate's coordinates and information in the current workplane.
-                //    Plate.Select();
-                //    ReperShow(Plate.GetCoordinateSystem());
-                //    // Draw the coordinate of the plate in the model in the local coordinate system.
-                //    GraphicsDrawer Drawer = new GraphicsDrawer();
-                //    foreach (ContourPoint ContourPoint in Plate.Contour.ContourPoints)
-                //    {
-                //        double x = ContourPoint.X, y = ContourPoint.Y, z = ContourPoint.Z;
-                //        T3D.Point CornerPoint = new T3D.Point(x, y, z);
-                //        PointXYZ(ContourPoint);
-                //        //double ImperialValue = 25.4;
-                //        //double XValue = Math.Round(CornerPoint.X / ImperialValue, 4);
-                //        //double YValue = Math.Round(CornerPoint.Y / ImperialValue, 4);
-                //        //double ZValue = Math.Round(CornerPoint.Z / ImperialValue, 4);
-                //        //Drawer.DrawText(CornerPoint, "(" + XValue + "," + YValue + "," + ZValue + ")", new Color(1,0,0));
-                //        Drawer.DrawLineSegment(new LineSegment(new T3D.Point(0, 0, 0), new T3D.Point(0, 0, 500)), new Color(1, 0, 0));
-                //    }
-                //    mw.Msg("На экране Tekla построена пластина по заданным точкам"
-                //        + " и показаны координаты этих точек и репер ПСК.  [OK]");
-                //    MessageBox.Show("Построена пластина.");
-                //    mw.Msg();
-                //}
-            //}
         }
 
         public void CK09_ApplyFitting()
@@ -103,6 +50,53 @@ namespace TeklaAPI
             // Current Workplane. Reminder how the user had the model before you did stuff.
             TransformationPlane CurrentPlane = Model.GetWorkPlaneHandler().GetCurrentTransformationPlane();
 
+            Picker Picker = new Picker();
+            Beam PickedBeam = null;
+            try
+            {
+                PickedBeam = (Beam) Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
+            }
+            catch { PickedBeam = null; }
+            if (PickedBeam != null)
+            {
+                // Change the workplane to the coordinate system of the Beam
+                var psk = new TransformationPlane(PickedBeam.GetCoordinateSystem());
+                Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(psk);
+
+                // Applyfitting
+                Fitting BeamFitting = new Fitting();
+                BeamFitting.Father = PickedBeam;
+                Plane FittingPlane = new Plane();
+                FittingPlane.Origin = new T3D.Point(500, 0, 0);
+                FittingPlane.AxisX = new T3D.Vector(0, 0, 500);
+                FittingPlane.AxisY = new T3D.Vector(0, - 500, 0);
+                BeamFitting.Plane = FittingPlane;
+                BeamFitting.Insert();
+
+                // Apply Line Cut
+                CutPlane BeamLineCut = new CutPlane();
+                BeamLineCut.Father = PickedBeam;
+                Plane BeamCutPlane = new Plane();
+                BeamCutPlane.Origin = new T3D.Point(200, 0, 0);
+                BeamCutPlane.AxisX = new T3D.Vector(0, 0, 500);
+                // Changing the positive vs. negative value here determines which direction
+                // the line cut will take away material where as fitting looks at which end
+                // of beam it is closest to figure out how to cut.
+                BeamCutPlane.AxisX = new T3D.Vector(0, -500, 0);
+                BeamLineCut.Plane = BeamCutPlane;
+                BeamLineCut.Insert();
+
+                // SetWorkplane back to what user had before
+                Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+
+                // Show the plate in the model and the workplane change
+                Model.CommitChanges();
+
+                // Draw Positive Z axis.
+                GraphicsDrawer Drawer = new GraphicsDrawer();
+                var red = new Color(1, 0, 0);
+                Drawer.DrawLineSegment(new T3D.Point(0, 0, 0), new T3D.Point(0, 0, 500), red);
+            }
             Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
         }
 
