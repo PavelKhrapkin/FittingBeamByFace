@@ -102,8 +102,63 @@ namespace TeklaAPI
 
         public void CK09_PartCut()
         {
-            // Reset Workplane back to global
-            Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
+            // Current Workplane. Reminder how the user had the model before you did stuff.
+            TransformationPlane CurrentPlane = Model.GetWorkPlaneHandler().GetCurrentTransformationPlane();
+
+            Picker Picker = new Picker();
+            Beam PickedPart = null;
+            try
+            {
+                PickedPart = (Beam)Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
+            }
+            catch { PickedPart = null; }
+            if (PickedPart != null)
+            {
+                // Change the workplane to the coordinate system of the Beam
+                var psk = new TransformationPlane(PickedPart.GetCoordinateSystem());
+                Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(psk);
+
+                Beam BeamPartObject = new Beam();
+                BeamPartObject.StartPoint = new T3D.Point(400, 0, -200);
+                BeamPartObject.StartPoint = new T3D.Vector(400, 0, 200);
+                BeamPartObject.Profile.ProfileString = "D200";
+                BeamPartObject.Material.MaterialString = "ANTIMATERIAL";
+                BeamPartObject.Class = BooleanPart.BooleanOperativeClassName;
+                BeamPartObject.Name = "CUT";
+                BeamPartObject.Position.Depth = Position.DepthEnum.MIDDLE;
+                BeamPartObject.Position.Rotation = Position.RotationEnum.FRONT;
+                BeamPartObject.Position.Plane = Position.PlaneEnum.MIDDLE;
+                if (!BeamPartObject.Insert())
+                {
+                    Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Cut wasn't created.");
+                    // SetWorkPlane back to what user had before
+                    Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+                }
+                else
+                {
+                    BooleanPart PartCut = new BooleanPart();
+                    PartCut.Father = PickedPart;
+                    PartCut.OperativePart = BeamPartObject;
+                    PartCut.Type = BooleanPart.BooleanTypeEnum.BOOLEAN_CUT;
+                    if(!PartCut.Insert())
+                    {
+                        // SetWorkPlane back to what user had before
+                        Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+                    }
+                    else
+                    {
+                        // We don't need the phisical part in the model anymore.
+                        BeamPartObject.Delete();
+
+                        // SetWorkPlane back to what user had before
+                        Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+
+                        // Show the fitting in the model but the user
+                        //..will never see the workplane change
+                        Model.CommitChanges();
+                    }
+                }
+            }
         }
 
         public void CK09_PolygonCut()
