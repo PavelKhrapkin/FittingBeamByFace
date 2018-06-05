@@ -163,8 +163,70 @@ namespace TeklaAPI
 
         public void CK09_PolygonCut()
         {
-            // Reset Workplane back to global
-            Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
+            // Current Workplane. Reminder how the user had the model before you did stuff.
+            TransformationPlane CurrentPlane = Model.GetWorkPlaneHandler().GetCurrentTransformationPlane();
+
+            Picker Picker = new Picker();
+            Beam PickedPart = null;
+            try
+            {
+                PickedPart = (Beam)Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
+            }
+            catch { PickedPart = null; }
+            if (PickedPart != null)
+            {
+                // Change the workplane to the coordinate system of the Beam
+                var psk = new TransformationPlane(PickedPart.GetCoordinateSystem());
+                Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(psk);
+
+                ContourPlate ContourPlateObject = new ContourPlate();
+                ContourPlateObject.AssemblyNumber.Prefix = "XX";
+                ContourPlateObject.AssemblyNumber.StartNumber = 1;
+                ContourPlateObject.Name = "CUT";
+                ContourPlateObject.PartNumber.Prefix = "xx";
+                ContourPlateObject.Profile.ProfileString = "200";
+                ContourPlateObject.Material.MaterialString = "ANTIMATERIAL";
+                ContourPlateObject.Finish = "";
+                // This is the Important Part!
+                ContourPlateObject.Class = BooleanPart.BooleanOperativeClassName;
+                ContourPlateObject.Position.Depth = Position.DepthEnum.MIDDLE;
+                // when doing a polygon cut make sure you don't do roght alone edge
+                //..or sometimes you maight get a solid error and your part will disappeared
+                ContourPlateObject.AddContourPoint(new ContourPoint(new T3D.Point(-10, -10, 0), null));
+                ContourPlateObject.AddContourPoint(new ContourPoint(new T3D.Point(100, -10, 0), null));
+                ContourPlateObject.AddContourPoint(new ContourPoint(new T3D.Point(100, 100, 0), null));
+                ContourPlateObject.AddContourPoint(new ContourPoint(new T3D.Point(-10, 100, 0), null));
+                if (!ContourPlateObject.Insert())
+                {
+                    Tekla.Structures.Model.Operations.Operation.DisplayPrompt("Plate wasn't created.");
+                    // SetWorkPlane back to what user had before
+                    Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+                }
+                else
+                {
+                    BooleanPart PolygonCut = new BooleanPart();
+                    PolygonCut.Father = PickedPart;
+                    PolygonCut.OperativePart = ContourPlateObject;
+                    PolygonCut.Type = BooleanPart.BooleanTypeEnum.BOOLEAN_CUT;
+                    if (!PolygonCut.Insert())
+                    {
+                        // SetWorkPlane back to what user had before
+                        Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+                    }
+                    else
+                    {
+                        // We don't need the phisical part in the model anymore.
+                        ContourPlateObject.Delete();
+
+                        // SetWorkPlane back to what user had before
+                        Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(CurrentPlane);
+
+                        // Show the fitting in the model but the user
+                        //..will never see the workplane change
+                        Model.CommitChanges();
+                    }
+                }
+            }
         }
     }
 }
