@@ -22,8 +22,7 @@ namespace TeklaAPI
             Picker Picker = new Picker();
             try
             {
-                ArrayList PickPoints = Picker
-                    .PickPoints(TSMUI.Picker.PickPointEnum.PICK_TWO_POINTS);
+                ArrayList PickPoints = Picker.PickPoints(Picker.PickPointEnum.PICK_TWO_POINTS);
                 FirstPoint = PickPoints[0] as T3D.Point;
                 SecondPoint = PickPoints[1] as T3D.Point;
             }
@@ -51,7 +50,7 @@ namespace TeklaAPI
             Picker Picker = new Picker();
             try
             {
-                PickedObject = Picker.PickObject(TSMUI.Picker.PickObjectEnum.PICK_ONE_OBJECT);
+                PickedObject = Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_OBJECT);
             }
             catch { PickedObject = null; }
 
