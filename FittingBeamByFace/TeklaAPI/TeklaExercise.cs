@@ -197,12 +197,6 @@ namespace TeklaAPI
             return geomPlane;
         }
 
-        public Beam PickBeam()
-        {
-            Picker picker = new Picker();
-            return picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART, "Pick a Beam") as Beam;
-        }
-
         public void FittingBeamByFace()
         {
             Beam beam = PickBeam();

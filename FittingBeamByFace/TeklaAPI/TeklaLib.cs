@@ -1,13 +1,15 @@
 ﻿/* ----------------------------------------------------------------------------
  * TeklaLib - part of TeklaAPI module - separated Library simple common methods
  * 
- * 1.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 6.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 11.05.2018 - TeklaLib module created
  * 15.05.2018 - ReperShow method add
  * 16.05.2018 - PointShow add 
  *  1.06.2018 - PointXYZ description
+ *  5.06.2018 - PickBeam add
+ *  6.06.2018 - IAil(int) add
  * --- Methods: ---
  * Txt(point, text [, color])   - draw string text in point with color name
  * PoinXYZ(point)   - draw point coordinates as "(x, y, z)" string of integers
@@ -15,10 +17,13 @@
  * Rep(point)       - draw Reper as Global [x,y,z] in point
  * ReperShow(CoordSys) - draw [x,y,z] arrow in Origin Point of Coordinate Syst
  * PointShow(p, text)  - draw point p and text - name of the point
+ * PickBeam(text)   - Pick a beam from the Tekla model with text prompt
+ * IAil(int n)      - display localyzed messabe number n in Tekla
  */
 using System.Globalization;
 using Tekla.Structures.Model.UI;
 using Tekla.Structures.Geometry3d;
+using Tekla.Structures.Model;
 
 namespace TeklaAPI
 {
@@ -88,6 +93,23 @@ namespace TeklaAPI
             GraphicsDrawer.DrawLineSegment(p1, p3, _color);
             GraphicsDrawer.DrawLineSegment(p2, p4, _color);
             Txt(p, text);
+        }
+
+        public Beam PickBeam(string prompt = "Pick a beam")
+        {
+            Picker picker = new Picker();
+            Beam selectedBeam = null;
+            while (selectedBeam == null)
+            {
+                var part = Picker.PickObjectEnum.PICK_ONE_PART;
+                selectedBeam = picker.PickObject(part, prompt) as Beam;
+            }
+            return selectedBeam;
+        }
+
+        public void IAil(int n)
+        {
+
         }
     }
 }

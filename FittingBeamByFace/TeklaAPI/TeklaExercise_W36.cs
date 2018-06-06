@@ -25,7 +25,7 @@ namespace TeklaAPI
 
         public void CheckCrossBeam()
         {
-            var beam = PickBeam("Select Main Beam");
+            var beam = PickBeam("Select Main Beam"); 
             if (beam != null)
             {
                 var psk = beam.GetCoordinateSystem();
@@ -33,24 +33,6 @@ namespace TeklaAPI
                 PointXYZ(beam.StartPoint);
                 PointXYZ(beam.EndPoint);
             }
-        }
-
-        public Beam PickBeam(string txt)
-        {
-            ModelObject PickedObject = null;
-            Picker Picker = new Picker();
-  //          Picker.PickObject(txt);
-            try
-            {
-               PickedObject = Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
-            }
-            catch { PickedObject = null; }
-            //if (MainBeam == null)
-            //{
-            //    MessageBox.Show("Основная балка не выбрана");
-            //    return null;
-            //}
-            return (Beam) PickedObject;
         }
     }
 }
