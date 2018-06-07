@@ -20,6 +20,7 @@ namespace TeklaAPI.Tests
     [TestClass()]
     public class UT_Tekla
     {
+        #region --- variables, Initialyze, Cleanup
         U _TS = new U();
         Model Model;
         TransformationPlane ModelPlane, TmpPlane;
@@ -47,7 +48,7 @@ namespace TeklaAPI.Tests
             if (AttBeam != null) AttBeam.Delete();
             Model.CommitChanges();
         }
-
+        #endregion --- variables, Initialyze, Cleanup
         [TestMethod()]
         public void UT_Tekla_Init()
         {
@@ -56,6 +57,7 @@ namespace TeklaAPI.Tests
             Assert.IsNotNull(ModelPlane);
         }
 
+        #region --- Txt, LocalTxt, PointShow, ReperShow
         [TestMethod()]
         public void UT_Txt()
         {
@@ -112,19 +114,6 @@ namespace TeklaAPI.Tests
         }
 
         [TestMethod()]
-        public void UT_Tekla_CreateBeam()
-        {
-            // test 0: создаем балку вдоль оси Х, а потом ее стираем
-            T3D.Point p1 = new T3D.Point(0, 500, 0);
-            T3D.Point p2 = new T3D.Point(500, 500, 0);
-            ThisBeam = _TS.CreateBeam("test Beam", "I50B1_20_93", p1, p2);
-
-            Assert.AreEqual("C245", ThisBeam.Material.MaterialString);
-            //           ThisBeam.Delete();
-            Model.CommitChanges();
-        }
-
-        [TestMethod()]
         public void UT_ReperShow()
         {
             Point p1 = new Point(1000, 1000, 0);
@@ -152,6 +141,7 @@ namespace TeklaAPI.Tests
             // test 2: в точке [1800, 800] выводим координаты на экран Tekla
             _TS.PointXYZ(new Point(1800, 800));
         }
+        #endregion --- Txt, LocalTxt, PointShow, ReperShow
 
         [TestMethod()]
         public void UT_Tekla_SetWorkPlane()
@@ -165,6 +155,19 @@ namespace TeklaAPI.Tests
             _TS._SetWorkPlane(ThisBeam);
 
             //          Assert.IsNotNull(plane);
+        }
+
+        [TestMethod()]
+        public void UT_Tekla_CreateBeam()
+        {
+            // test 0: создаем балку вдоль оси Х, а потом ее стираем
+            Point p1 = new Point(0, 500, 0);
+            Point p2 = new Point(500, 500, 0);
+            ThisBeam = _TS.CreateBeam("test Beam", "I50B1_20_93", p1, p2);
+
+            Assert.AreEqual("C245", ThisBeam.Material.MaterialString);
+            //           ThisBeam.Delete();
+            Model.CommitChanges();
         }
 
         [TestMethod()]
@@ -186,6 +189,59 @@ namespace TeklaAPI.Tests
             T3D.Point p5 = new T3D.Point(400, 0, 0);
             T3D.Point p6 = new T3D.Point(400, 0, 50);
             ThisBeam = _TS.CreateBeam("вут", "T40BT1_14_2_685_86", p5, p6);
+        }
+
+        [TestMethod()]
+        public void Example1()
+        {
+          
+        }
+
+
+        [TestMethod()]
+        public void UT_CutBeamByLine()
+        {
+            // Пример 1: из TeklaAPI CutPlate Example
+            //.. создает балку в [0,0 - 1000,0] и обрезает ее по CutPlate
+            Point Point = new Point(0, 0, 0);
+            Point Point2 = new Point(1000, 0, 0);
+
+            Beam Beam = new Beam();
+            Beam.StartPoint = Point;
+            Beam.EndPoint = Point2;
+            Beam.Profile.ProfileString = "HEA400";
+            Beam.Finish = "PAINT";
+            Beam.Insert();
+            Model.CommitChanges();
+
+            CutPlane CutPlane = new CutPlane();
+            CutPlane.Plane = new Plane();
+            CutPlane.Plane.Origin = new Point(400, 0, 0);
+            CutPlane.Plane.AxisX = new Vector(0, 500, 0);
+            CutPlane.Plane.AxisY = new Vector(0, 0, -1000);
+            CutPlane.Father = Beam;
+            CutPlane.Insert();
+            Model.CommitChanges();
+
+            // test 0: создаем балку вдоль оси Х, а потом ее стираем
+            Point p1 = new Point(0, 2500, 0);
+            Point p2 = new Point(2500, 0, 0);
+            ThisBeam = _TS.CreateBeam("MainBeam", "I50B1_20_93", p1, p2);
+
+            // создаем режущую плоскость
+            CutPlane BeamLineCut = new CutPlane();
+            BeamLineCut.Father = ThisBeam;
+            Plane BeamCutPlane = new Plane();
+            BeamCutPlane.Origin = new Point(1000, 0, 0);
+            BeamCutPlane.AxisX = new Vector(0, 0, 500);
+            // Changing the positive vs. negative value here determines which direction
+            // the line cut will take away material where as fitting looks at which end
+            // of beam it is closest to figure out how to cut.
+            BeamCutPlane.AxisX = new Vector(0, -500, 0);
+            BeamLineCut.Plane = BeamCutPlane;
+            BeamLineCut.Insert();
+
+            Model.CommitChanges(); 
         }
     }
 

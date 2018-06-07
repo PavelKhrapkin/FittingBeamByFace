@@ -100,6 +100,24 @@ namespace TeklaAPI
             Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane());
         }
 
+        //PKh 7/6/18
+        public Beam CutBeamByLine(Beam beam, CutPlane cutPlane)
+        {
+            // Apply Line Cut
+            CutPlane BeamLineCut = new CutPlane();
+            BeamLineCut.Father = beam;
+            Plane BeamCutPlane = new Plane();
+            BeamCutPlane.Origin = new T3D.Point(200, 0, 0);
+            BeamCutPlane.AxisX = new T3D.Vector(0, 0, 500);
+            // Changing the positive vs. negative value here determines which direction
+            // the line cut will take away material where as fitting looks at which end
+            // of beam it is closest to figure out how to cut.
+            BeamCutPlane.AxisX = new T3D.Vector(0, -500, 0);
+            BeamLineCut.Plane = BeamCutPlane;
+            BeamLineCut.Insert();
+            return beam;
+        }
+
         public void CK09_PartCut()
         {
             // Current Workplane. Reminder how the user had the model before you did stuff.
