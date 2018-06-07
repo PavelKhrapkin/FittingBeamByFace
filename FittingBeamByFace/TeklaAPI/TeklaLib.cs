@@ -24,6 +24,7 @@ using System.Globalization;
 using Tekla.Structures.Model.UI;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
+using Tekla.Structures;
 
 namespace TeklaAPI
 {
@@ -95,6 +96,7 @@ namespace TeklaAPI
             Txt(p, text);
         }
 
+        public Beam PickBeam(params int[] n) => PickBeam(LocalTxt(n));
         public Beam PickBeam(string prompt = "Pick a beam")
         {
             Picker picker = new Picker();
@@ -102,14 +104,26 @@ namespace TeklaAPI
             while (selectedBeam == null)
             {
                 var part = Picker.PickObjectEnum.PICK_ONE_PART;
-                selectedBeam = picker.PickObject(part, prompt) as Beam;
+                selectedBeam = picker.PickObject(part, LocalTxt(prompt)) as Beam;
             }
             return selectedBeam;
         }
 
-        public void IAil(int n)
+        public string LocalTxt(params string[] txt)
         {
+            string str = string.Empty;
+            foreach (string s in txt) str += LocalTxt(s);
+            return str;
+        }
 
+        public string LocalTxt(params int[] n)
+        {
+            string str = string.Empty;
+            foreach(int i in n)
+            {
+                str += local.GetText("by_number_msg_no_" + i);
+            }
+            return str;
         }
     }
 }

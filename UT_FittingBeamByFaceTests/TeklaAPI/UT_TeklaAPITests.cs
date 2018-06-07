@@ -12,6 +12,8 @@ using Tekla.Structures.Model;
 using T3D = Tekla.Structures.Geometry3d;
 using TSMUI = Tekla.Structures.Model.UI;
 using Tekla.Structures.Geometry3d;
+using Tekla.Structures;
+using TSDL = Tekla.Structures.Dialog.Localization;
 
 namespace TeklaAPI.Tests
 {
@@ -68,6 +70,44 @@ namespace TeklaAPI.Tests
             tut.X += 500;
             tut.Y += 500;
             _TS.Txt(tut, "черный??", "Black");
+        }
+
+        [TestMethod()]
+        public void UT_LocalTxtl()
+        {
+            // test 0: check Language
+            var local = _TS._local();
+            Assert.IsNotNull(local);
+            Assert.IsNotNull(local.Language);
+            switch (local.Language)
+            {
+                case "rus": case "enu": case "esp": case "nld": case "deu":  break;
+                default:
+                    Assert.Fail($"Неизвестный язык ={local.Language}");
+                    break;
+            }
+
+            // test 1: LocalTxt(40), LocalTxt("..40")
+            string s = _TS.LocalTxt("by_number_msg_no_40");
+            string v = _TS.LocalTxt(40);
+            Assert.AreEqual(s, v);
+            switch (local.Language)
+            {
+                case "rus": Assert.AreEqual("Не является профилем балки", s); break;
+                case "enu": Assert.AreEqual("Not a beam profile", s); break;
+                case "esp": Assert.AreEqual("No es un perfil de viga", s); break;
+                case "nld": Assert.AreEqual("No es un perfil de viga", s); break;
+                case "deu": Assert.AreEqual("Selektiertes Profil ist kein Träger-Typ", s); break;
+            }
+        }
+
+        [TestMethod()]
+        public void UT_IAil()
+        {
+            // test 0: convert 
+
+    //        Assert.AreEqual("", _TS.IAil(40));
+
         }
 
         [TestMethod()]
@@ -158,5 +198,6 @@ namespace TeklaAPI.Tests
             SetWorkPlane(beam);
             return GetTmpPlane();
         }
+        internal TSDL _local() => local;
     }
 }

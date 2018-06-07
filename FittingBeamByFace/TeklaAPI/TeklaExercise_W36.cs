@@ -25,7 +25,7 @@ namespace TeklaAPI
 
         public void CheckCrossBeam()
         {
-            var beam = PickBeam("Select Main Beam"); 
+            var beam = PickBeam(283); //Pick Main Beam
             if (beam != null)
             {
                 var psk = beam.GetCoordinateSystem();

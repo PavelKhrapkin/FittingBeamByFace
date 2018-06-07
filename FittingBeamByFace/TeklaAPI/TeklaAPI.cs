@@ -1,13 +1,14 @@
 ﻿/* ------------------------------------------------------------------
  * TeklaAPI - module is working with TeklaStructure over OpenAPI
  * 
- * 7.05.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 7.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 24.04.2018 - Common TeklaAPI module created
  *  7.05.2018 - Senia Busin Excercise
  *  8.05.2018 - DrawTextExample Excercise
  * 11.05.2018 - Separated few methods to TeklaLib
+ *  7.06.2018 - Localization
  * --- Methods: ---
  * Init()   - setup Model connection, save ModelPlane
  * CreateBeam(name, prfString, p1, p2)  - create ThisBeam from p1 to p2
@@ -18,6 +19,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tekla.Structures.Datatype;
 using System.Globalization;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
@@ -25,14 +27,18 @@ using Tekla.Structures.Model;
 using Tekla.Structures.Model.UI;
 using T3D = Tekla.Structures.Geometry3d;
 using Tekla.Structures.Geometry3d;
+using System.IO;
+using Tekla.Structures;
+using TSDL = Tekla.Structures.Dialog.Localization;
 
 namespace TeklaAPI
 {
     public partial class TeklaAPI
     {
         private FittingBeamByFace.MainWindow mw = null;
+        protected TSDL local;
         protected Model Model;
-        protected TransformationPlane ModelPlane, TmpPlane;
+        protected TransformationPlane ModelPlane, TmpPlane;       
         Beam MainBeam = null, AttBeam = null;
 
         public void Init(dynamic mainWindow = null)
@@ -41,6 +47,13 @@ namespace TeklaAPI
             Model = new Model();
             if (!Model.GetConnectionStatus())
                 throw new Exception("Tekla not connected");
+
+            // Load LocalizationFile
+            string file = @"C:\Program Files\Tekla Structures\2018\messages\by_number.ail";
+            if (!File.Exists(file))  throw new Exception("No AIL file");   
+            Tekla.Structures.Dialog.Dialogs.SetSettings(string.Empty);
+            string lang = (string)Settings.GetValue("language");
+            local = new TSDL(file, lang);
 
             // Save Tekla Model Workplane to restore after change to any Part Plane
             SetWorkPlane();
@@ -143,7 +156,7 @@ namespace TeklaAPI
             Intersection.LineToLine(line1, line2);
             LineSegment intersectionSegment = Intersection.LineToLine(line1, line2);
 
-            double dist = Distance.PointToPoint(intersectionSegment.Point1, intersectionSegment.Point2);
+            double dist = T3D.Distance.PointToPoint(intersectionSegment.Point1, intersectionSegment.Point2);
             if (dist > 0.0001) return;
         }
 
