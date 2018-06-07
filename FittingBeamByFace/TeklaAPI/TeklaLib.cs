@@ -112,7 +112,7 @@ namespace TeklaAPI
         public string LocalTxt(params string[] txt)
         {
             string str = string.Empty;
-            foreach (string s in txt) str += LocalTxt(s);
+            foreach (string s in txt) str += local.GetText(s);
             return str;
         }
 

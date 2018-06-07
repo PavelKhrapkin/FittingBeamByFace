@@ -25,14 +25,19 @@ namespace TeklaAPI
 
         public void CheckCrossBeam()
         {
-            var beam = PickBeam(283); //Pick Main Beam
-            if (beam != null)
-            {
-                var psk = beam.GetCoordinateSystem();
-                ReperShow(beam.GetCoordinateSystem());
-                PointXYZ(beam.StartPoint);
-                PointXYZ(beam.EndPoint);
-            }
+            Beam MainBeam = PickBeam(283, 24);
+            BeamShow(MainBeam);
+            Beam AddBeam = PickBeam(283, 25);
+            BeamShow(AddBeam);
+        }
+
+        public void BeamShow(Beam beam)
+        {
+            if (beam == null) return;
+            var psk = beam.GetCoordinateSystem();
+            ReperShow(beam.GetCoordinateSystem());
+            PointXYZ(beam.StartPoint);
+            PointXYZ(beam.EndPoint);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace TeklaAPI.Tests
         }
 
         [TestMethod()]
-        public void UT_LocalTxtl()
+        public void UT_LocalTxt()
         {
             // test 0: check Language
             var local = _TS._local();
@@ -99,15 +99,16 @@ namespace TeklaAPI.Tests
                 case "nld": Assert.AreEqual("No es un perfil de viga", s); break;
                 case "deu": Assert.AreEqual("Selektiertes Profil ist kein Träger-Typ", s); break;
             }
-        }
 
-        [TestMethod()]
-        public void UT_IAil()
-        {
-            // test 0: convert 
-
-    //        Assert.AreEqual("", _TS.IAil(40));
-
+            // test 2: несколько параметров LocalTxt
+            s = _TS.LocalTxt(283, 333);
+            switch (local.Language)
+            {
+                case "rus": Assert.AreEqual("Соединения с балкой:Укажите деталь", s); break;
+                default:
+                    Assert.Fail($"Неизвестный язык ={local.Language}");
+                    break;
+            }
         }
 
         [TestMethod()]
