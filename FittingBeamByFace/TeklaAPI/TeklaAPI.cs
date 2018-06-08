@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------
  * TeklaAPI - module is working with TeklaStructure over OpenAPI
  * 
- * 7.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 8.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 24.04.2018 - Common TeklaAPI module created
@@ -9,26 +9,23 @@
  *  8.05.2018 - DrawTextExample Excercise
  * 11.05.2018 - Separated few methods to TeklaLib
  *  7.06.2018 - Localization
+ *  8.06.2018 - CeateBeam interface expanded
  * --- Methods: ---
  * Init()   - setup Model connection, save ModelPlane
- * CreateBeam(name, prfString, p1, p2)  - create ThisBeam from p1 to p2
+ * CreateBeam(name, prfString, p1, p2,..)  - create ThisBeam from p1 to p2
  * SetWorkPlane([theBeam])  - create workplane at theBeam, 
  *                            by default,restore saved
  * Node36(MainBeam, AttBeam) - implement Node36
  */
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Tekla.Structures.Datatype;
-using System.Globalization;
+using System.IO;
 using System.Windows;
+using Tekla.Structures.Datatype;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.UI;
 using T3D = Tekla.Structures.Geometry3d;
-using Tekla.Structures.Geometry3d;
-using System.IO;
-using Tekla.Structures;
 using TSDL = Tekla.Structures.Dialog.Localization;
 
 namespace TeklaAPI
@@ -61,7 +58,9 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
 
-        public Beam CreateBeam(string name, string prfStr, T3D.Point p1, T3D.Point p2)
+        public Beam CreateBeam(string name, string prfStr, T3D.Point p1, T3D.Point p2
+            , string material="C245", bool Commit=true, string Class = "7"
+            , int PositionDepth = -1, int PositionRotation = -1, int PositionPlane = -1)
         {
             if(p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
             if (prfStr == "" || prfStr == null) goto ErrPrfStr;
@@ -69,15 +68,22 @@ namespace TeklaAPI
             ThisBeam.StartPoint = p1;
             ThisBeam.EndPoint = p2;
             ThisBeam.Profile.ProfileString = prfStr;
-            ThisBeam.Material.MaterialString = "C245";
-            ThisBeam.Class = "7";
+            ThisBeam.Material.MaterialString = material;
+            ThisBeam.Class = Class;
+            if (PositionDepth != -1)
+                ThisBeam.Position.Depth = (Position.DepthEnum) PositionDepth;
+            if (PositionRotation != -1)
+                ThisBeam.Position.Rotation = (Position.RotationEnum) PositionRotation;
+            if (PositionRotation != -1)
+                ThisBeam.Position.Plane = (Position.PlaneEnum)PositionPlane;
+            if (!Commit) return ThisBeam;
             ThisBeam.Insert();
             Model.CommitChanges();
             return ThisBeam;
 
             string msg;
-            ErrPrfStr: msg = "Profile string is empty"; goto Err;
-            ErrXeqY: msg = "StartPoint and EndPoint are the same -- Beam not Created.";
+            ErrPrfStr: msg = LocalTxt(11) + "=\"\""; goto Err;
+            ErrXeqY: msg = LocalTxt(507) + " = " + LocalTxt(508);
             Err: MessageBox.Show(msg);
             return null;
         }

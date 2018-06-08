@@ -192,13 +192,6 @@ namespace TeklaAPI.Tests
         }
 
         [TestMethod()]
-        public void Example1()
-        {
-          
-        }
-
-
-        [TestMethod()]
         public void UT_CutBeamByLine()
         {
             // Пример 1: из TeklaAPI CutPlate Example
@@ -206,12 +199,12 @@ namespace TeklaAPI.Tests
             Point Point = new Point(0, 0, 0);
             Point Point2 = new Point(1000, 0, 0);
 
-            Beam Beam = new Beam();
-            Beam.StartPoint = Point;
-            Beam.EndPoint = Point2;
-            Beam.Profile.ProfileString = "HEA400";
-            Beam.Finish = "PAINT";
-            Beam.Insert();
+            ThisBeam = new Beam();
+            ThisBeam.StartPoint = Point;
+            ThisBeam.EndPoint = Point2;
+            ThisBeam.Profile.ProfileString = "HEA400";
+            ThisBeam.Finish = "PAINT";
+            ThisBeam.Insert();
             Model.CommitChanges();
 
             CutPlane CutPlane = new CutPlane();
@@ -219,18 +212,21 @@ namespace TeklaAPI.Tests
             CutPlane.Plane.Origin = new Point(400, 0, 0);
             CutPlane.Plane.AxisX = new Vector(0, 500, 0);
             CutPlane.Plane.AxisY = new Vector(0, 0, -1000);
-            CutPlane.Father = Beam;
+            CutPlane.Father = ThisBeam;
             CutPlane.Insert();
             Model.CommitChanges();
+            // В результате на экране Tekla создается балка вдоль оси Х
+            //..и стирается ее часть, ближняя к точке (0,0) на Х=400.
+            //..Чтобы стирать другую часть балки, поменяйте   
 
             // test 0: создаем балку вдоль оси Х, а потом ее стираем
             Point p1 = new Point(0, 2500, 0);
             Point p2 = new Point(2500, 0, 0);
-            ThisBeam = _TS.CreateBeam("MainBeam", "I50B1_20_93", p1, p2);
+            MainBeam = _TS.CreateBeam("MainBeam", "I50B1_20_93", p1, p2);
 
             // создаем режущую плоскость
             CutPlane BeamLineCut = new CutPlane();
-            BeamLineCut.Father = ThisBeam;
+            BeamLineCut.Father = this.MainBeam;
             Plane BeamCutPlane = new Plane();
             BeamCutPlane.Origin = new Point(1000, 0, 0);
             BeamCutPlane.AxisX = new Vector(0, 0, 500);
@@ -242,6 +238,48 @@ namespace TeklaAPI.Tests
             BeamLineCut.Insert();
 
             Model.CommitChanges(); 
+        }
+
+        [TestMethod()]
+        public void UT_CutBeamByPart()
+        {
+            // test 0: обрезаем балку ThisBeam балкой MainBeam
+            //.. создаем балку [0, 1000 - 2000,1000] I20 и обрезает ее
+            //.. балкой MainBeam [500,0 - 500, 1500] I50
+            Point p1 = new Point(0, 3000);
+            Point p2 = new Point(2000, 3000);
+            ThisBeam = _TS.CreateBeam("ThisBeam", "I20B1_20_93", p1, p2
+                , PositionDepth:(int) Position.DepthEnum.MIDDLE);
+
+            Point cp1 = new Point(1000, 0);
+            Point cp2 = new Point(1000, 4000);
+            MainBeam = _TS.CreateBeam("MainBeam", "I50B1_20_93", cp1, cp2
+                , PositionDepth: (int)Position.DepthEnum.MIDDLE);
+    
+
+            ////Point Point = new Point(0, 1000);
+            ////Point Point2 = new Point(2000, 1000);
+
+            ////ThisBeam = new Beam();
+            ////ThisBeam.StartPoint = Point;
+            ////ThisBeam.EndPoint = Point2;
+            ////ThisBeam.Profile.ProfileString = "HEA400";
+            ////ThisBeam.Finish = "PAINT";
+            ////ThisBeam.Insert();
+            ////Model.CommitChanges();
+
+            ////CutPlane CutPlane = new CutPlane();
+            ////CutPlane.Plane = new Plane();
+            ////CutPlane.Plane.Origin = new Point(400, 0, 0);
+            ////CutPlane.Plane.AxisX = new Vector(0, 500, 0);
+            ////CutPlane.Plane.AxisY = new Vector(0, 0, -1000);
+            ////CutPlane.Father = ThisBeam;
+            ////CutPlane.Insert();
+            ////Model.CommitChanges();
+            ////// В результате на экране Tekla создается балка вдоль оси Х
+            //////..и стирается ее часть, ближняя к точке (0,0) на Х=400.
+            //////..Чтобы стирать другую часть балки, поменяйте   
+
         }
     }
 
