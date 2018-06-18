@@ -62,7 +62,8 @@ namespace TeklaAPI
             , string material="C245", bool Commit=true, string Class = "7"
             , int PositionDepth = -1, int PositionRotation = -1, int PositionPlane = -1)
         {
-            if(p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
+            string msg;
+            if (p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
             if (prfStr == "" || prfStr == null) goto ErrPrfStr;
             Beam ThisBeam = new Beam();
             ThisBeam.StartPoint = p1;
@@ -81,9 +82,8 @@ namespace TeklaAPI
             Model.CommitChanges();
             return ThisBeam;
 
-            string msg;
-            ErrPrfStr: msg = LocalTxt(11) + "=\"\""; goto Err;
-            ErrXeqY: msg = LocalTxt(507) + " = " + LocalTxt(508);
+            ErrPrfStr: msg = LocalTxt(11, "=\"\""); goto Err;
+            ErrXeqY: msg = LocalTxt(507, " = ", 508);
             Err: MessageBox.Show(msg);
             return null;
         }
@@ -92,7 +92,7 @@ namespace TeklaAPI
         {
             if (theBeam != null)
             {
-                T3D.CoordinateSystem BeamCoordinateSystem = theBeam.GetCoordinateSystem();
+                CoordinateSystem BeamCoordinateSystem = theBeam.GetCoordinateSystem();
                 Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(new TransformationPlane(BeamCoordinateSystem));
                 Model.CommitChanges();
                 ViewHandler.SetRepresentation("standard");

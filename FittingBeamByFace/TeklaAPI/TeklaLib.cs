@@ -1,7 +1,7 @@
 ﻿/* ----------------------------------------------------------------------------
  * TeklaLib - part of TeklaAPI module - separated Library simple common methods
  * 
- * 6.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 18.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 11.05.2018 - TeklaLib module created
@@ -10,15 +10,19 @@
  *  1.06.2018 - PointXYZ description
  *  5.06.2018 - PickBeam add
  *  6.06.2018 - IAil(int) add
+ * 18.06.2018 - PlainShow add, VectorAd add 
  * --- Methods: ---
  * Txt(point, text [, color])   - draw string text in point with color name
  * PoinXYZ(point)   - draw point coordinates as "(x, y, z)" string of integers
  * ShowI(x)         - draw x value as int in Tekla Window
  * Rep(point)       - draw Reper as Global [x,y,z] in point
  * ReperShow(CoordSys) - draw [x,y,z] arrow in Origin Point of Coordinate Syst
+ * PointAdVector(p, v, [lng])   - get Point [p + v] with length lng
+ * VectorAd(v1, v2) - add Vectors v1 and v2
  * PointShow(p, text)  - draw point p and text - name of the point
+ * PlainShow(Plain)    - draw rectangular shows the Plane
  * PickBeam(text)   - Pick a beam from the Tekla model with text prompt
- * IAil(int n)      - display localyzed messabe number n in Tekla
+ * LocalTxt(dynamic[] x) - make localyzed messages by number or text string
  */
 using System.Globalization;
 using Tekla.Structures.Model.UI;
@@ -59,17 +63,19 @@ namespace TeklaAPI
             GraphicsDrawer.DrawLineSegment(p, pZ, _color); Txt(pZ, "Z");
         }
 
-        public void ReperShow(CoordinateSystem beamCoordinateSystem)
+        public void ReperShow(CoordinateSystem beamCoordinateSystem, int lng = 1000)
         {
+            var trPlane = new TransformationPlane();
+            Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(trPlane);
             GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
             Color _color = new Color(1, 0, 0);
             Point p = beamCoordinateSystem.Origin;
             Vector aX = beamCoordinateSystem.AxisX.GetNormal();
             Vector aY = beamCoordinateSystem.AxisY.GetNormal();
             Vector aZ = Vector.Cross(aX, aY);
-            Point pX = PointAddVector(p, aX, 1000);
-            Point pY = PointAddVector(p, aY, 1000);
-            Point pZ = PointAddVector(p, aZ, 1000);
+            Point pX = PointAddVector(p, aX, lng);
+            Point pY = PointAddVector(p, aY, lng);
+            Point pZ = PointAddVector(p, aZ, lng);
             GraphicsDrawer.DrawLineSegment(p, pX, _color); Txt(pX, "X");
             GraphicsDrawer.DrawLineSegment(p, pY, _color); Txt(pY, "Y");
             GraphicsDrawer.DrawLineSegment(p, pZ, _color); Txt(pZ, "Z");
@@ -77,6 +83,8 @@ namespace TeklaAPI
 
         public Point PointAddVector(Point p, Vector v, double Norm = 1)
             => new Point(p.X + v.X * Norm, p.Y + v.Y * Norm, p.Z + v.Z * Norm);
+        public Vector VectorAd(Vector v1, Vector v2)
+            => new Vector(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
 
         public void PointShow(Point p, string text = "")
         {
@@ -96,6 +104,62 @@ namespace TeklaAPI
             Txt(p, text);
         }
 
+        public void PlaneShow(CoordinateSystem cs, int lng=1000)
+        {
+
+            Model.GetWorkPlaneHandler()
+                .SetCurrentTransformationPlane(new TransformationPlane(cs));
+
+            Model.CommitChanges();
+            ViewHandler.SetRepresentation("standard");
+            var p = cs.Origin;
+            Point p1 = new Point(p.X + lng, p.Y - lng);
+            Point p2 = new Point(p.X + lng, p.Y + lng);
+            Point p3 = new Point(p.X - lng, p.Y + lng);
+            Point p4 = new Point(p.X - lng, p.Y - lng);
+
+            //var trPlane = new TransformationPlane();
+            //Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(trPlane);
+            GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
+            Color _color = new Color(1, 0, 0);
+   
+            GraphicsDrawer.DrawLineSegment(p1, p2, _color); Txt(p1, "p1");
+            GraphicsDrawer.DrawLineSegment(p2, p3, _color); Txt(p2, "p2");
+            GraphicsDrawer.DrawLineSegment(p3, p4, _color); Txt(p3, "p3");
+            GraphicsDrawer.DrawLineSegment(p4, p1, _color); Txt(p4, "p4");
+
+            Model.GetWorkPlaneHandler()
+               .SetCurrentTransformationPlane(new TransformationPlane());
+
+            ReperShow(cs);
+        }
+
+        //public void PlaneShow(Plane Plane)
+        //{
+        //    const int XLNG = 1200;
+        //    const int YLNG = 800;
+        //    const int ZLNG = 400;
+        //    Point o = Plane.Origin;
+        //    Vector aX = Plane.AxisX.GetNormal();
+        //    Vector aY = Plane.AxisY.GetNormal();
+        //    CoordinateSystem cs = new CoordinateSystem(o, aX, aY);
+        //    Model.GetWorkPlaneHandler()
+        //        .SetCurrentTransformationPlane(new TransformationPlane(cs));
+        //    Model.CommitChanges();
+        //    ViewHandler.SetRepresentation("standard");
+        //    ReperShow(cs, ZLNG);
+        //    Point p1 = new Point(o.X + XLNG, o.Y - YLNG);
+        //    Point p2 = new Point(o.X + XLNG, o.Y + YLNG);
+        //    Point p3 = new Point(o.X - XLNG, o.Y + YLNG);
+        //    Point p4 = new Point(o.X - XLNG, o.Y - YLNG);
+        //    GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
+        //    Color _color = new Color(1, 0, 0);
+        //    GraphicsDrawer.DrawLineSegment(p1, p2, _color);
+        //    GraphicsDrawer.DrawLineSegment(p2, p3, _color);
+        //    GraphicsDrawer.DrawLineSegment(p3, p4, _color);
+        //    GraphicsDrawer.DrawLineSegment(p4, p1, _color);
+        //}
+
         public Beam PickBeam(params int[] n) => PickBeam(LocalTxt(n));
         public Beam PickBeam(string prompt = "Pick a beam")
         {
@@ -109,19 +173,14 @@ namespace TeklaAPI
             return selectedBeam;
         }
 
-        public string LocalTxt(params string[] txt)
+        public string LocalTxt(params dynamic[] x)
         {
             string str = string.Empty;
-            foreach (string s in txt) str += local.GetText(s);
-            return str;
-        }
-
-        public string LocalTxt(params int[] n)
-        {
-            string str = string.Empty;
-            foreach(int i in n)
+            foreach (var s in x)
             {
-                str += local.GetText("by_number_msg_no_" + i);
+                if(s.GetType() == typeof(string)) str += local.GetText(s);
+                if(s.GetType() == typeof(int))
+                    str += local.GetText("by_number_msg_no_" + s.ToString());
             }
             return str;
         }

@@ -111,6 +111,10 @@ namespace TeklaAPI.Tests
                     Assert.Fail($"Неизвестный язык ={local.Language}");
                     break;
             }
+
+            // test 3: mix txt and int
+            if (local.Language == "rus")
+                Assert.AreEqual("Соединения с балкой: Укажите деталь", _TS.LocalTxt(283, " ", 333));
         }
 
         [TestMethod()]
@@ -142,6 +146,20 @@ namespace TeklaAPI.Tests
             _TS.PointXYZ(new Point(1800, 800));
         }
         #endregion --- Txt, LocalTxt, PointShow, ReperShow
+
+        [TestMethod()]
+        public void UT_PlaneShow()
+        {
+            Plane plane = new Plane();
+            plane.Origin = new Point(1000, 1000, 0);
+            plane.AxisX = new Vector(100, -40, 50);
+            plane.AxisY = new Vector(40, 100, 50);
+
+            CoordinateSystem cs = new CoordinateSystem(plane.Origin, plane.AxisX, plane.AxisY);
+    //        _TS.PlaneShow(CoordinateSystem())
+
+            _TS.PlaneShow(cs);
+        }
 
         [TestMethod()]
         public void UT_Tekla_SetWorkPlane()
@@ -254,31 +272,15 @@ namespace TeklaAPI.Tests
             Point cp1 = new Point(1000, 0);
             Point cp2 = new Point(1000, 4000);
             MainBeam = _TS.CreateBeam("MainBeam", "I50B1_20_93", cp1, cp2
-                , PositionDepth: (int)Position.DepthEnum.MIDDLE);
-    
+                , PositionDepth: (int)Position.DepthEnum.MIDDLE
+                , Class: BooleanPart.BooleanOperativeClassName);
 
-            ////Point Point = new Point(0, 1000);
-            ////Point Point2 = new Point(2000, 1000);
-
-            ////ThisBeam = new Beam();
-            ////ThisBeam.StartPoint = Point;
-            ////ThisBeam.EndPoint = Point2;
-            ////ThisBeam.Profile.ProfileString = "HEA400";
-            ////ThisBeam.Finish = "PAINT";
-            ////ThisBeam.Insert();
-            ////Model.CommitChanges();
-
-            ////CutPlane CutPlane = new CutPlane();
-            ////CutPlane.Plane = new Plane();
-            ////CutPlane.Plane.Origin = new Point(400, 0, 0);
-            ////CutPlane.Plane.AxisX = new Vector(0, 500, 0);
-            ////CutPlane.Plane.AxisY = new Vector(0, 0, -1000);
-            ////CutPlane.Father = ThisBeam;
-            ////CutPlane.Insert();
-            ////Model.CommitChanges();
-            ////// В результате на экране Tekla создается балка вдоль оси Х
-            //////..и стирается ее часть, ближняя к точке (0,0) на Х=400.
-            //////..Чтобы стирать другую часть балки, поменяйте   
+            BooleanPart Beam = new BooleanPart();
+            Beam.Father = ThisBeam;
+            Beam.SetOperativePart(MainBeam);
+            Beam.Insert();
+            MainBeam.Delete();
+            Model.CommitChanges();
 
         }
     }
