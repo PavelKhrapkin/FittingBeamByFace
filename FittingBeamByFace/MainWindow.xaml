@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:FittingBeamByFace"
         mc:Ignorable="d"
         Title="TeklaAPI Exercizes and Development Pavel Khrapkin 2018" Height="400" Width="400">
-    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.06.4
+    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.06.21
             - History: -
     April-2018 - Created set of modules
     2018.05.5  - DataGrid XAML architekture with all Buttons visible on Window
     2018.05.21 - Modify XAML to Tab Control with split contents by Tabs
     2018.06.1  - Chris Keyack Session 08
     2018.06.4  - Chris Keyack Session 09
+    2018.06.21 - Chris Keyack Session 10
     -->
     <Grid>
         <TabControl>
@@ -116,6 +117,40 @@
                     <TextBox Name="CK09_4" Height="0" TextWrapping="Wrap"/>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Chris Keyack 10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Session 10. Bolts and Welding Assembly 2018.06.21" FontWeight="Bold"/>
+                    <TextBlock/>
+
+                    <TextBlock Text ="??Выбираем угловые точки и строим по ним пластину.??"/>
+                    <StackPanel Orientation="Horizontal" Height="20"
+                                HorizontalAlignment="Center">
+                        <Button Content="Bolt" Width="50" Click="Button_CK10_Bolt_Click"
+                            FontWeight="Bold" Background="Yellow"/>
+                        <Button Content="SetWorkPlane" Width="120" Click="Button_CK10_SetWorkPlane_Click"
+                            FontWeight="Bold" Background="Yellow" Margin="5, 0"/>
+                    </StackPanel>
+                    <TextBox Name="CK10_1" Height="0" TextWrapping="Wrap"/>
+                    <Image Source="divider.jpg" Height="15"/>
+
+                    <TextBlock Text ="??Возвращаемся от ПСК к глобальной системе координат.??"/>
+                    <Button Content="Weld" FontWeight="Bold" Background="Yellow"
+                        Width="50" Click="Button_C10_Weld_Click"/>
+                    <TextBox Name="CK10_2" Height="0" TextWrapping="Wrap"/>
+                    <Image Source="divider.jpg" Height="15"/>
+
+                    <TextBlock Text ="??Возвращаемся от ПСК к глобальной системе координат.??"/>
+                    <Button Content="Add To" FontWeight="Bold" Background="LightGreen"
+                        Width="100" Click="Button_CK10_AddTo_Click"/>
+                    <TextBox Name="CK10_3" Height="0" TextWrapping="Wrap"/>
+                    <Image Source="divider.jpg" Height="15"/>
+
+                    <TextBlock Text ="??Возвращаемся от ПСК к глобальной системе координат.??"/>
+                    <Button Content="GetAssembly" FontWeight="Bold" Background="Aqua"
+                        Width="100" Click="Button_CK09_PolygonCut_Click"/>
+                    <TextBox Name="CK10_4" Height="0" TextWrapping="Wrap"/>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="Сеня Бусин">
                 <StackPanel Margin="10">
                     <TextBlock Text="FaceFitting"/>
@@ -123,7 +158,6 @@
                             FontWeight="Bold" Background="Yellow"/>
                 </StackPanel>
             </TabItem>
-
             <TabItem Header="W36">
                 <StackPanel>
                     <TextBlock Text="Моделирование узла 36  2018.06.5" FontWeight="Bold"/>
