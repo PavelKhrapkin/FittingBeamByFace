@@ -135,7 +135,7 @@
 
                     <TextBlock Text ="??Возвращаемся от ПСК к глобальной системе координат.??"/>
                     <Button Content="Weld" FontWeight="Bold" Background="Yellow"
-                        Width="50" Click="Button_C10_Weld_Click"/>
+                        Width="50" Click="Button_CK10_Weld_Click"/>
                     <TextBox Name="CK10_2" Height="0" TextWrapping="Wrap"/>
                     <Image Source="divider.jpg" Height="15"/>
 
@@ -147,7 +147,7 @@
 
                     <TextBlock Text ="??Возвращаемся от ПСК к глобальной системе координат.??"/>
                     <Button Content="GetAssembly" FontWeight="Bold" Background="Aqua"
-                        Width="100" Click="Button_CK09_PolygonCut_Click"/>
+                        Width="100" Click="Button_CK10_GetAssembly_Click"/>
                     <TextBox Name="CK10_4" Height="0" TextWrapping="Wrap"/>
                 </StackPanel>
             </TabItem>

@@ -1,5 +1,5 @@
 ﻿/* ------------------------------------------------------------------
- *  Головной модуль MainWindow.cs       04.06.2018 Pavel Khrapkin 
+ *  Головной модуль MainWindow.cs      21.06.2018 Pavel Khrapkin 
  *  
  *  Использует модули TeklaAPI разделенные на 3 части partial
  *  1) TeklaLib     - библиотечные методы
@@ -118,6 +118,23 @@ namespace FittingBeamByFace
         private void Button_CK09_PolygonCut_Click(object sender, RoutedEventArgs e)
             => InvokeTS(TS.CK09_PolygonCut, CK09_4);
         #endregion --- Chris Keyack Session 09 ---
+
+        #region --- Chris Keyack Session 10 ---
+        private void Button_CK10_Bolt_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK10_Bolt, CK10_1);
+
+        private void Button_CK10_SetWorkPlane_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK10_SetWorkPlane, CK10_1);
+
+        private void Button_CK10_Weld_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK10_Weld, CK10_2);
+
+        private void Button_CK10_AddTo_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.CK10_AddTo, CK10_3);
+
+        private void Button_CK10_GetAssembly_Click(object sender, RoutedEventArgs e)
+          => InvokeTS(TS.CK10_GetAssembly, CK10_4);
+        #endregion --- Chris Keyack Session 10 ---
 
         #region --- Сеня Бусин ---
         private void Button_Go_Click(object sender, RoutedEventArgs e)

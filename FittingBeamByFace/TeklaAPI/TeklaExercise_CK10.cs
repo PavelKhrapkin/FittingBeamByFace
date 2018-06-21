@@ -15,6 +15,25 @@ namespace TeklaAPI
 {
     public partial class TeklaAPI
     {
+        public void CK10_Bolt()
+        {
+        }
+
+        public void CK10_SetWorkPlane()
+        {
+        }
+
+        public void CK10_Weld()
+        {
+        }
+
+        public void CK10_AddTo()
+        {
+        }
+
+        public void CK10_GetAssembly()
+        {
+        }
 #if ToReWrite
         public object TSMUI { get; private set; }
 
