@@ -1,18 +1,11 @@
-﻿using TeklaAPI;
-/* -----------------------------------------------------
+﻿/* -----------------------------------------------------
 * Tekla module Unit Tests  1.06.2018 Pavel Khrapkin
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
 using T3D = Tekla.Structures.Geometry3d;
-using TSMUI = Tekla.Structures.Model.UI;
-using Tekla.Structures.Geometry3d;
-using Tekla.Structures;
 using TSDL = Tekla.Structures.Dialog.Localization;
 
 namespace TeklaAPI.Tests
@@ -189,24 +182,40 @@ namespace TeklaAPI.Tests
         }
 
         [TestMethod()]
-        public void UT_Tekla_Node36()
+        public void UT_W36()
         {
-            T3D.Point p1 = new T3D.Point(0, 2000, 0);
-            T3D.Point p2 = new T3D.Point(3000, 0, 0);
+            Point p1 = new Point(0, 2000, 0);
+            Point p2 = new Point(3000, 0, 0);
             MainBeam = _TS.CreateBeam("Main Beam", "I30B1_20_93", p1, p2);
             _TS._SetWorkPlane(MainBeam);
 
-            T3D.Point p3 = new T3D.Point(400, 0, 0);
-            T3D.Point p4 = new T3D.Point(400, 0, 2000);
-            AttBeam = _TS.CreateBeam("Att Beam", "I20B1_20_93", p3, p4);
-            AttBeam.Position.Depth = Position.DepthEnum.FRONT;
-            AttBeam.Position.Rotation = Position.RotationEnum.BACK;
+            Point p3 = new Point(400, 0, 0);
+            Point p4 = new Point(400, 0, 2000);
+            AttBeam = _TS.CreateBeam("Att Beam", "I20B1_20_93", p3, p4
+                , PositionRotation:(int)Position.RotationEnum.BACK
+                , PositionPlane:(int)Position.PlaneEnum.MIDDLE
+                , PositionDepth:(int)Position.DepthEnum.MIDDLE
+                , Class:"5");
+
+            // толщина стенки AttBeam - WEB_THICKNESS
+            double BeamThickness = -1;
+            AttBeam.GetReportProperty("WEB_THICKNESS", ref BeamThickness);
+            if (BeamThickness < 5 || BeamThickness > 23 )
+                throw new Exception($"Wrong AttBeam thickness={BeamThickness}");
 
             // do it later            _TS.Node36(MainBeam, AttBeam);
 
-            T3D.Point p5 = new T3D.Point(400, 0, 0);
-            T3D.Point p6 = new T3D.Point(400, 0, 50);
-            ThisBeam = _TS.CreateBeam("вут", "T40BT1_14_2_685_86", p5, p6);
+            // тав
+            int l_tav = 160;
+            int l_size = 40;
+            double w_tav = 13.5;
+            double xTav = 400 + (BeamThickness + w_tav)/2;
+            Point p5 = new Point(xTav, - l_tav/2);
+            Point p6 = new Point(xTav, l_tav / 2);
+            ThisBeam = _TS.CreateBeam("вут", "T40BT1_14_2_685_86", p5, p6, Class:"6",
+                PositionRotation:(int)Position.RotationEnum.BELOW,
+                PositionPlane:(int)Position.PlaneEnum.MIDDLE,
+                PositionDepth:(int)Position.DepthEnum.FRONT);
         }
 
         [TestMethod()]
@@ -244,6 +253,7 @@ namespace TeklaAPI.Tests
 
             // создаем режущую плоскость
             CutPlane BeamLineCut = new CutPlane();
+                // Father - Объект модели над которым выполняется действие 
             BeamLineCut.Father = this.MainBeam;
             Plane BeamCutPlane = new Plane();
             BeamCutPlane.Origin = new Point(1000, 0, 0);
@@ -251,7 +261,7 @@ namespace TeklaAPI.Tests
             // Changing the positive vs. negative value here determines which direction
             // the line cut will take away material where as fitting looks at which end
             // of beam it is closest to figure out how to cut.
-            BeamCutPlane.AxisX = new Vector(0, -500, 0);
+            BeamCutPlane.AxisY = new Vector(0, -500, 0);
             BeamLineCut.Plane = BeamCutPlane;
             BeamLineCut.Insert();
 
@@ -275,13 +285,38 @@ namespace TeklaAPI.Tests
                 , PositionDepth: (int)Position.DepthEnum.MIDDLE
                 , Class: BooleanPart.BooleanOperativeClassName);
 
-            BooleanPart Beam = new BooleanPart();
-            Beam.Father = ThisBeam;
-            Beam.SetOperativePart(MainBeam);
-            Beam.Insert();
-            MainBeam.Delete();
+            ThisBeam = _TS.CutBeamByPart(ThisBeam, MainBeam, false);
+
+            // стираем ThisBeam и MainBeam
+  //          ThisBeam.Delete();
+ //           MainBeam.Delete();
+ //           Model.CommitChanges();
+
+            // test 1: обрезаем балку ThisBeam пластиной Plate
+            p1 = new Point(3000, 2000, 1000);
+            p2 = new Point(5000, 1000, 0);
+            ThisBeam = _TS.CreateBeam("ThisBeam", "I20B1_20_93", p1, p2);
+            ContourPoint c1 = new ContourPoint(new Point(4000, 1000, 0), null);
+            ContourPoint c2 = new ContourPoint(new Point(4000, 3000, 0), null);
+            ContourPoint c3 = new ContourPoint(new Point(4000, 3000, 2000), null);
+            ContourPoint c4 = new ContourPoint(new Point(4000, 1000, 2000), null);
+            var Plate = new ContourPlate();
+            Plate.AddContourPoint(c1);
+            Plate.AddContourPoint(c2);
+            Plate.AddContourPoint(c3);
+            Plate.AddContourPoint(c4);
+            Plate.Profile.ProfileString = "PL200";
+            Plate.Material.MaterialString = "C245";
+            Plate.Class = "2";
+            Plate.Name = "PLATE";
+            Plate.Insert();
             Model.CommitChanges();
 
+            ThisBeam = _TS.CutBeamByPart(ThisBeam, Plate, false);
+
+   //         ThisBeam.Delete();
+            Plate.Delete();
+            Model.CommitChanges();
         }
     }
 

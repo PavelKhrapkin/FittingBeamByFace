@@ -134,32 +134,6 @@ namespace TeklaAPI
             ReperShow(cs);
         }
 
-        //public void PlaneShow(Plane Plane)
-        //{
-        //    const int XLNG = 1200;
-        //    const int YLNG = 800;
-        //    const int ZLNG = 400;
-        //    Point o = Plane.Origin;
-        //    Vector aX = Plane.AxisX.GetNormal();
-        //    Vector aY = Plane.AxisY.GetNormal();
-        //    CoordinateSystem cs = new CoordinateSystem(o, aX, aY);
-        //    Model.GetWorkPlaneHandler()
-        //        .SetCurrentTransformationPlane(new TransformationPlane(cs));
-        //    Model.CommitChanges();
-        //    ViewHandler.SetRepresentation("standard");
-        //    ReperShow(cs, ZLNG);
-        //    Point p1 = new Point(o.X + XLNG, o.Y - YLNG);
-        //    Point p2 = new Point(o.X + XLNG, o.Y + YLNG);
-        //    Point p3 = new Point(o.X - XLNG, o.Y + YLNG);
-        //    Point p4 = new Point(o.X - XLNG, o.Y - YLNG);
-        //    GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
-        //    Color _color = new Color(1, 0, 0);
-        //    GraphicsDrawer.DrawLineSegment(p1, p2, _color);
-        //    GraphicsDrawer.DrawLineSegment(p2, p3, _color);
-        //    GraphicsDrawer.DrawLineSegment(p3, p4, _color);
-        //    GraphicsDrawer.DrawLineSegment(p4, p1, _color);
-        //}
-
         public Beam PickBeam(params int[] n) => PickBeam(LocalTxt(n));
         public Beam PickBeam(string prompt = "Pick a beam")
         {
@@ -183,6 +157,36 @@ namespace TeklaAPI
                     str += local.GetText("by_number_msg_no_" + s.ToString());
             }
             return str;
+        }
+
+        public Beam CutBeamByPart(Beam beam, Part part, bool startSideCut=true)
+        {
+            // вырезаем ThasBeam по MainBeam
+            var partClass = part.Class;
+            BooleanPart Beam = new BooleanPart();
+            Beam.Father = beam;
+            part.Class = BooleanPart.BooleanOperativeClassName;
+            Beam.SetOperativePart(part);
+            Beam.Insert();
+            part.Class = partClass;
+            part.Modify();
+
+            // создаем режущую плоскость, чтобы отбросить 
+            //..(левую) часть ThisBeam по плоскости MainBeam
+            CutPlane BeamLineCut = new CutPlane();
+            BeamLineCut.Father = beam;
+            Plane BeamCutPlane = new Plane();
+            var cs = part.GetCoordinateSystem();
+            if (startSideCut) cs.AxisX *= -1;
+            BeamCutPlane.AxisX = cs.AxisX;
+            BeamCutPlane.AxisY = cs.AxisY;
+            BeamCutPlane.Origin = cs.Origin;
+            BeamLineCut.Plane = BeamCutPlane;
+            BeamLineCut.Insert();
+
+            Model.CommitChanges();
+
+            return beam;
         }
     }
 }
