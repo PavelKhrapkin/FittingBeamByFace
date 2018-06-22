@@ -153,6 +153,15 @@
             </TabItem>
             <TabItem Header="Сеня Бусин">
                 <StackPanel Margin="10">
+                    <TextBlock Text="Упражнения по мотивам видео Сени Бусина   2018.06.22" FontWeight="Bold"/>
+                    <TextBlock/>
+
+                    <TextBlock Text ="Вывод на экран Tekla текста, линий, полилиний, реперов."/>
+                    <Button Content="Rep" Width="50" Click="Button_Rep_Click" 
+                            FontWeight="Bold" Background="LightPink"/>
+                    <TextBox Name="SB_01" Height="0" TextWrapping="Wrap"/>
+                    <Image Source="divider.jpg" Height="15"/>
+
                     <TextBlock Text="FaceFitting"/>
                     <Button Content="Start" Width="80" Click="Button_Go_Click" 
                             FontWeight="Bold" Background="Yellow"/>

@@ -113,6 +113,9 @@ namespace TeklaAPI.Tests
         [TestMethod()]
         public void UT_ReperShow()
         {
+            // test 0: вывод глобального репера длиной 1000
+
+
             Point p1 = new Point(1000, 1000, 0);
             Point p2 = new Point(2000, 3000, 0);
             ThisBeam = _TS.CreateBeam("test Beam", "I50B1_20_93", p1, p2);

@@ -1,7 +1,7 @@
 ﻿/* ----------------------------------------------------------------------------
  * TeklaLib - part of TeklaAPI module - separated Library simple common methods
  * 
- * 18.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 22.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 11.05.2018 - TeklaLib module created
@@ -11,7 +11,10 @@
  *  5.06.2018 - PickBeam add
  *  6.06.2018 - IAil(int) add
  * 18.06.2018 - PlainShow add, VectorAd add 
+ * 22.06.2018 - Line and PolyLine add, optimization with Line, color
  * --- Methods: ---
+ * Line(p1, p2, [color])    - draw line from Point p1 to Point p2 
+ * PolyLine([color], Points[] p) - draw polyline with color
  * Txt(point, text [, color])   - draw string text in point with color name
  * PoinXYZ(point)   - draw point coordinates as "(x, y, z)" string of integers
  * ShowI(x)         - draw x value as int in Tekla Window
@@ -34,13 +37,37 @@ namespace TeklaAPI
 {
     public partial class TeklaAPI
     {
+        const string RED = "RED";
+        private Color _color = new Color(1, 0, 0);
 
-        public void Txt(Point point, string text, string color = "Red")
+        public void Line(Point p1, Point p2, string color = "red")
+            => GraphicsDrawer.DrawLineSegment(p1, p2, setColor(color));
+
+        public void PolyLine(string color = "red", params Point[] p)
         {
-            GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
-            Color _color = new Color(1, 0, 0);
-            if (color == "Black") _color = new Color(0, 0, 0);
-            GraphicsDrawer.DrawText(point, text, _color);
+            setColor(color);
+            PolyLine(p);
+        }
+        public void PolyLine(params Point[]p)
+        {
+            if (p.Length < 2) return;
+            var pnt = p[0];
+            for( int i = 1; i < p.Length; i++)
+            {
+                Line(pnt, p[i]);
+                pnt = p[i];
+            }
+        }
+
+        public void Txt(Point point, string text, string color = RED) 
+            => GraphicsDrawer.DrawText(point, text, setColor(color));
+
+        private Color setColor(string color = RED)
+        {
+            string col = color.ToUpper();
+            _color = new Color(1, 0, 0);
+            if (col == "BLACK") _color = new Color(0, 0, 0);
+            return _color;
         }
 
         //Shows the point coordinates without decimals
@@ -51,16 +78,15 @@ namespace TeklaAPI
             => x.ToString("0", CultureInfo.InvariantCulture);
 
         //Draws coordinate Reper with length 1000 in p in Global Coord System
-        public void Rep(Point p)
+        public void Rep(Point p, string color=RED)
         {
+            setColor(color);
             Point pX = new Point(p.X + 1000, p.Y, p.Z);
             Point pY = new Point(p.X, p.Y + 1000, p.Z);
             Point pZ = new Point(p.X, p.Y, p.Z + 1000);
-            GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
-            Color _color = new Color(1, 0, 0);
-            GraphicsDrawer.DrawLineSegment(p, pX, _color); Txt(pX, "X");
-            GraphicsDrawer.DrawLineSegment(p, pY, _color); Txt(pY, "Y");
-            GraphicsDrawer.DrawLineSegment(p, pZ, _color); Txt(pZ, "Z");
+            Line(p, pX); Txt(pX, "X");
+            Line(p, pY); Txt(pY, "Y");
+            Line(p, pZ); Txt(pZ, "Z");
         }
 
         public void ReperShow(CoordinateSystem beamCoordinateSystem, int lng = 1000)
@@ -93,14 +119,15 @@ namespace TeklaAPI
             Point p2 = new Point(p.X + l, p.Y - l);
             Point p3 = new Point(p.X - l, p.Y - l);
             Point p4 = new Point(p.X - l, p.Y + l);
-            GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
-            Color _color = new Color(1, 0, 0);
-            GraphicsDrawer.DrawLineSegment(p1, p2, _color);
-            GraphicsDrawer.DrawLineSegment(p2, p3, _color);
-            GraphicsDrawer.DrawLineSegment(p3, p4, _color);
-            GraphicsDrawer.DrawLineSegment(p4, p1, _color);
-            GraphicsDrawer.DrawLineSegment(p1, p3, _color);
-            GraphicsDrawer.DrawLineSegment(p2, p4, _color);
+            PolyLine(p1, p2, p3, p4, p1, p3, p4, p2);
+            ////GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
+            ////Color _color = new Color(1, 0, 0);
+            ////GraphicsDrawer.DrawLineSegment(p1, p2, _color);
+            ////GraphicsDrawer.DrawLineSegment(p2, p3, _color);
+            ////GraphicsDrawer.DrawLineSegment(p3, p4, _color);
+            ////GraphicsDrawer.DrawLineSegment(p4, p1, _color);
+            ////GraphicsDrawer.DrawLineSegment(p1, p3, _color);
+            ////GraphicsDrawer.DrawLineSegment(p2, p4, _color);
             Txt(p, text);
         }
 

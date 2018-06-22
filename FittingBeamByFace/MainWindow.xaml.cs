@@ -148,10 +148,8 @@ namespace FittingBeamByFace
 //            TS.ExtendControlLine();
         }
 
-        private void Button_DrawReper_Click(object sender, RoutedEventArgs e)
-        {
-            TS.ExReper();
-        }
+        private void Button_Rep_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.SB_ExReper, SB_01);
         #endregion --- Сеня Бусин ---
 
         #region --- W36 ---

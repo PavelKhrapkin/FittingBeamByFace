@@ -177,17 +177,20 @@ namespace TeklaAPI
             Txt(p2, ShowXYZ(p2));
         }
 
-        internal void ExReper()
+        internal void SB_ExReper()
         {
             Picker picker = new Picker();
             T3D.Point p = picker.PickPoint("Pick Point for Reper");
             Rep(p);
+            mw.Msg("В точке, выбранной по левой кнопке мышки, появляются"
+               + " красные линии репера глобальной системы координат. [OK]");
+            MessageBox.Show("Выведен репер");
+            mw.Msg();
 
-            T3D.Point p1 = picker.PickPoint("Pick Point for Rotated П/4 Reper");
-            T3D.Vector v1 = new T3D.Vector(1, 1, 1);
-            T3D.Vector v2 = new T3D.Vector(Rotate(v1, 3.1415926 / 4));
-            Rep(p1);
-
+            //T3D.Point p1 = picker.PickPoint("Pick Point for Rotated П/4 Reper");
+            //T3D.Vector v1 = new T3D.Vector(1, 1, 1);
+            //T3D.Vector v2 = new T3D.Vector(Rotate(v1, 3.1415926 / 4));
+            //Rep(p1);
         }
     }
 }
