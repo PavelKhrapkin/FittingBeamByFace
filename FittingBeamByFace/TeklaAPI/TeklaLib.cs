@@ -120,14 +120,6 @@ namespace TeklaAPI
             Point p3 = new Point(p.X - l, p.Y - l);
             Point p4 = new Point(p.X - l, p.Y + l);
             PolyLine(p1, p2, p3, p4, p1, p3, p4, p2);
-            ////GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
-            ////Color _color = new Color(1, 0, 0);
-            ////GraphicsDrawer.DrawLineSegment(p1, p2, _color);
-            ////GraphicsDrawer.DrawLineSegment(p2, p3, _color);
-            ////GraphicsDrawer.DrawLineSegment(p3, p4, _color);
-            ////GraphicsDrawer.DrawLineSegment(p4, p1, _color);
-            ////GraphicsDrawer.DrawLineSegment(p1, p3, _color);
-            ////GraphicsDrawer.DrawLineSegment(p2, p4, _color);
             Txt(p, text);
         }
 
