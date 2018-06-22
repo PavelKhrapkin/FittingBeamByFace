@@ -28,10 +28,9 @@
  * LocalTxt(dynamic[] x) - make localyzed messages by number or text string
  */
 using System.Globalization;
-using Tekla.Structures.Model.UI;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
-using Tekla.Structures;
+using Tekla.Structures.Model.UI;
 
 namespace TeklaAPI
 {
