@@ -174,7 +174,7 @@ namespace TeklaAPI.Tests
         [TestMethod()]
         public void UT_Tekla_CreateBeam()
         {
-            // test 0: создаем балку вдоль оси Х, а потом ее стираем
+            // test 1: создаем балку вдоль оси Х, а потом ее стираем
             Point p1 = new Point(0, 500, 0);
             Point p2 = new Point(500, 500, 0);
             ThisBeam = _TS.CreateBeam("test Beam", "I50B1_20_93", p1, p2);
@@ -182,6 +182,12 @@ namespace TeklaAPI.Tests
             Assert.AreEqual("C245", ThisBeam.Material.MaterialString);
             //           ThisBeam.Delete();
             Model.CommitChanges();
+
+            // test 2: проверка вывода сообщения об ошибке - пустой текст профиля
+            //..это модальный тест, то есть он требует нажатия кнопки ОК,
+            //..сейчас закомментриован
+            //_TS.CreateBeam("test Beam", "", p1, p2);
+
         }
 
         [TestMethod()]

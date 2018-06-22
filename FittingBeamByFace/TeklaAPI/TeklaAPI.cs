@@ -58,36 +58,6 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
 
-        public Beam CreateBeam(string name, string prfStr, T3D.Point p1, T3D.Point p2
-            , string material="C245", bool Commit=true, string Class = "7"
-            , int PositionDepth = -1, int PositionRotation = -1, int PositionPlane = -1)
-        {
-            string msg;
-            if (p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
-            if (prfStr == "" || prfStr == null) goto ErrPrfStr;
-            Beam ThisBeam = new Beam();
-            ThisBeam.StartPoint = p1;
-            ThisBeam.EndPoint = p2;
-            ThisBeam.Profile.ProfileString = prfStr;
-            ThisBeam.Material.MaterialString = material;
-            ThisBeam.Class = Class;
-            if (PositionDepth != -1)
-                ThisBeam.Position.Depth = (Position.DepthEnum) PositionDepth;
-            if (PositionRotation != -1)
-                ThisBeam.Position.Rotation = (Position.RotationEnum) PositionRotation;
-            if (PositionRotation != -1)
-                ThisBeam.Position.Plane = (Position.PlaneEnum)PositionPlane;
-            if (!Commit) return ThisBeam;
-            ThisBeam.Insert();
-            Model.CommitChanges();
-            return ThisBeam;
-
-            ErrPrfStr: msg = LocalTxt(11, "=\"\""); goto Err;
-            ErrXeqY: msg = LocalTxt(507, " = ", 508);
-            Err: MessageBox.Show(msg);
-            return null;
-        }
-
         protected void SetWorkPlane(Beam theBeam = null)
         {
             if (theBeam != null)
@@ -103,6 +73,8 @@ namespace TeklaAPI
             Model.CommitChanges();
             ViewHandler.SetRepresentation("standard");
         }
+
+        protected void TSerror(string msg) => MessageBox.Show(msg);
 
         public void Node36(Beam MainBeam, Beam AttBeam)
         {

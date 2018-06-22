@@ -4,6 +4,7 @@
  * Cris Keyack Session 10 https://www.youtube.com/watch?v=f3sagcwinpI
  * Bolts Welds Assembly
  */
+using System;
 using System.Collections;
 using System.Windows;
 using Tekla.Structures.Geometry3d;
@@ -25,45 +26,18 @@ namespace TeklaAPI
             Part PickedSecondPart = null;
             try
             {
-                PickedFirstPart = (Beam)Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
-                PickedSecondPart = (Beam)Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
+                PickedFirstPart = (Part)Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
+                PickedSecondPart = (Part)Picker.PickObject(Picker.PickObjectEnum.PICK_ONE_PART);
             }
-            catch { PickedFirstPart = PickedSecondPart = null; }
-            if (PickedFirstPart != null && PickedSecondPart != null)
+            catch (ArgumentException e)
             {
-                // Change the workplane to the coordinate system of the plate
-                var cs = PickedFirstPart.GetCoordinateSystem();
-                var psk = new TransformationPlane(cs);
-                Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(psk);
-
-                // BoltGroupCode
-                BoltArray NewBoltArray = new BoltArray();
-                NewBoltArray.BoltSize = 24;
-                NewBoltArray.BoltType = BoltGroup.BoltTypeEnum.BOLT_TYPE_WORKSHOP;
-                NewBoltArray.BoltStandard = "7798";
-                NewBoltArray.CutLength = 100;
-                // Add to specings of bolts in the X direction
-                NewBoltArray.AddBoltDistX(76.2);
-                NewBoltArray.AddBoltDistX(76.2);
-                // Only one row of bolts
-                NewBoltArray.AddBoltDistY(0);
-                // Edge disctance from first point picked to first bolt in x direction
-                NewBoltArray.StartPointOffset.Dx = 38.1;
-                //Front lines up nicely with x/y position in current workplane.
-                NewBoltArray.Position.Rotation = Position.RotationEnum.FRONT;
-                NewBoltArray.PartToBoltTo = PickedFirstPart;
-                NewBoltArray.PartToBeBolted = PickedSecondPart;
-                NewBoltArray.FirstPosition = new T3D.Point(0, 100, 0);
-                NewBoltArray.SecondPosition = new T3D.Point(1000, 250, 0);
-
-                if(NewBoltArray.Insert())
-                {
-                    // Draw X Axis of bolt group.
-            //        TSMUI.GraphicsDrawer 
-                }
-
-
+                MessageBox.Show($"Not Picked Exception {e}");
+                PickedFirstPart = null;  PickedSecondPart = null;
             }
+
+            ContourShow(PickedSecondPart);
+
+            CreateBolt(PickedFirstPart, PickedSecondPart);
         }
 
         public void CK10_SetWorkPlane()

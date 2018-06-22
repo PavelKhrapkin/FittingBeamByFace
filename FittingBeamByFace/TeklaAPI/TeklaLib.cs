@@ -24,6 +24,7 @@
  * VectorAd(v1, v2) - add Vectors v1 and v2
  * PointShow(p, text)  - draw point p and text - name of the point
  * PlainShow(Plain)    - draw rectangular shows the Plane
+ * ContourShow(Plate)  - draw Plate points
  * PickBeam(text)   - Pick a beam from the Tekla model with text prompt
  * LocalTxt(dynamic[] x) - make localyzed messages by number or text string
  */
@@ -47,18 +48,18 @@ namespace TeklaAPI
             setColor(color);
             PolyLine(p);
         }
-        public void PolyLine(params Point[]p)
+        public void PolyLine(params Point[] p)
         {
             if (p.Length < 2) return;
             var pnt = p[0];
-            for( int i = 1; i < p.Length; i++)
+            for (int i = 1; i < p.Length; i++)
             {
                 Line(pnt, p[i]);
                 pnt = p[i];
             }
         }
 
-        public void Txt(Point point, string text, string color = RED) 
+        public void Txt(Point point, string text, string color = RED)
             => GraphicsDrawer.DrawText(point, text, setColor(color));
 
         private Color setColor(string color = RED)
@@ -77,7 +78,7 @@ namespace TeklaAPI
             => x.ToString("0", CultureInfo.InvariantCulture);
 
         //Draws coordinate Reper with length 1000 in p in Global Coord System
-        public void Rep(Point p, string color=RED)
+        public void Rep(Point p, string color = RED)
         {
             setColor(color);
             Point pX = new Point(p.X + 1000, p.Y, p.Z);
@@ -122,7 +123,7 @@ namespace TeklaAPI
             Txt(p, text);
         }
 
-        public void PlaneShow(CoordinateSystem cs, int lng=1000)
+        public void PlaneShow(CoordinateSystem cs, int lng = 1000)
         {
 
             Model.GetWorkPlaneHandler()
@@ -140,7 +141,7 @@ namespace TeklaAPI
             //Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(trPlane);
             GraphicsDrawer GraphicsDrawer = new GraphicsDrawer();
             Color _color = new Color(1, 0, 0);
-   
+
             GraphicsDrawer.DrawLineSegment(p1, p2, _color); Txt(p1, "p1");
             GraphicsDrawer.DrawLineSegment(p2, p3, _color); Txt(p2, "p2");
             GraphicsDrawer.DrawLineSegment(p3, p4, _color); Txt(p3, "p3");
@@ -150,6 +151,20 @@ namespace TeklaAPI
                .SetCurrentTransformationPlane(new TransformationPlane());
 
             ReperShow(cs);
+        }
+
+        public void ContourShow(Part plate)
+        {
+            setColor();
+            if (plate.GetType() != typeof(ContourPlate))
+                TSerror("Wrong Part");
+            
+            ContourPlate pl = plate as ContourPlate;
+            int i = 0;
+            foreach(var p in pl.Contour.ContourPoints)
+            {
+                PointShow((Point)p, "p" + (i++).ToString());
+            }
         }
 
         public Beam PickBeam(params int[] n) => PickBeam(LocalTxt(n));
@@ -170,14 +185,44 @@ namespace TeklaAPI
             string str = string.Empty;
             foreach (var s in x)
             {
-                if(s.GetType() == typeof(string)) str += local.GetText(s);
-                if(s.GetType() == typeof(int))
+                if (s.GetType() == typeof(string)) str += local.GetText(s);
+                if (s.GetType() == typeof(int))
                     str += local.GetText("by_number_msg_no_" + s.ToString());
             }
             return str;
         }
 
-        public Beam CutBeamByPart(Beam beam, Part part, bool startSideCut=true)
+        public Beam CreateBeam(string name, string prfStr, Point p1, Point p2
+            , string material = "C245", bool Commit = true, string Class = "7"
+            , int PositionDepth = -1, int PositionRotation = -1, int PositionPlane = -1)
+        {
+            string msg;
+            if (p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
+            if (prfStr == "" || prfStr == null) goto ErrPrfStr;
+            Beam ThisBeam = new Beam();
+            ThisBeam.StartPoint = p1;
+            ThisBeam.EndPoint = p2;
+            ThisBeam.Profile.ProfileString = prfStr;
+            ThisBeam.Material.MaterialString = material;
+            ThisBeam.Class = Class;
+            if (PositionDepth != -1)
+                ThisBeam.Position.Depth = (Position.DepthEnum)PositionDepth;
+            if (PositionRotation != -1)
+                ThisBeam.Position.Rotation = (Position.RotationEnum)PositionRotation;
+            if (PositionRotation != -1)
+                ThisBeam.Position.Plane = (Position.PlaneEnum)PositionPlane;
+            if (!Commit) return ThisBeam;
+            ThisBeam.Insert();
+            Model.CommitChanges();
+            return ThisBeam;
+
+            ErrPrfStr: msg = LocalTxt(11, "=\"\""); goto Err;
+            ErrXeqY: msg = LocalTxt(507, " = ", 508);
+            Err: TSerror(msg);
+            return null;
+        }
+
+        public Beam CutBeamByPart(Beam beam, Part part, bool startSideCut = true)
         {
             // вырезаем ThasBeam по MainBeam
             var partClass = part.Class;
@@ -205,6 +250,55 @@ namespace TeklaAPI
             Model.CommitChanges();
 
             return beam;
+        }
+
+        public BoltArray CreateBolt(Part part1, Part part2)
+        {
+            if (part1 != null && part2 != null)
+            {
+                // Change the workplane to the coordinate system of the plate
+                var cs = part1.GetCoordinateSystem();
+                var psk = new TransformationPlane(cs);
+                Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(psk);
+
+                // BoltGroupCode
+                BoltArray NewBoltArray = new BoltArray();
+                NewBoltArray.BoltSize = 24;
+                NewBoltArray.BoltType = BoltGroup.BoltTypeEnum.BOLT_TYPE_WORKSHOP;
+                NewBoltArray.BoltStandard = "7798";
+                NewBoltArray.CutLength = 100;
+                // Add to specings of bolts in the X direction
+                NewBoltArray.AddBoltDistX(76.2);
+                NewBoltArray.AddBoltDistX(76.2);
+                // Only one row of bolts
+                NewBoltArray.AddBoltDistY(0);
+                // Edge disctance from first point picked to first bolt in x direction
+                NewBoltArray.StartPointOffset.Dx = 38.1;
+                //Front lines up nicely with x/y position in current workplane.
+                NewBoltArray.Position.Rotation = Position.RotationEnum.FRONT;
+                NewBoltArray.PartToBoltTo = part1;
+                NewBoltArray.PartToBeBolted = part2;
+                NewBoltArray.FirstPosition = new Point(0, 100, 0);
+                NewBoltArray.SecondPosition = new Point(1000, 250, 0);
+
+                PointShow(NewBoltArray.FirstPosition, "First");
+                PointShow(NewBoltArray.SecondPosition, "2nd");
+
+                if (NewBoltArray.Insert())
+                {
+                    // Draw X Axis of bolt group.
+                    Line(NewBoltArray.FirstPosition, NewBoltArray.SecondPosition);
+                    // Set WorkPlane back to what user had before
+                    Model.CommitChanges();
+                    return NewBoltArray;
+                }
+                else
+                {
+                    Tekla.Structures.Model.Operations.Operation
+                          .DisplayPrompt("Bolt not done");
+                }
+            }
+            return null;
         }
     }
 }
