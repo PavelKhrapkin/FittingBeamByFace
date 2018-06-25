@@ -254,6 +254,7 @@ namespace TeklaAPI
 
         public BoltArray CreateBolt(Part part1, Part part2)
         {
+            int bolt_lng = 33;
             if (part1 != null && part2 != null)
             {
                 // Change the workplane to the coordinate system of the plate
@@ -262,35 +263,35 @@ namespace TeklaAPI
                 Model.GetWorkPlaneHandler().SetCurrentTransformationPlane(psk);
 
                 // BoltGroupCode
-                BoltArray NewBoltArray = new BoltArray();
-                NewBoltArray.BoltSize = 24;
-                NewBoltArray.BoltType = BoltGroup.BoltTypeEnum.BOLT_TYPE_WORKSHOP;
-                NewBoltArray.BoltStandard = "7798";
-                NewBoltArray.CutLength = 100;
+                BoltArray BoltArray = new BoltArray();
+                BoltArray.BoltSize = 20;
+                BoltArray.BoltType = BoltGroup.BoltTypeEnum.BOLT_TYPE_WORKSHOP;
+                BoltArray.BoltStandard = "7798";
+                BoltArray.CutLength = 100;
                 // Add to specings of bolts in the X direction
-                NewBoltArray.AddBoltDistX(76.2);
-                NewBoltArray.AddBoltDistX(76.2);
+                BoltArray.AddBoltDistX(76.2);
+                BoltArray.AddBoltDistX(76.2);
                 // Only one row of bolts
-                NewBoltArray.AddBoltDistY(0);
+                BoltArray.AddBoltDistY(0);
                 // Edge disctance from first point picked to first bolt in x direction
-                NewBoltArray.StartPointOffset.Dx = 38.1;
+                BoltArray.StartPointOffset.Dx = 38.1;
                 //Front lines up nicely with x/y position in current workplane.
-                NewBoltArray.Position.Rotation = Position.RotationEnum.FRONT;
-                NewBoltArray.PartToBoltTo = part1;
-                NewBoltArray.PartToBeBolted = part2;
-                NewBoltArray.FirstPosition = new Point(0, 100, 0);
-                NewBoltArray.SecondPosition = new Point(1000, 250, 0);
+                BoltArray.Position.Rotation = Position.RotationEnum.FRONT;
+                BoltArray.PartToBoltTo = part1;
+                BoltArray.PartToBeBolted = part2;
+                BoltArray.FirstPosition = new Point(0, 100, 0);
+                BoltArray.SecondPosition = new Point(1000, 250, 0);
 
-                PointShow(NewBoltArray.FirstPosition, "First");
-                PointShow(NewBoltArray.SecondPosition, "2nd");
+                PointShow(BoltArray.FirstPosition, "First");
+                PointShow(BoltArray.SecondPosition, "2nd");
 
-                if (NewBoltArray.Insert())
+                if (BoltArray.Insert())
                 {
                     // Draw X Axis of bolt group.
-                    Line(NewBoltArray.FirstPosition, NewBoltArray.SecondPosition);
+                    Line(BoltArray.FirstPosition, BoltArray.SecondPosition);
                     // Set WorkPlane back to what user had before
                     Model.CommitChanges();
-                    return NewBoltArray;
+                    return BoltArray;
                 }
                 else
                 {
@@ -299,6 +300,15 @@ namespace TeklaAPI
                 }
             }
             return null;
+        }
+
+        public int M20_7798_Length(int connectedLng, double AddBoltLength = 0)
+        {
+            int[] bolt_lng_GOST = { 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90
+                    , 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200
+                    , 200, 220, 240, 260, 280, 300};
+            const int M20heigth = 18;
+            return 0;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* -----------------------------------------------------
-* Tekla module Unit Tests  1.06.2018 Pavel Khrapkin
+* Tekla module Unit Tests  25.06.2018 Pavel Khrapkin
 */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -225,6 +225,14 @@ namespace TeklaAPI.Tests
                 PositionRotation:(int)Position.RotationEnum.BELOW,
                 PositionPlane:(int)Position.PlaneEnum.MIDDLE,
                 PositionDepth:(int)Position.DepthEnum.FRONT);
+        }
+
+        [TestMethod()]
+        public void UT_M20_7798_Length()
+        {
+            // test 0: проверяем результат M20_7798_Length(7, 3)
+            double lng = _TS.M20_7798_Length(7, 3);
+            Assert.AreEqual(20, lng);
         }
 
         [TestMethod()]
