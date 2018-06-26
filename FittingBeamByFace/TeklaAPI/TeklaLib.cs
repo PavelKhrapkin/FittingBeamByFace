@@ -301,14 +301,5 @@ namespace TeklaAPI
             }
             return null;
         }
-
-        public int M20_7798_Length(int connectedLng, double AddBoltLength = 0)
-        {
-            int[] bolt_lng_GOST = { 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90
-                    , 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200
-                    , 200, 220, 240, 260, 280, 300};
-            const int M20heigth = 18;
-            return 0;
-        }
     }
 }

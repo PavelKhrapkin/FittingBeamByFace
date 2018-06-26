@@ -61,3 +61,4 @@ C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csproj.CopyComplete
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.exe
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.pdb
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\ObjDir\2018\FittingBeamByFace\FittingBeamByFace.csprojResolveAssemblyReference.cache

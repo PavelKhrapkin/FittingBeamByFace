@@ -64,3 +64,12 @@ C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018\UT_FittingBeamByFaceTests\UT_FittingBeamByFaceTests.csproj.CopyComplete
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018\UT_FittingBeamByFaceTests\UT_FittingBeamByFaceTests.dll
 C:\Users\Pavel_Khrapkin\Source\Repos\TeklaAssembly\FittingBeamByFace\ObjDir\2018\UT_FittingBeamByFaceTests\UT_FittingBeamByFaceTests.pdb
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\Castle.Core.dll
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\Moq.dll
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\System.ValueTuple.dll
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\Castle.Core.xml
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\Moq.pdb
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\Moq.xml
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\khrapkin\Source\Repos\FittingBeamByFace\UT_FittingBeamByFaceTests\bin\Debug\System.ValueTuple.xml

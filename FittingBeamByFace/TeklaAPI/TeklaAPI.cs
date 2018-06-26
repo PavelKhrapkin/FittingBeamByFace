@@ -74,7 +74,7 @@ namespace TeklaAPI
             ViewHandler.SetRepresentation("standard");
         }
 
-        protected void TSerror(string msg) => MessageBox.Show(msg);
+        public void TSerror(string msg) => MessageBox.Show(msg);
 
         public void Node36(Beam MainBeam, Beam AttBeam)
         {

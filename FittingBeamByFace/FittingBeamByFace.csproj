@@ -93,6 +93,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SteelJoin\JoinLib.cs" />
+    <Compile Include="SteelJoin\Joins.cs" />
     <Compile Include="TeklaAPI\TeklaAPI.cs" />
     <Compile Include="TeklaAPI\TeklaExercise_CK10.cs" />
     <Compile Include="TeklaAPI\TeklaExercise_W36.cs" />
@@ -145,6 +147,7 @@
   <ItemGroup>
     <Resource Include="divider.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
