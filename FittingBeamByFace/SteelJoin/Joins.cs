@@ -11,10 +11,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tekla.Structures.Model;
 
 namespace FittingBeamByFace.SteelJoin
 {
-    class Joins
+    public class Joins
     {
+        public void W36(Beam MainBeam, Beam AttBeam)
+        {
+
+        }
     }
 }

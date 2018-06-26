@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SteelJoin\UT_JoinLibTests.cs" />
+    <Compile Include="SteelJoin\UT_JoinsTests.cs" />
     <Compile Include="TeklaAPI\UT_TeklaAPITests.cs" />
   </ItemGroup>
   <ItemGroup>

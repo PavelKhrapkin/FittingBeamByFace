@@ -27,6 +27,7 @@
  * ContourShow(Plate)  - draw Plate points
  * PickBeam(text)   - Pick a beam from the Tekla model with text prompt
  * LocalTxt(dynamic[] x) - make localyzed messages by number or text string
+ * CreateBeam(name, prfString, p1, p2,..)  - create ThisBeam from p1 to p2
  */
 using System.Globalization;
 using Tekla.Structures.Geometry3d;

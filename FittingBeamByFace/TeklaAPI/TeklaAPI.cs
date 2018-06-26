@@ -12,7 +12,6 @@
  *  8.06.2018 - CeateBeam interface expanded
  * --- Methods: ---
  * Init()   - setup Model connection, save ModelPlane
- * CreateBeam(name, prfString, p1, p2,..)  - create ThisBeam from p1 to p2
  * SetWorkPlane([theBeam])  - create workplane at theBeam, 
  *                            by default,restore saved
  * Node36(MainBeam, AttBeam) - implement Node36
@@ -75,11 +74,6 @@ namespace TeklaAPI
         }
 
         public void TSerror(string msg) => MessageBox.Show(msg);
-
-        public void Node36(Beam MainBeam, Beam AttBeam)
-        {
-
-        }
 
         public void RepShow(T3D.Point p, T3D.Vector vX, T3D.Vector vY)
         {
