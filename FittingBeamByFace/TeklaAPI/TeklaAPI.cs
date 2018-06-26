@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------
  * TeklaAPI - module is working with TeklaStructure over OpenAPI
  * 
- * 8.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 26.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 24.04.2018 - Common TeklaAPI module created
@@ -10,6 +10,7 @@
  * 11.05.2018 - Separated few methods to TeklaLib
  *  7.06.2018 - Localization
  *  8.06.2018 - CeateBeam interface expanded
+ * 26.06,2018 - separated code for Joins and JoinLib
  * --- Methods: ---
  * Init()   - setup Model connection, save ModelPlane
  * SetWorkPlane([theBeam])  - create workplane at theBeam, 
@@ -33,7 +34,7 @@ namespace TeklaAPI
     {
         private FittingBeamByFace.MainWindow mw = null;
         protected TSDL local;
-        protected Model Model;
+        public Model Model;
         protected TransformationPlane ModelPlane, TmpPlane;       
         Beam MainBeam = null, AttBeam = null;
 

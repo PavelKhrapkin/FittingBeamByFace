@@ -8,13 +8,11 @@
  * M20_7798_Length(connectingLength, AddLength) - return Bolt length with
  *                  accounted total thickness of connected details and optional
  *                  additional length for extra nuts, Wasters etc
+ *                  
+ * BeamWebThickness(Beam beam)  - return Web thickness - ptoperty of Beam                 
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TSLIB = TeklaAPI.TeklaAPI;
+using Tekla.Structures.Model;
 
 namespace FittingBeamByFace.SteelJoin
 {
@@ -40,6 +38,16 @@ namespace FittingBeamByFace.SteelJoin
                 }
             }
             return bolt_lng_GOST[i];
+        }
+
+        public double BeamWebThickness(Beam beam)
+        {
+            // толщина стенки Beam - WEB_THICKNESS
+            double BeamThickness = -1;
+            beam.GetReportProperty("WEB_THICKNESS", ref BeamThickness);
+            if (BeamThickness < 5 || BeamThickness > 23)
+                throw new Exception($"Wrong AttBeam thickness={BeamThickness}");
+            return BeamThickness;
         }
     }
 }

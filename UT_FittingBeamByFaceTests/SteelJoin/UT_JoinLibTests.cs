@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tekla.Structures.Geometry3d;
+using Tekla.Structures.Model;
 
 namespace FittingBeamByFace.SteelJoin.Tests
 {
@@ -15,6 +17,7 @@ namespace FittingBeamByFace.SteelJoin.Tests
     public class UT_JoinLibTests
     {
         U JL = new U();
+        TeklaAPI.TeklaAPI TS = new TeklaAPI.TeklaAPI();
 
         [TestMethod()]
         public void UT_M20_7798_Length()
@@ -35,6 +38,20 @@ namespace FittingBeamByFace.SteelJoin.Tests
             //!! нужно использовать технику подстановок вывода 
             //!! сообщенй об ошибках TSerror Mock -- ОТЛОЖИЛ
             //           lng = _TS.M20_7798_Length(10000);
+        }
+
+        [TestMethod()]
+        public void UT_BeamWebThickness()
+        {
+            // test 0: create Beam [1000, 1000, 300] -> [5000, 200, 3456] I50
+            TS.Init();
+            Point p1 = new Point(1000, 1000, 300);
+            Point p2 = new Point(5000, 200, 3456);
+            Beam beam = TS.CreateBeam("test Beam", "I50B1_20_93", p1, p2);
+            double w = JL.BeamWebThickness(beam);
+            Assert.AreEqual(8.8, w);
+
+            beam.Delete();
         }
     }
 

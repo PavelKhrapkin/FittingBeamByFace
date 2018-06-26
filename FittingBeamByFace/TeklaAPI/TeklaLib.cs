@@ -1,7 +1,7 @@
 ﻿/* ----------------------------------------------------------------------------
  * TeklaLib - part of TeklaAPI module - separated Library simple common methods
  * 
- * 22.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
+ * 26.06.2018 Pavel Khrapkin NIP Informatica, St.-Petersburg
  * 
  * --- History: ---
  * 11.05.2018 - TeklaLib module created
@@ -12,6 +12,7 @@
  *  6.06.2018 - IAil(int) add
  * 18.06.2018 - PlainShow add, VectorAd add 
  * 22.06.2018 - Line and PolyLine add, optimization with Line, color
+ * 26.06,2018 - separated code for Joins and JoinLib
  * --- Methods: ---
  * Line(p1, p2, [color])    - draw line from Point p1 to Point p2 
  * PolyLine([color], Points[] p) - draw polyline with color
