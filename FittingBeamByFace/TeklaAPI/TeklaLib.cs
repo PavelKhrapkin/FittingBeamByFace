@@ -203,6 +203,7 @@ namespace TeklaAPI
             if (p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z) goto ErrXeqY;
             if (prfStr == "" || prfStr == null) goto ErrPrfStr;
             Beam ThisBeam = new Beam();
+            ThisBeam.Name = name;
             ThisBeam.StartPoint = p1;
             ThisBeam.EndPoint = p2;
             ThisBeam.Profile.ProfileString = prfStr;
