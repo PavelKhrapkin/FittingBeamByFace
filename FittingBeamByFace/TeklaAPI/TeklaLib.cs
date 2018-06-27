@@ -30,6 +30,7 @@
  * LocalTxt(dynamic[] x) - make localyzed messages by number or text string
  * CreateBeam(name, prfString, p1, p2,..)  - create ThisBeam from p1 to p2
  */
+using System;
 using System.Globalization;
 using Tekla.Structures.Geometry3d;
 using Tekla.Structures.Model;
@@ -215,6 +216,12 @@ namespace TeklaAPI
                 ThisBeam.Position.Plane = (Position.PlaneEnum)PositionPlane;
             if (!Commit) return ThisBeam;
             ThisBeam.Insert();
+
+            Model = new Model();
+            if (!Model.GetConnectionStatus())
+                throw new Exception("Tekla not connected");
+
+
             Model.CommitChanges();
             return ThisBeam;
 

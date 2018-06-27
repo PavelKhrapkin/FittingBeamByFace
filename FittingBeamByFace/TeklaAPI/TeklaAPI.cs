@@ -33,10 +33,11 @@ namespace TeklaAPI
     public partial class TeklaAPI
     {
         private FittingBeamByFace.MainWindow mw = null;
-        protected TSDL local;
-        public Model Model;
+        protected TSDL local;        
         protected TransformationPlane ModelPlane, TmpPlane;       
         Beam MainBeam = null, AttBeam = null;
+        private Model model;
+        public Model Model { get => model; set => model = value; }
 
         public void Init(dynamic mainWindow = null)
         {
@@ -58,7 +59,7 @@ namespace TeklaAPI
             Model.CommitChanges();
         }
 
-        protected void SetWorkPlane(Beam theBeam = null)
+        public void SetWorkPlane(Beam theBeam = null)
         {
             if (theBeam != null)
             {
