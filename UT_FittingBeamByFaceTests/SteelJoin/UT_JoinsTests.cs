@@ -65,8 +65,9 @@ namespace FittingBeamByFace.SteelJoin.Tests
                 , PositionPlane: (int)Position.PlaneEnum.MIDDLE
                 , PositionDepth: (int)Position.DepthEnum.MIDDLE
                 , Class: "5");
-
             _J.W36(MainBeam, AttBeam);
+
+         
         }
     }
 

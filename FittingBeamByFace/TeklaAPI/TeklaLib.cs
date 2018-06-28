@@ -170,6 +170,7 @@ namespace TeklaAPI
             }
         }
 
+        public Beam PickBeam(params dynamic[] d) => PickBeam(LocalTxt(d));
         public Beam PickBeam(params int[] n) => PickBeam(LocalTxt(n));
         public Beam PickBeam(string prompt = "Pick a beam")
         {

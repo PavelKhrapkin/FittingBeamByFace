@@ -1,11 +1,11 @@
 ﻿/* ------------------------------------------------------------------
- *  Головной модуль MainWindow.cs      21.06.2018 Pavel Khrapkin 
+ *  Головной модуль MainWindow.cs      27.06.2018 Pavel Khrapkin 
  *  
  *  Использует модули TeklaAPI разделенные на 3 части partial
  *  1) TeklaLib     - библиотечные методы
  *  2) TeklaExercise - упражнения Сени Бусина, Криса Кейак и мои
  *                     (разбито на отдельные файлы TeklaExercise_CK06..)
- *  3) TeklaAPI     - отдадка, в состоянии между 1) и 2)
+ *  3) TeklaAPI     - отладка, в состоянии между 1) и 2)
  *  
  *  Unit Test - UT_TeklaAPI
  */
@@ -153,15 +153,11 @@ namespace FittingBeamByFace
         #endregion --- Сеня Бусин ---
 
         #region --- W36 ---
-        private void Button_GoW36_Click(object sender, RoutedEventArgs e)
-        {
-            TS.DevelopW36();
-        }
+        private void Button_W36_Get2beam_Click(object sender, RoutedEventArgs e)
+            => InvokeTS(TS.W36_Get2beam, W36_Get2Beam);
 
         private void Button_W36_CheckCrossBeam(object sender, RoutedEventArgs e)
-        {
-            TS.CheckCrossBeam();
-        }
+            => InvokeTS(TS.W36_CheckCrossBeam, W36_Cross);
         #endregion --- W36 ---
     }
 }

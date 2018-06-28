@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FittingBeamByFace"
         mc:Ignorable="d"
         Title="TeklaAPI Exercizes and Development Pavel Khrapkin 2018" Height="400" Width="400">
-    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.06.21
+    <!-- Exercizes and Development with TeklaAPI Pavel Khrapkin 2018.06.27
             - History: -
     April-2018 - Created set of modules
     2018.05.5  - DataGrid XAML architekture with all Buttons visible on Window
@@ -14,6 +14,7 @@
     2018.06.1  - Chris Keyack Session 08
     2018.06.4  - Chris Keyack Session 09
     2018.06.21 - Chris Keyack Session 10
+    2018.06.27 - W36
     -->
     <Grid>
         <TabControl>
@@ -169,20 +170,22 @@
             </TabItem>
             <TabItem Header="W36">
                 <StackPanel>
-                    <TextBlock Text="Моделирование узла 36  2018.06.5" FontWeight="Bold"/>
+                    <TextBlock Text="Моделирование узла 36  2018.06.27" FontWeight="Bold"/>
                     <TextBlock />
-                    <TextBlock Text="Проверяем, пересекаются ли балки?"/>
-                    <Button Content="Проверка" Click="Button_W36_CheckCrossBeam"/>
-                    <!--                <TextBlock Text ="??Выбираем "/>
-                </StackPanel>
-                <TextBlock Text="угловые точки и строим по ним пластину.??"/>
 
-                <TextBlock Text ="??Выбираем угловые точки и строим по ним пластину.??"/>
-                <Button Content="Set Workplane" Width="100" Click="Button_CK09_SetWorkplane_Click" 
+                    <TextBlock Text="Разработка W36 - выбираем две балки из модели в Tekla"/>
+                    <Button Content="Выбор 2 балок" Width="120" Click="Button_W36_Get2beam_Click" 
                             FontWeight="Bold" Background="Yellow"/>
-                <TextBox Name="CK09_1" Height="0" TextWrapping="Wrap"/>
-                <Image Source="divider.jpg" Height="15"/>
--->
+                    <TextBox Name="W36_Get2Beam" Height="0" TextWrapping="Wrap"/>
+                    <Image Source="divider.jpg" Height="15"/>
+
+                    <TextBlock Text="Часть работы W36:"/>
+                    <TextBlock Text="        * Вспомогательная балка в нужной плоскости?"/>
+                    <TextBlock Text="        * Она перпендикулярна основной балке?"/>
+                    <TextBlock Text="        * Точка W36 на основной балке допустима?"/>
+                    <Button Content="Пересечение годится?" Click="Button_W36_CheckCrossBeam"
+                            Width="150" Background="LightGreen"/>
+                    <TextBox Name="W36_Cross" Height="0" TextWrapping="Wrap"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
